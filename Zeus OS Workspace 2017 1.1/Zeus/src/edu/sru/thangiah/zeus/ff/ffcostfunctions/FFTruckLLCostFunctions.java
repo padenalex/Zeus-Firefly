@@ -1,4 +1,4 @@
-package edu.sru.thangiah.zeus.ff.FFcostfunctions;
+package edu.sru.thangiah.zeus.ff.ffcostfunctions;
 
 import edu.sru.thangiah.zeus.ff.FFTruck;
 import edu.sru.thangiah.zeus.ff.FFTruckLinkedList;
