@@ -1,6 +1,6 @@
 package edu.sru.thangiah.zeus;
 
-import  edu.sru.thangiah.zeus.vrp.VRPRoot;
+import  edu.sru.thangiah.zeus.ff.FFRoot;
 
 
 import javax.swing.*;
@@ -24,7 +24,8 @@ public class Zeus {
 	  
 	  
     //Solve the VRP Problem
-    VRPRoot theRoot = new VRPRoot();
+    //VRPRoot theRoot = new VRPRoot();
+	  FFRoot theRoot = new FFRoot();
     //TOPRoot theRoot = new TOPRoot();
     //MDVRPRoot theRoot = new MDVRPRoot();
 	//HDMDVRPRoot theRoot = new HDMDVRPRoot();
