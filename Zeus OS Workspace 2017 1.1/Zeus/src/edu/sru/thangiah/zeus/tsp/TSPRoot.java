@@ -57,16 +57,9 @@ public class TSPRoot {
         new TSP(path + "data/" + oldpath + "/" + s);
       }
      */
-<<<<<<< HEAD:Zeus OS Workspace 2017 1.1/Zeus/src/edu/sru/thangiah/zeus/tsp/TSPRoot.java
     //new tsp.MDTSP("mdtsp_p01.txt");
     //new TSP("mdtsp_p01.txt"); //Reading from a text file
     new TSP("mdtsp_p01.xlsx");
     //new edu.sru.thangiah.zeus.tsp.TSP("mdtsp_p01.txt");
-=======
-    //new ff.MDFF("mdff_p01.txt");
-    //new FF("mdff_p01.txt"); //Reading from a text file
-    new FF("a280.xlsx");
-    //new edu.sru.thangiah.zeus.ff.FF("mdff_p01.txt");
->>>>>>> 15975d9c90c9b4e3051941bf23e61adda892f303:Zeus OS Workspace 2017 1.1/Zeus/src/edu/sru/thangiah/zeus/ff/FFRoot.java
   }
 }
