@@ -563,6 +563,13 @@ public class TSP {
 		return 1;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
 	/* 
 	 * Method used to read data from the specified Excel file 
 	 */
@@ -630,12 +637,18 @@ public class TSP {
 
 		//read in the first line
 		try {
-			type = (int)curRow.getCell(0).getNumericCellValue();
-			m = (int)curRow.getCell(1).getNumericCellValue();
-			n = (int)curRow.getCell(2).getNumericCellValue();
-			t = (int)curRow.getCell(3).getNumericCellValue();
-			D = (int)curRow.getCell(4).getNumericCellValue();
-			Q = (int)curRow.getCell(5).getNumericCellValue();
+			//type = (int)curRow.getCell(0).getNumericCellValue();
+			type = 0;
+			//m = (int)curRow.getCell(1).getNumericCellValue();
+			m = 1;
+			curRow = sheet.getRow(3);
+			n = (int)curRow.getCell(1).getNumericCellValue();
+			//t = (int)curRow.getCell(3).getNumericCellValue();
+			t = 1;
+			//D = (int)curRow.getCell(4).getNumericCellValue();
+			D = 9999999;
+			//Q = (int)curRow.getCell(5).getNumericCellValue();
+			Q = 9999999;
 		}
 		catch (Exception e) {
 			System.out.println("Line could not be read in");
@@ -696,12 +709,12 @@ public class TSP {
 		//mainShipments.maxDuration = D ;
 
 		//display the information from the first line
-		//System.out.println("typePtsp is       " + type);
-		//System.out.println("numVeh is         " + m);
-		//System.out.println("numCust is        " + n);
-		//System.out.println("days is           " + t);
-		//System.out.println("Depot duration is " + D);
-		//System.out.println("capacity is       " + Q);
+		System.out.println("typePtsp is       " + type);
+		System.out.println("numVeh is         " + m);
+		System.out.println("numCust is        " + n);
+		System.out.println("days is           " + t);
+		System.out.println("Depot duration is " + D);
+		System.out.println("capacity is       " + Q);
 
 		if (type != 0) { //then it is not an MDTSP problem
 			System.out.println("Problem is not an MDTSP problem");
@@ -744,7 +757,7 @@ public class TSP {
 			//except for the combinations.  The combinations are processed
 			//until the last character in s is processed
 
-			rowCounter = 3; //set the rowCounter, customer data begin from the 4th row
+			rowCounter = 6; //set the rowCounter, customer data begin from the 4th row
 
 			for (int k = 0; k < runTimes; k++) {
 				index = 0;
@@ -754,9 +767,12 @@ public class TSP {
 					i = (int)curRow.getCell(0).getNumericCellValue();
 					x = (int)curRow.getCell(1).getNumericCellValue();
 					y = (int)curRow.getCell(2).getNumericCellValue();
-					d = (int)curRow.getCell(3).getNumericCellValue();
-					q = (int)curRow.getCell(4).getNumericCellValue();
-					f = (int)curRow.getCell(5).getNumericCellValue();
+					d = 0;
+					q = 0;
+					f = 0;
+					//d = (int)curRow.getCell(3).getNumericCellValue();
+					//q = (int)curRow.getCell(4).getNumericCellValue();
+					//f = (int)curRow.getCell(5).getNumericCellValue();
 					//							a = (int)curRow.getCell(6).getNumericCellValue();
 					//							for(int indexComb=0; indexComb<a; indexComb++){
 					//								list[indexComb] = (int)curRow.getCell(indexComb+7).getNumericCellValue();
@@ -838,6 +854,15 @@ public class TSP {
 	}
 
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Print  out the data to the console
 	 */

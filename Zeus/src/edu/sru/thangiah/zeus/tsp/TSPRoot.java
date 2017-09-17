@@ -59,7 +59,7 @@ public class TSPRoot {
      */
     //new tsp.MDTSP("mdtsp_p01.txt");
     //new TSP("mdtsp_p01.txt"); //Reading from a text file
-    new TSP("mdtsp_p01.xlsx");
+    new TSP("a280.xlsx");
     //new edu.sru.thangiah.zeus.tsp.TSP("mdtsp_p01.txt");
   }
 }
