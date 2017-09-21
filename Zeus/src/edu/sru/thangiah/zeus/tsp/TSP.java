@@ -641,8 +641,23 @@ public class TSP {
 			type = 0;
 			//m = (int)curRow.getCell(1).getNumericCellValue();
 			m = 1;
-			curRow = sheet.getRow(3);
-			n = (int)curRow.getCell(1).getNumericCellValue();
+			
+			//----------- Find String "DIMENSION" And Set n= 1 over from it
+			for (int i = 0; i < 10 ; i++) {
+				XSSFRow tempRow;
+				String matchTotal;
+				tempRow = sheet.getRow(i);
+				matchTotal = (String)tempRow.getCell(0).getStringCellValue();
+				System.out.println("The temp row value found is: " + matchTotal);
+				if (matchTotal.equals("DIMENSION")) {
+					n = (int)tempRow.getCell(1).getNumericCellValue();
+					System.out.println("The Total Found Using Loop is: " + n);
+					break;
+				}
+				}
+			//-----------
+			//curRow = sheet.getRow(3);
+			//n = (int)curRow.getCell(1).getNumericCellValue();
 			//t = (int)curRow.getCell(3).getNumericCellValue();
 			t = 1;
 			//D = (int)curRow.getCell(4).getNumericCellValue();
