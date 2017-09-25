@@ -37,8 +37,8 @@ public class TSPShipmentLinkedList
   
   
   
-  public void insertShipment(int num, float x, float y, int q, int d, int e, String type) {    
-		TSPShipment thisShip = new TSPShipment(num, x, y, d, q, e, type);
+  public void insertShipment(int num, float x, float y) {    
+		TSPShipment thisShip = new TSPShipment(num, x, y);
 		//add the instance to the linked list - in this case it is added at the end of the list
 		//the total number of shipments is incremented in the insert
 		insertLast(thisShip);	
@@ -52,20 +52,19 @@ public class TSPShipmentLinkedList
    * @param ind index
    * @param x x-coordinate
    * @param y y-coordinate
-   * @param q demand
-   * @param d service time
-   * @param e frequency
+   * @param q demand ----no need
+   * @param d service time ----no need
+   * @param e frequency ----no need
    * @param comb number of combination
    * @param vComb list of combinations (vector)
    * @param cuComb number of combinations (matrix)
    */
 
-  public void insertShipment(int num, float x, float y, int q, int d, int e,
-                             int comb, String type,
+  public void insertShipment(int num, float x, float y,                             int comb, String type,
                              int[] vComb, int[][] cuComb) {
     if (vComb.length <= ProblemInfo.MAX_COMBINATIONS) {
       //create an instance of the Shipment
-      TSPShipment thisShip = new TSPShipment(num, x, y, d, q, e, comb, type,
+      TSPShipment thisShip = new TSPShipment(num, x, y, comb,
                                              vComb, cuComb);
       //add the instance to the linked list - in this case it is added at the end of the list
       //the total number of shipments is incremented in the insert
@@ -114,6 +113,16 @@ public class TSPShipmentLinkedList
 			  selectShipType;
 	  return selectShip.getSelectShipment(currDepotLL, currDepot, currShipmentLL,currShip);
   }
+  
+  public TSPShipment getNextInsertShipment(TSPNodesLinkedList currNodeLL,
+		  TSPNodes currNode,
+		  TSPShipmentLinkedList currShipmentLL,
+		  TSPShipment currShip) {
+
+	  TSPShipmentLinkedList selectShip = (TSPShipmentLinkedList) ProblemInfo.
+			  selectShipType;
+	  return selectShip.getSelectShipment(currNodeLL, currNode, currShipmentLL,currShip);
+  }
 
   /**
    * This is a stub - Leave it as it is
@@ -130,7 +139,14 @@ public class TSPShipmentLinkedList
 		  TSPShipment currShip) {
 	  return null;
   }
-
+  
+  
+  public TSPShipment getSelectShipment(TSPNodesLinkedList currNodeLL,
+		  TSPNodes currNode,
+		  TSPShipmentLinkedList currShipmentLL,
+		  TSPShipment currShip) {
+	  return null;
+  }
 
 
   /**
@@ -177,6 +193,13 @@ public class TSPShipmentLinkedList
 		  ship = ship.getNext();
 	  }
   }
+
+
+
+public int[] getCurrentComb(int[] list, int l) {
+	// TODO Auto-generated method stub
+	return null;
+}
 }
 
   //Select the shipment with the shortest distance to the depot

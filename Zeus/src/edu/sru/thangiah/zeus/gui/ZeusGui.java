@@ -90,6 +90,34 @@ public class ZeusGui
     }
 
   }
+  
+  
+  //nodes only zeus GUI
+  public ZeusGui(NodesLinkedList mN, ShipmentLinkedList mS) {
+	    //run the JFrame constructor
+	    //super("Zeus - Unified Model for Vehicle Routing Problems");
+
+	    ZeusGuiInfo.mainNodes = mN;
+	    ZeusGuiInfo.mainShipments = mS;
+
+	    createOptFrame = false;
+
+	    //this allows for layering of windows.
+	    desktop = new JDesktopPane();
+	    this.setContentPane(desktop);
+	    ZeusGuiInfo.mainDesktop = desktop;
+
+	    //make dragging faster by using the outline
+	    desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
+
+	    try {
+	      jbInit();
+	    }
+	    catch (Exception e) {
+	      e.printStackTrace();
+	    }
+
+	  }
 
   /**
    * This constructor will create a new GUI with space filling curves enabled.

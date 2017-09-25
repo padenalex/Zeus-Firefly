@@ -22,15 +22,13 @@ public class TSPShipment
   public TSPShipment() {
   }
   
-  public TSPShipment(int i, float x, float y, int d, int q, int e, String t) {
+  public TSPShipment(int i, float x, float y) {
 	    //super(i, x, y, q, d, t, p);
 	    setIndex(i);
 	    setXCoord(x);
 	    setYCoord(y);
-	    setDemand(q);
-	    //serviceTime = d;
-	    setTruckTypeNeeded(t);
-	    //pickUpPointName = p;
+	   //serviceTime = d;
+	   //pickUpPointName = p;
 	}
 
   /**
@@ -58,19 +56,19 @@ public class TSPShipment
   
 
   //calls the super in Shipment
-  public TSPShipment(int i, float x, float y, int d, int q, int e, int comb,
-		  String t,
+  public TSPShipment(int i, float x, float y, int comb,
+		  
 		  int[] vComb, int[][] cuComb) {
 	  //super(ind, x, y, d, q, e, comb, t, vComb, cuComb);
 	  setIndex(i);
 	  setXCoord(x);
 	  setYCoord(y);
-	  setDemand(q);
+	  //setDemand(q);
 	  //serviceTime = d;
 
 	  // frequency = e;
 	  // noComb = comb;
-	  setTruckTypeNeeded(t);
+	  //setTruckTypeNeeded(t);
 	  //visitComb = vComb;
 	  //currentComb = cuComb;
 	  setIsAssigned(false);
@@ -87,8 +85,8 @@ public class TSPShipment
   }
 
   //calls the super in shipment
-  public TSPShipment(int i, int x, int y, int d, int q, int e, int comb,
-		  String t,
+  public TSPShipment(int i, int x, int y, int comb,
+		 
 		  int[] vComb, int[][] cuComb) {
 	  //super(ind, x, y, d, q, e, comb, t, vComb, cuComb);
 	  //serviceTime = d;
@@ -100,12 +98,12 @@ public class TSPShipment
 	  setIndex(i);
 	  setXCoord(x);
 	  setYCoord(y);
-	  setDemand(q);
+	  
 	  //serviceTime = d;
 
 	  // frequency = e;
 	  // noComb = comb;
-	  setTruckTypeNeeded(t);
+	  
 	  //visitComb = vComb;
 	  //currentComb = cuComb;
 	  setIsAssigned(false);

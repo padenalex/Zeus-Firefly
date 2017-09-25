@@ -34,18 +34,18 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class TSP {
 
-	int m = 0, //number of vehicles
+	int //m = 0, //number of vehicles
 			n = 0, //number of customers
-			t = 0, //number of days(or depots)
-			D = 0, //maximum duration of route
-			Q = 0; //maximum capacity of vehicle
+			//t = 0, //number of days(or depots)
+			D = 0; //maximum duration of route
+			//Q = 0; //maximum capacity of vehicle
 
 	long startTime, endTime; //track the CPU processing time
 	private Vector mainOpts = new Vector(); //contains the collections of optimizations
 	@SuppressWarnings("rawtypes")
 	private Vector optInformation = new Vector(); //contains information about routes
 	private TSPShipmentLinkedList mainShipments = new TSPShipmentLinkedList(); //customers read in from a file or database that are available
-	private TSPDepotLinkedList mainDepots = new TSPDepotLinkedList(); //depots linked list for the TSP problem
+	private TSPNodesLinkedList mainNodes = new TSPNodesLinkedList(); //depots linked list for the TSP problem
 	private TSPQualityAssurance tspQA; //check the integrity and quality of the solution
 
 	//constructor for the class
@@ -60,9 +60,9 @@ public class TSP {
 
 		boolean isDiagnostic = false;
 		Shipment tempShip;
-		Depot thisDepot;
+		Nodes thisNode;
 		int type;
-		int depotNo;
+		int nodeNo;
 		int countAssignLoop;
 		boolean status;
 		String outputFileName;
@@ -107,7 +107,7 @@ public class TSP {
 		//Trucks used, total demand, dist, travel time and cost
 		Settings.printDebug(Settings.COMMENT, "Created Initial Routes ");
 		Settings.printDebug(Settings.COMMENT,
-				"Initial Stats: " + mainDepots.getSolutionString());
+				"Initial Stats: " + mainNodes.getRouteString());
 		//At this point all shipments have been assigned
 		writeLongSolution(dataFile.substring(dataFile.lastIndexOf("/") + 1));
 		//writeShortSolution(dataFile.substring(dataFile.lastIndexOf("/") + 1));
@@ -135,7 +135,7 @@ public class TSP {
 
 		//Check for the quality and integrity of the solution
 		System.out.println("Starting QA");
-		tspQA = new TSPQualityAssurance(mainDepots, mainShipments);
+		tspQA = new TSPQualityAssurance(mainNodes, mainShipments);
 		if (tspQA.runQA() == false) {
 			Settings.printDebug(Settings.ERROR, "QA FAILED!");
 		}
@@ -152,7 +152,7 @@ public class TSP {
 		//Vector emptyVector = new Vector(0);
 		//TSPZeusGui gui = new TSPZeusGui(mainDepots, mainShipments, emptyVector);
 
-		ZeusGui guiPost = new ZeusGui(mainDepots, mainShipments);
+		ZeusGui guiPost = new ZeusGui(mainNodes, mainShipments);
 
 	} 
 
@@ -162,7 +162,7 @@ public class TSP {
 	public OptInfo createInitialRoutes() {
 		//OptInfo has old and new attributes
 		OptInfo info = new OptInfo();
-		TSPDepot currDepot = null; //current depot
+		TSPNodes currNode = null; //current depot
 		TSPShipment currShip = null; //current shipment
 		//int countLoop=0;
 
@@ -178,7 +178,7 @@ public class TSP {
 		}
 
 		//capture the old attributes
-		info.setOldAttributes(mainDepots.getAttributes());
+		info.setOldAttributes(mainNodes.getAttributes());
 		/* Get the shipment that is closest to a depot with respect to a criteria
      The method for assigning customers to the depots is as follows. As there are
      a fixed number of depots, start with the first depot and find closest customer
@@ -201,19 +201,19 @@ public class TSP {
 			//Get the x an y coordinate of the depot
 			//Then use those to get the customer, that has not been allocated,
 			// that is closest to the depot
-			currDepot = (TSPDepot) mainDepots.getTSPHead().getNext();
-			x = currDepot.getXCoord();
-			y = currDepot.getYCoord();
+			currNode = (TSPNodes) mainNodes.getTSPHead().getNext();
+			x = currNode.getXCoord();
+			y = currNode.getYCoord();
 			//Send the entire mainDepots and mainShipments to get the next shipment
 			//to be inserted including the current depot
-			TSPShipment theShipment = mainShipments.getNextInsertShipment(mainDepots,
-					currDepot, mainShipments, currShip);
+			TSPShipment theShipment = mainShipments.getNextInsertShipment(mainNodes,
+					currNode, mainShipments, currShip);
 
 			if (theShipment == null) { //shipment is null, print error message
 				Settings.printDebug(Settings.COMMENT, "No shipment was selected");
 			}
 			//The selected shipment will be inserted into the route
-			if (!mainDepots.insertShipment(theShipment)) {
+			if (!mainNodes.insertShipment(theShipment)) {
 				Settings.printDebug(Settings.COMMENT, "The Shipment: <" + theShipment.getIndex() +
 						"> cannot be routed");
 			}
@@ -229,8 +229,8 @@ public class TSP {
 			//theShipment = (TSPShipment) theShipment.getNext();? - Not needed
 		}
 
-		ProblemInfo.depotLLLevelCostF.calculateTotalsStats(mainDepots);
-		info.setNewAtributes(mainDepots.getAttributes());
+		ProblemInfo.nodesLLLevelCostF.calculateTotalsStats(mainNodes);
+		info.setNewAtributes(mainNodes.getAttributes());
 		return info;
 	}
 
@@ -327,12 +327,12 @@ public class TSP {
 		ProblemInfo.numDepots = 1; //Set the number of depots to 1 for this problem
 		ProblemInfo.fileName = TSPFileName; //name of the file being read in
 		ProblemInfo.probType = type; //problem type
-		ProblemInfo.noOfVehs = m; //number of vehicles
+		//ProblemInfo.noOfVehs = m; //number of vehicles
 		ProblemInfo.noOfShips = n; //number of shipments
-		ProblemInfo.noOfDays = t; //number of days (horizon) or number of depots for MDTSP
-		if (Q == 0) { //if there is no maximum capacity, set it to a very large number
+		//ProblemInfo.noOfDays = t; //number of days (horizon) or number of depots for MDTSP
+		/*if (Q == 0) { //if there is no maximum capacity, set it to a very large number
 			Q = 999999999;
-		}
+		}*/
 		if (D == 0) { //if there is no travel time, set it to a very large number
 			D = 999999999; //if there is not maximum distance, set it to a very large number
 			//ProblemInfo.maxCapacity = Q;  //maximum capacity of a vehicle
@@ -340,7 +340,7 @@ public class TSP {
 		}
 		/** @todo  There three variables need to be defined at the beginning of
 		 * the method */
-		float maxCapacity = Q; //maximum capacity of a vehicle
+		//float maxCapacity = Q; //maximum capacity of a vehicle
 		float maxDistance = D; //maximum distance of a vehicle
 
 		String serviceType = "1"; //serviceType is the trucktype. Should match with
@@ -349,12 +349,12 @@ public class TSP {
 		//the problem. For this problem, we assume that there is only one
 		//truck type that is available.
 		//loop through each truck type and store each one in the vector
-		int numTruckTypes = 1;
+		/*int numTruckTypes = 1;
 		for (int i = 0; i < numTruckTypes; i++) {
 			TSPTruckType truckType = new TSPTruckType(i, maxDistance,
-					maxCapacity, serviceType);
+					serviceType);
 			ProblemInfo.truckTypes.add(truckType);
-		}
+		}*/
 
 		//Some problems tend to have different customer types. In this problem
 		//there is only one customter type. The integer value for the customer type
@@ -394,7 +394,7 @@ public class TSP {
 		int i = 0, //customer number
 				d = 0, //service duration
 				q = 0, //demand
-				f = 0, //frequency of visit
+				//f = 0, //frequency of visit
 				a = 0, //number of combinations allowed
 				vIndex = 1,
 				custCnt = 0;
@@ -408,13 +408,17 @@ public class TSP {
 		                                                       MAX_COMBINATIONS];
 		//if MDTSP problem, readn in n+t lines
 		if (type == 0) {
-			runTimes = n + t;
+			//runTimes = n + t;
 
 		}
 		//if  PTSP/PTSP, read in n+1 lines
-		else {
+		else if(type == 1){
 			runTimes = n + 1;
 			//This section will get the customers/depots and related information
+		}
+		else
+		{
+			runTimes = n;//for tsp
 		}
 
 		try {
@@ -481,12 +485,12 @@ public class TSP {
 					//l=index of combination to be decoded,
 					//t = days in planning horizon or #depots
 					for (int l = 0; l < a; l++) {
-						currentComb[l] = mainShipments.getCurrentComb(list, l, t); // current visit comb
+						currentComb[l] = mainShipments.getCurrentComb(list, l); // current visit comb
 
 						//insert the customer data into the linked list
 					}
 					Integer custType = (Integer) custTypes.elementAt(0);
-					mainShipments.insertShipment(i, x, y, q, d, f, a, custType.toString(),
+					mainShipments.insertShipment(i, x, y, a, custType.toString(),
 							list, currentComb);
 
 					//  type = (Integer) custTypes.elementAt(0);
@@ -519,19 +523,19 @@ public class TSP {
 
 					//insert the depot into the depot linked list
 					//insert only one depot for the TSP
-					if (mainDepots.getHead().getNext() == mainDepots.getTail() && mainDepots.getNoDepots() <= 1)
+					if (mainNodes.getHead().getNext() == mainNodes.getTail() && mainNodes.getNoNodes() <= 1)
 					{
-						TSPDepot depot = new TSPDepot(i - n, x, y); //n is the number of customers
-						mainDepots.insertDepotLast(depot);
+						TSPNodes node = new TSPNodes(i - n, x, y); //n is the number of customers
+						mainNodes.insertNodeLast(node);
 
 						//Each depot has a mainTrucks. The different truck types available are
 						//inserted into the mainTrucks type. For the TSP, there is only one truck type
-						depot = (TSPDepot) mainDepots.getHead().getNext();
-						for (i = 0; i < ProblemInfo.truckTypes.size(); i++) {
+						node = (TSPNodes) mainNodes.getHead().getNext();
+						/*for (i = 0; i < ProblemInfo.truckTypes.size(); i++) {
 							TSPTruckType ttype = (TSPTruckType) ProblemInfo.truckTypes.
 									elementAt(i);
 							depot.getMainTrucks().insertTruckLast(new TSPTruck(ttype,depot.getXCoord(), depot.getYCoord()));
-						}
+						}*/
 					}
 				} //else
 				//read the next line from the file
@@ -806,7 +810,7 @@ public class TSP {
 				//							//insert the customer data into the linked list
 				//						}
 				Integer custType = (Integer) custTypes.elementAt(0);
-				mainShipments.insertShipment(i, x, y, q, d, f, custType.toString());
+				mainShipments.insertShipment(i, x, y);
 				
 				//mainShipments.insertShipment(i, x, y, q, d, f, a, custType.toString(),
 				//		list, currentComb);
@@ -834,18 +838,18 @@ public class TSP {
 				}
 
 				//insert the depot into the depot linked list
-				TSPDepot depot = new TSPDepot(i - n, x, y); //n is the number of customers
-				mainDepots.insertDepotLast(depot);
+				TSPNodes node = new TSPNodes(i - n, x, y); //n is the number of customers
+				mainNodes.insertNodeLast(node);
 
 				//Each depot has a mainTrucks. The different truck types available are
 				//inserted into the mainTrucks type. For the TSP, there is only one truck type
-				depot = (TSPDepot) mainDepots.getHead().getNext();
-				for (i = 0; i < ProblemInfo.truckTypes.size(); i++) {
+				node = (TSPNodes) mainNodes.getHead().getNext();
+				/*for (i = 0; i < ProblemInfo.truckTypes.size(); i++) {
 					TSPTruckType ttype = (TSPTruckType) ProblemInfo.truckTypes.
 							elementAt(i);
 					depot.getMainTrucks().insertTruckLast(new TSPTruck(ttype,
 							depot.getXCoord(), depot.getYCoord()));                   
-				}
+				}*/
 
 				rowCounter++; //go to next row 
 			} //end for
@@ -915,7 +919,7 @@ public class TSP {
 		try {
 			PrintStream ps = new PrintStream(new FileOutputStream(ProblemInfo.
 					outputPath + file + "_long.txt"));
-			mainDepots.printDepotLinkedList(ps);
+			mainNodes.getRouteString();
 		}
 		catch (IOException ioex) {
 			ioex.printStackTrace();
@@ -938,13 +942,18 @@ public class TSP {
 					ProblemInfo.numCustomers + " Num Trucks: " +
 					ProblemInfo.numTrucks + " Processing Time: " +
 					(endTime - startTime) / 1000 + " seconds");
-			ps.println(mainDepots.getAttributes().toDetailedString());
+			ps.println(mainNodes.getAttributes().toDetailedString());
 			ps.println();
 
-			Depot depotHead = mainDepots.getHead();
-			Depot depotTail = mainDepots.getTail();
+			Nodes nodeHead = mainNodes.getHead();
+			Nodes nodeTail = mainNodes.getTail();
+			
+			while (nodeHead != nodeTail) {
+				ps.print(nodeHead.getIndex() + " ");
+				nodeHead = nodeHead.getNext();
+			}
 
-			while (depotHead != depotTail) {
+			/*while (nodeHead != nodeTail) {
 				Truck truckHead = depotHead.getMainTrucks().getHead();
 				Truck truckTail = depotHead.getMainTrucks().getTail();
 
@@ -967,8 +976,8 @@ public class TSP {
 
 				ps.println();
 				ps.println();
-				depotHead = depotHead.getNext();
-			}
+				//depotHead = depotHead.getNext();
+			}*/
 			for (int i = 0; i < optInformation.size(); i++) {
 				ps.println(optInformation.elementAt(i));
 			}
@@ -1042,10 +1051,10 @@ public class TSP {
 			//The opt.run method called is dependent on the object that
 			//was created in the mainOpts. If the object was BestBestIntraSearch
 			//then the run method in BestBestIntraSearch is called.
-			optInformation.add(opt.toString() + " " + opt.run(mainDepots));
+			optInformation.add(opt.toString() + " " + opt.run(mainNodes));
 			Settings.printDebug(Settings.COMMENT,
 					opt.toString() + " Stats: " +
-							mainDepots.getSolutionString());
+							mainNodes.getRouteString());
 		}
 		//Calculate the total stats
 		//ProblemInfo.depotLLLevelCostF.calculateTotalsStats(mainDepots);

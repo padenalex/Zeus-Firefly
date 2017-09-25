@@ -18,9 +18,9 @@ import java.util.*;
 /** @todo Need to document the variables and the parameters */
 public class TSPQualityAssurance
     extends QualityAssurance {
-  TSPDepotLinkedList mainDepots;
+  TSPNodesLinkedList mainNodes;
   TSPShipmentLinkedList mainShipments;
-  TSPQADepotLinkedList tspQADepots;
+  TSPQANodesLinkedList tspQANodes;
   TSPQAShipmentLinkedList tspQAShipments;
 
   File shipFile;
@@ -29,13 +29,13 @@ public class TSPQualityAssurance
   public TSPQualityAssurance() {
   }
 
-  public TSPQualityAssurance(TSPDepotLinkedList md, TSPShipmentLinkedList ms) {
+  public TSPQualityAssurance(TSPNodesLinkedList mn, TSPShipmentLinkedList ms) {
     //used for writing out the files
-    mainDepots = md;
+    mainNodes = mn;
     mainShipments = ms;
     //used for reading in the information
     tspQAShipments = new TSPQAShipmentLinkedList();
-    tspQADepots = new TSPQADepotLinkedList();
+    tspQANodes = new TSPQANodesLinkedList();
 
     //Write out the information that is in the data structures. This does not read the original file
     //Might need another function that reads in the original files and checks if they are correct
@@ -50,7 +50,7 @@ public class TSPQualityAssurance
      * available trucks */
     //Area all the customer being serviced and are they serviced only once
     System.out.print("Check on all customers being serviced and serviced no more than once:");
-    isGood = tspQAShipments.customerServicedOnlyOnce(tspQADepots);
+    isGood = tspQAShipments.customerServicedOnlyOnce(tspQANodes);
     if (isGood) {
       System.out.println("Passed");
     }
@@ -60,7 +60,7 @@ public class TSPQualityAssurance
 
     //Check on maximum travel time of truck
     System.out.print("Check on maximum travel time of trucks:");
-    isGood = isGood && tspQADepots.checkDistanceConstraint();
+    isGood = isGood && tspQANodes.checkDistanceConstraint();
     /** @todo Need a check to ensure that the constraints of the routes are met - maximum distance and capacity*/
     if (isGood) {
       System.out.println("Passed");
@@ -72,14 +72,16 @@ public class TSPQualityAssurance
     //Check on maximum demand of a truck
     System.out.print("Check on maximum demand of trucks:");
 
-    isGood = isGood && tspQADepots.checkCapacityConstraint();
-    /** @todo Need a check to ensure that the constraints of the routes are met - maximum distance and capacity*/
+    /*No need to check capacity
+     * 
+     * isGood = isGood && tspQADepots.checkCapacityConstraint();
+     @todo Need a check to ensure that the constraints of the routes are met - maximum distance and capacity
     if (isGood) {
       System.out.println("Passed");
     }
     else {
       System.out.println("Failed");
-    }
+    }*/
 
     return isGood;
   }
@@ -96,7 +98,7 @@ public class TSPQualityAssurance
       solFile = new File(ProblemInfo.tempFileLocation + "/sol.txt");
       out = new PrintStream(new FileOutputStream(solFile));
       //mainDepots.expandAllRoutes(); //not needed for the TSP
-      mainDepots.printDepotLinkedList(out);
+      mainNodes.getRouteString();
     }
     catch (IOException ioe) {
       ioe.printStackTrace();

@@ -19,6 +19,8 @@ public abstract class SearchStrategy {
   protected Optimization optimization = null;
 
   public abstract OptInfo run(DepotLinkedList depots);
+  
+  public abstract OptInfo run(NodesLinkedList nodes);
 
   public abstract String toString();
 
