@@ -33,7 +33,7 @@ public class TSPRoot {
 	XSSFRow curRow;
 	int rowCounter = 0; //initial the row counter
 	String FileName;
-//	int FileType;
+	int FileType;
 	
 
 	//    FileInputStream fis;
@@ -48,9 +48,9 @@ public class TSPRoot {
 		while ((String)curRow.getCell(0).getStringCellValue() != "EOF") {
 		rowCounter++;
 		curRow = sheet.getRow(rowCounter); // the 2nd row is the problem data
-		FileName = (String)curRow.getCell(0).getStringCellValue();
-		//FileType = (int)curRow.getCell(0).getNumericCellValue();
-	    new TSP(FileName+".xlsx");
+		FileName = (String)curRow.getCell(0).getStringCellValue(); //Get File Name From Master
+		FileType = (int)curRow.getCell(1).getNumericCellValue(); //Get File Type From Master
+	    new TSP(FileName+".xlsx", FileType);
 		}
 		//---------------------------------------------
 	}

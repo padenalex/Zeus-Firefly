@@ -35,7 +35,7 @@ public class TSP {
 
 	//constructor for the class
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public TSP(String dataFile) {
+	public TSP(String dataFile, int fileType) {
 
 		//Truck types are placed into a vector
 		ProblemInfo.truckTypes = new Vector();
@@ -51,12 +51,13 @@ public class TSP {
 		int countAssignLoop;
 		boolean status;
 		String outputFileName;
+		int TSPFileType = 10;
 
 		/** @todo  Need to put in a TSP file and read in TSP data. The readfile method will have to be changed to match the format of the
 		 * tsp file*/
 		//read in the MDTSP data
 		//readDataFromTextFile(ProblemInfo.inputPath + dataFile);
-		readDataFromExcelFile(ProblemInfo.inputPath + dataFile);
+		readDataFromExcelFile(ProblemInfo.inputPath + dataFile, TSPFileType);
 		Settings.printDebug(Settings.COMMENT,
 				"Read Data File: " + ProblemInfo.inputPath + dataFile);
 		printDataToConsole();
@@ -194,12 +195,12 @@ public class TSP {
 		return info;
 	}
 
-	
+	//-------------------------------------------------------------------------------------------------------------------------
 	
 	/* 
 	 * Method used to read data from the specified Excel file 
 	 */
-	public int readDataFromExcelFile(String TSPFileName) {
+	public int readDataFromExcelFile(String TSPFileName, int TSPFileType) {
 
 		//type = 0 EUC_2D
 		//     = 1 GEO
@@ -236,6 +237,7 @@ public class TSP {
 			workbook = new XSSFWorkbook(fis);
 			sheet = workbook.getSheetAt(0);
 			curRow = sheet.getRow(rowCounter+1); // the 2nd row is the problem data
+			System.out.println("The File Type Is of value = " +TSPFileType);
 
 		}
 		catch (Exception e) {
