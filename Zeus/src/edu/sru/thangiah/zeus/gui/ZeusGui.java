@@ -65,11 +65,11 @@ public class ZeusGui
    * @param mD DepotLinkedList
    * @param mS ShipmentLinkedList
    */
-  public ZeusGui(DepotLinkedList mD, ShipmentLinkedList mS) {
+  public ZeusGui(NodesLinkedList mN, ShipmentLinkedList mS) {
     //run the JFrame constructor
     //super("Zeus - Unified Model for Vehicle Routing Problems");
 
-    ZeusGuiInfo.mainDepots = mD;
+    ZeusGuiInfo.mainNodes = mN;
     ZeusGuiInfo.mainShipments = mS;
 
     createOptFrame = false;
@@ -90,34 +90,6 @@ public class ZeusGui
     }
 
   }
-  
-  
-  //nodes only zeus GUI
-  public ZeusGui(NodesLinkedList mN, ShipmentLinkedList mS) {
-	    //run the JFrame constructor
-	    //super("Zeus - Unified Model for Vehicle Routing Problems");
-
-	    ZeusGuiInfo.mainNodes = mN;
-	    ZeusGuiInfo.mainShipments = mS;
-
-	    createOptFrame = false;
-
-	    //this allows for layering of windows.
-	    desktop = new JDesktopPane();
-	    this.setContentPane(desktop);
-	    ZeusGuiInfo.mainDesktop = desktop;
-
-	    //make dragging faster by using the outline
-	    desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
-
-	    try {
-	      jbInit();
-	    }
-	    catch (Exception e) {
-	      e.printStackTrace();
-	    }
-
-	  }
 
   /**
    * This constructor will create a new GUI with space filling curves enabled.
@@ -126,13 +98,13 @@ public class ZeusGui
    * @param SFC double[]
    * @param info String
    */
-  public ZeusGui(DepotLinkedList mD, ShipmentLinkedList mS, double[] SFC, String info) {
+  public ZeusGui(NodesLinkedList mN, ShipmentLinkedList mS, double[] SFC, String info) {
     //run the JFrame constructor
     super("Zeus - Unified Model for Vehicle Routing Problems");
 
     ZeusGuiInfo.useSpaceFillingCurves = true;
 
-    ZeusGuiInfo.mainDepots = mD;
+    ZeusGuiInfo.mainNodes = mN;
     ZeusGuiInfo.mainShipments = mS;
     ZeusGuiInfo.mainFeatures = SFC;
     ZeusGuiInfo.mainFeaturesInfo = info;
@@ -172,10 +144,10 @@ public class ZeusGui
     createButtons();
 
     //create the depot frame and place it in the display
-    depotFrame = new DepotFrame(ZeusGuiInfo.mainDepots);
+    /*depotFrame = new DepotFrame(ZeusGuiInfo.mainDepots);
     depotFrame.setVisible(ZeusGuiInfo.showDepotPane);
     depotFrame.setBounds(0, 0, depotFrame.getWidth(), depotFrame.getHeight());
-    desktop.add(depotFrame);
+    desktop.add(depotFrame);*/
 
     //create the shipment frame and place in the display
     shipmentFrame = new ShipmentFrame(ZeusGuiInfo.mainShipments);
@@ -185,7 +157,7 @@ public class ZeusGui
     desktop.add(shipmentFrame);
 
       //create the info frame and place it in the display
-      infoFrame = new InfoFrame(ZeusGuiInfo.mainDepots.getSolutionString());
+      infoFrame = new InfoFrame(ZeusGuiInfo.mainNodes.getRouteString());
       infoFrame.setVisible(ZeusGuiInfo.showInfoPane);
       infoFrame.setBounds(this.getWidth() - infoFrame.getWidth(), 0,
                           infoFrame.getWidth(), infoFrame.getHeight());

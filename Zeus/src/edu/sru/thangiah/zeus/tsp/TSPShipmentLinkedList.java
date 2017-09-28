@@ -104,7 +104,7 @@ public class TSPShipmentLinkedList
    * @return TSPShipment the shipment to be inserted
    */
 
-  public TSPShipment getNextInsertShipment(TSPDepotLinkedList currDepotLL,
+  /*public TSPShipment getNextInsertShipment(TSPDepotLinkedList currDepotLL,
 		  TSPDepot currDepot,
 		  TSPShipmentLinkedList currShipmentLL,
 		  TSPShipment currShip) {
@@ -112,7 +112,7 @@ public class TSPShipmentLinkedList
 	  TSPShipmentLinkedList selectShip = (TSPShipmentLinkedList) ProblemInfo.
 			  selectShipType;
 	  return selectShip.getSelectShipment(currDepotLL, currDepot, currShipmentLL,currShip);
-  }
+  }*/
   
   public TSPShipment getNextInsertShipment(TSPNodesLinkedList currNodeLL,
 		  TSPNodes currNode,
@@ -133,12 +133,12 @@ public class TSPShipmentLinkedList
    * @return TSPShipment the shipment to be inserted
    */
 
-  public TSPShipment getSelectShipment(TSPDepotLinkedList currDepotLL,
+  /*public TSPShipment getSelectShipment(TSPDepotLinkedList currDepotLL,
 		  TSPDepot currDepot,
 		  TSPShipmentLinkedList currShipmentLL,
 		  TSPShipment currShip) {
 	  return null;
-  }
+  }*/
   
   
   public TSPShipment getSelectShipment(TSPNodesLinkedList currNodeLL,
@@ -196,19 +196,19 @@ public class TSPShipmentLinkedList
 
 
 
-public int[] getCurrentComb(int[] list, int l) {
-	// TODO Auto-generated method stub
-	return null;
-}
+	public int[] getCurrentComb(int[] list, int l) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
   //Select the shipment with the shortest distance to the depot
-  class ClosestEuclideanDistToDepot
+  class ClosestEuclideanDistToNode
   extends TSPShipmentLinkedList {
-	  public TSPShipment getSelectShipment(TSPDepotLinkedList currDepotLL,
-			  TSPDepot currDepot,
-                                       TSPShipmentLinkedList currShipLL,
-                                       TSPShipment currShip) {
+	  public TSPShipment getSelectShipment(TSPNodesLinkedList currNodeLL,
+			  TSPNodes currNode,
+			  TSPShipmentLinkedList currShipLL,
+              TSPShipment currShip) {
     //currDepotLL is the depot linked list of the problem
     //currDepot is the depot under consideration
     //currShipLL is the set of avaialble shipments
@@ -220,30 +220,30 @@ public int[] getCurrentComb(int[] list, int l) {
     //double foundAngle = 360; //initial value
     double distance;
     double foundDistance = 200; //initial distance
-    double depotX, depotY;
+    double nodeX, nodeY;
 
     //Get the X and Y coordinate of the depot
-    depotX = currDepot.getXCoord();
-    depotY = currDepot.getYCoord();
+    nodeX = currNode.getXCoord();
+    nodeY = currNode.getYCoord();
 
     while (temp != currShipLL.getTSPTail()) {
       if (isDiagnostic) {
         System.out.print("Shipment " + temp.getIndex() + " ");
 
-        if ( ( (temp.getXCoord() - depotX) >= 0) &&
-            ( (temp.getYCoord() - depotX) >= 0)) {
+        if ( ( (temp.getXCoord() - nodeX) >= 0) &&
+            ( (temp.getYCoord() - nodeX) >= 0)) {
           System.out.print("Quadrant I ");
         }
-        else if ( ( (temp.getXCoord() - depotX) <= 0) &&
-                 ( (temp.getYCoord() - depotY) >= 0)) {
+        else if ( ( (temp.getXCoord() - nodeX) <= 0) &&
+                 ( (temp.getYCoord() - nodeY) >= 0)) {
           System.out.print("Quadrant II ");
         }
-        else if ( ( (temp.getXCoord()) <= (0 - depotX)) &&
-                 ( (temp.getYCoord() - depotY) <= 0)) {
+        else if ( ( (temp.getXCoord()) <= (0 - nodeX)) &&
+                 ( (temp.getYCoord() - nodeY) <= 0)) {
           System.out.print("Quadrant III ");
         }
-        else if ( ( (temp.getXCoord() - depotX) >= 0) &&
-                 ( (temp.getYCoord() - depotY) <= 0)) {
+        else if ( ( (temp.getXCoord() - nodeX) >= 0) &&
+                 ( (temp.getYCoord() - nodeY) <= 0)) {
           System.out.print("Quadrant VI ");
         }
         else {
@@ -263,7 +263,7 @@ public int[] getCurrentComb(int[] list, int l) {
       }
 /** @todo Associate the quadrant with the distance to get the correct shipment.
        * Set up another insertion that takes the smallest angle and the smallest distance */
-      distance = calcDist(depotX, temp.getXCoord(), depotY, temp.getYCoord());
+      distance = calcDist(nodeX, temp.getXCoord(), nodeY, temp.getYCoord());
 
       if (isDiagnostic) {
         System.out.println("  " + distance);
@@ -293,9 +293,106 @@ public int[] getCurrentComb(int[] list, int l) {
 
 }
 
+  class SmallestPolarAngleToNode
+  	extends TSPShipmentLinkedList
+  	{
+	  public TSPShipment getSelectShipment(TSPNodesLinkedList currNodeLL,
+			  							   TSPNodes currNode,
+			  							   TSPShipmentLinkedList currShipLL,
+			  							   TSPShipment currShip)
+	  {
+		  boolean isDiagnostic = false;
+		  TSPShipment temp = (TSPShipment) currShipLL.getTSPHead().getNext();
+		  TSPShipment foundShipment = null; //the shipment found with the criteria
+		  double angle;
+		  double foundAngle = 360; //initial value
+		  
+		  //x and y of node
+		  double nodeX, nodeY;
+		  
+		  nodeX = currNode.getXCoord();
+		  nodeY = currNode.getYCoord();
+		  
+		  while (temp != currShipLL.getTSPTail())
+		  {
+			if (isDiagnostic)
+			{
+				System.out.println("Temp is " + temp);
+				System.out.println("Tail is "+getTail());
+				System.out.print("Shipment " + temp.getIndex() + " ");
+			}
+			
+			if ((( temp.getXCoord() - nodeX) >= 0) &&
+					((temp.getYCoord() - nodeY) >=0 ))
+			{
+				System.out.print("Quadrant I ");
+			}
+			else if ((( temp.getXCoord() - nodeX) <= 0) &&
+					((temp.getYCoord() - nodeY) >=0 ))
+			{
+				System.out.print("Quadrant II ");
+			}
+			else if ((( temp.getXCoord() - nodeX) <= 0) &&
+					((temp.getYCoord() - nodeY) <=0 ))
+			{
+				System.out.print("Quadrant III ");
+			}
+			else if ((( temp.getXCoord() - nodeX) >= 0) &&
+					((temp.getYCoord() - nodeY) <=0 ))
+			{
+				System.out.print("Quadrant IV ");
+			}
+			else
+			{
+				System.out.print("No Quadrant");
+			}
+			
+			if (temp.getIsAssigned())
+			{
+		    	if (isDiagnostic)
+		    	{
+		    		System.out.println("has been assigned");
+		    	}
+
+		    	temp = (TSPShipment) temp.getNext();
+
+		    	continue;
+		    }
+			
+			angle = calcPolarAngle(nodeX, nodeY, temp.getXCoord(),
+		    		  temp.getYCoord());
+			
+			if (isDiagnostic)
+			{
+		    	  System.out.println("  " + angle);
+		    }
+			
+			if (foundShipment == null)
+			{ //this is the first shipment being checked
+		    	  foundShipment = temp;
+		    	  foundAngle = angle;
+		    }
+		    else
+		    {
+		    	if (angle < foundAngle)
+		    	{ //found an angle that is less
+		    		foundShipment = temp;
+		    		foundAngle = angle;
+		    	}
+		    }
+		    temp =  (TSPShipment) temp.getNext();
+		    }
+		  return foundShipment;
+	  }
+	  
+	  public static String WhoAmI()
+	  {
+		  return("Selection Type: Smallest polar angle to the node");
+	  }
+  	}
 
 //Select the shipment with the smallest polar coordinate angle to the depot
-class SmallestPolarAngleToDepot
+/*class SmallestPolarAngleToDepot
     extends TSPShipmentLinkedList {
   public TSPShipment getSelectShipment(TSPDepotLinkedList currDepotLL,
                                        TSPDepot currDepot,
@@ -486,5 +583,5 @@ class SmallestPolarAngleShortestDistToDepot
    return("Selection Type: Smallest polar angle to the depot");
  }
 
-}
+}*/
 

@@ -32,11 +32,10 @@ public class TSPNodesLinkedList
    * @param depotX depot x-coordinate
    * @param depotY depot y-coordinate
    */
-  public TSPNodesLinkedList(TSPTruckType tT, double depotX, double depotY, int tN) {
+  public TSPNodesLinkedList(double depotX, double depotY, int tN) {
 
 	  //super(tT, depotX, depotY, tN);
-	  setTruckType(tT);
-	  setTruckNum(tN);
+	  
 	  //Set the feasibility check to be done for the route
 	  setFeasibility(new TSPFeasibility(getTruckType().getMaxDuration(),
 			  getTruckType().getMaxCapacity(), this));
@@ -231,11 +230,7 @@ public class TSPNodesLinkedList
     else
     	clonedNodesLinkedList.setFeasibility(new TSPFeasibility());
     
-    if (this.getTruckType() != null)
-    	clonedNodesLinkedList.setTruckType( (TSPTruckType)this.getTruckType().clone());
-    else
-    	clonedNodesLinkedList.setTruckType(new TSPTruckType());
-
+   
     clonedNodesLinkedList.setTruckNum(this.getTruckNum());
     clonedNodesLinkedList.setHead( (TSPNodes)this.getHead().clone());
 

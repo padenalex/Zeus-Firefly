@@ -179,6 +179,9 @@ public class TSPQualityAssurance
           t.setMaxDemand(Double.parseDouble(st.nextToken().trim()));
           t.setMaxDistance(Double.parseDouble(st.nextToken().trim()));
 
+          TSPQANodesLinkedList nodes = new TSPQANodesLinkedList();
+                    
+          
           int numNodes = Integer.parseInt(st.nextToken().trim());
           //the first node is the depot node
           TSPQANode n = new TSPQANode();
@@ -198,9 +201,8 @@ public class TSPQualityAssurance
             n.setType(st.nextToken().trim());
             t.getNodes().add(n);
           }
-          d.getTrucks().add(t);
         }
-        tspQADepots.getDepots().add(d);
+        //tspQADepots.getDepots().add(d);
       }
     }
     catch (Exception e) {

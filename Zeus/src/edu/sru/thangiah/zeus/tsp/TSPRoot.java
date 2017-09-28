@@ -14,10 +14,10 @@ public class TSPRoot {
     //of different classes. The following has to be set in order for the program
     //to function correctly.
     ProblemInfo.nodesLLLevelCostF = new TSPNodesLLCostFunctions();
-    ProblemInfo.truckLevelCostF = new TSPTruckCostFunctions();
-    ProblemInfo.truckLLLevelCostF = new TSPTruckLLCostFunctions();
-    ProblemInfo.depotLevelCostF = new TSPDepotCostFunctions();
-    ProblemInfo.depotLLLevelCostF = new TSPDepotLLCostFunctions();
+    //ProblemInfo.truckLevelCostF = new TSPTruckCostFunctions();
+    //ProblemInfo.truckLLLevelCostF = new TSPTruckLLCostFunctions();
+    //ProblemInfo.depotLevelCostF = new TSPDepotCostFunctions();
+    //ProblemInfo.depotLLLevelCostF = new TSPDepotLLCostFunctions();
     //Paths for temporary, input and output files
     //ProblemInfo.currDir gives the working directory of the program
     ProblemInfo.tempFileLocation = ProblemInfo.workingDirectory+"\\temp";

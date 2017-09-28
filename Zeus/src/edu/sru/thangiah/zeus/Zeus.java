@@ -1,6 +1,5 @@
 package edu.sru.thangiah.zeus;
 
-import  edu.sru.thangiah.zeus.vrp.VRPRoot;
 import  edu.sru.thangiah.zeus.tsp.TSPRoot;
 
 
@@ -26,7 +25,7 @@ public class Zeus {
 	  
     //Solve the VRP Problem
     //VRPRoot theRoot = new VRPRoot();
-    TSPRoot theRoot = new TSPRoot();
+	  TSPRoot theRoot = new TSPRoot();
     //TOPRoot theRoot = new TOPRoot();
     //MDVRPRoot theRoot = new MDVRPRoot();
 	//HDMDVRPRoot theRoot = new HDMDVRPRoot();
