@@ -62,7 +62,7 @@ public class RouteDisplayFrame
   private void jbInit() throws Exception {
     //this.setLayout(layout); -- Works on JBuilder 2006
      this.getContentPane().setLayout(layout);
-    rdfTrucks = createTree(ZeusGuiInfo.mainDepots);
+    rdfTrucks = createTree(ZeusGuiInfo.mainNodes);
     jSP = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, RDFPanel, rdfTrucks);
     this.getContentPane().add(jSP, "JSP");
     //this.getContentPane().add(RDFPanel, "RDFPanel");
@@ -159,7 +159,7 @@ public class RouteDisplayFrame
    * @param mainDepots depot linked list to show
    * @return the jtree
    */
-  private JCheckTree createTree(DepotLinkedList mainDepots) {
+  private JCheckTree createTree(NodesLinkedList mainNodes) {
     CheckTreeNode root = new CheckTreeNode(mainDepots, true);
 
     Depot depot = mainDepots.getHead().getNext();

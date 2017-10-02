@@ -5,6 +5,9 @@ import java.util.*;
 
 import edu.sru.thangiah.zeus.core.*;
 import edu.sru.thangiah.zeus.localopts.*;
+import edu.sru.thangiah.zeus.localopts.interopts.*;
+import edu.sru.thangiah.zeus.localopts.intraopts.*;
+
 import edu.sru.thangiah.zeus.vrp.vrpqualityassurance.*;
 import edu.sru.thangiah.zeus.gui.*;
 import edu.sru.thangiah.zeus.localopts.OptInfo;
@@ -14,6 +17,8 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+//For the Simulated Annealing metaheuristic
+import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
 
 
 //import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
@@ -94,6 +99,13 @@ public class VRP {
 		//set up the shipment insertion type
 		ProblemInfo.insertShipType = new LinearGreedyInsertShipment();
 		Settings.printDebug(Settings.COMMENT, LinearGreedyInsertShipment.WhoAmI());
+		
+		
+		// Set up the distance matrix
+		//ProblemInfo.distanceMatrix = 
+		
+		//Set up the similarity matrix
+		///ProblemInfo.similarityMatrix
 
 		//Capture the CPU time required for solving the problem
 		startTime = System.currentTimeMillis();
@@ -112,17 +124,17 @@ public class VRP {
 		writeLongSolution(dataFile.substring(dataFile.lastIndexOf("/") + 1));
 		//writeShortSolution(dataFile.substring(dataFile.lastIndexOf("/") + 1));
 
-		//create a vector of search strategy/optimizations to execute
+		/*//create a vector of search strategy/optimizations to execute
 		mainOpts = new Vector(1); //vector capacity of 1
 		//sets the upperbound in LocalOneOpt and
 		//sets the name of the search to Best
 		//mainOpts.add(new FirstFirstIntraSearch(new ThreeOpt()));
 		//mainOpts.add(new FirstFirstIntraSearch(new OneOpt()));
-		//mainOpts.add(new FirstBestIntraSearch(new OneOpt()));
+		mainOpts.add(new FirstBestIntraSearch(new OneOpt(true)));
 		//mainOpts.add(new BestBestIntraSearch(new OneOpt()));
 		//mainOpts.add(new FirstFirstInterSearch(new Exchange01()));
 		//mainOpts.add(new FirstFirstInterSearch(new Exchange10()));
-		//mainOpts.add(new FirstFirstInterSearch(new Exchange11()));
+		mainOpts.add(new FirstFirstInterSearch(new Exchange11(true)));
 		//mainOpts.add(new FirstBestInterSearch(new Exchange01()));
 		//mainOpts.add(new FirstFirstInterSearch(new Exchange22()));
 		//mainOpts.add(new FirstFirstInterSearch(new Exchange11()));
@@ -131,6 +143,52 @@ public class VRP {
 		//mainOpts.add(new BestBestInterSearch(new Exchange11()));
 		//mainOpts.add(new Combination1(ProblemInfo.truckTypes));
 		runOptimizations();
+		*/
+		
+		
+				
+
+		//create a vector of search strategy/optimizations to execute
+		mainOpts = new Vector(1);
+		//add a first-first local 1-opt
+		//simAnnealOpts.add(new FirstBestIntraSearch(new LocalOneOpt()));
+		//add an intra and inter-opt search strategy
+		
+		mainOpts.add(new FirstFirstIntraSearch(new OneOpt(true)));
+		mainOpts.add(new FirstFirstInterSearch(new Exchange11(true)));
+		
+		////////////////////////////////////////////////////////////////////////////
+		///// This is an implementation of a simulated annealing metaheuristic /////
+		////////////////////////////////////////////////////////////////////////////
+		int initialTemp = 1000;                        //the initial temperature
+		int finalTemp   = 0;                           //the final temperature
+		int iterationsAtEachTemp = 50;                 //iterations at each temperature
+		int numTemps = 100;                            //number of temperatures to look at
+
+		//create a simulated annealing instance
+		SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(initialTemp,
+				finalTemp, iterationsAtEachTemp, numTemps);
+		//set the cooling schedule you would like to use, in this case linear
+		simulatedAnnealing.setCoolingSchedule(new LinearCoolingSchedule(
+				simulatedAnnealing.getMaxIterations(),
+				simulatedAnnealing.getInitTemperature(),
+				simulatedAnnealing.getFinalTemperature()));
+
+		System.out.println("Simulated Annealing Initiated");
+		//now pass the opts and the depot linked list at it will be annealed the
+		//return will be an optInfo class that contains the beginning and ending
+		//stats
+		OptInfo simAnnealResults = simulatedAnnealing.anneal(mainDepots,mainOpts);
+		//print results
+		System.out.println("Simulated Annealing Results: " +
+				simAnnealResults.toString());
+
+		
+		
+		
+		
+		
+		
 		writeLongSolution(dataFile.substring(dataFile.lastIndexOf("/") + 2));
 
 		//Check for the quality and integrity of the solution
@@ -866,6 +924,199 @@ public class VRP {
 			ioex.printStackTrace();
 		}
 	}
+	
+	public void writeShortSolutionExcel(String file) 
+	{
+		
+		//setup excel file
+		int rowCounter = 0;
+		XSSFWorkbook workbook = new XSSFWorkbook(); // create a book
+		XSSFSheet sheet = workbook.createSheet("Sheet1");// create a sheet
+		XSSFRow curRow = sheet.createRow(rowCounter); // create a row
+		
+		//Problem info
+		curRow.createCell(0).setCellValue("File: ");
+		curRow.createCell(1).setCellValue(file);
+		curRow.createCell(2).setCellValue("Num Depots: ");
+		curRow.createCell(3).setCellValue(ProblemInfo.numDepots);
+		curRow.createCell(4).setCellValue("Num Pick Up Points: ");
+		curRow.createCell(5).setCellValue(ProblemInfo.numCustomers);
+		curRow.createCell(6).setCellValue("Num Trucks: ");
+		curRow.createCell(7).setCellValue(ProblemInfo.numTrucks);
+		curRow.createCell(8).setCellValue("Processing Time: ");
+		curRow.createCell(9).setCellValue((endTime - startTime) / 1000);
+		curRow.createCell(10).setCellValue("seconds");
+		
+		//next row
+		rowCounter++;
+		curRow = sheet.createRow(rowCounter);
+		
+		
+		curRow.createCell(0).setCellValue("Total Demand =");
+		curRow.createCell(1).setCellValue(mainDepots.getAttributes().getTotalDemand());
+		curRow.createCell(2).setCellValue("Total Distance =");
+		curRow.createCell(3).setCellValue(mainDepots.getAttributes().getTotalDistance());
+		curRow.createCell(4).setCellValue("Total Travel Time =");
+		curRow.createCell(5).setCellValue(mainDepots.getAttributes().getTotalTravelTime());
+		curRow.createCell(6).setCellValue("Total Cost = ");
+		curRow.createCell(7).setCellValue(Math.round(mainDepots.getAttributes().getTotalCost()*100.0)/100.0);
+			
+		rowCounter++;
+		curRow = sheet.createRow(rowCounter);
+			
+		Depot depotHead = mainDepots.getHead();
+		Depot depotTail = mainDepots.getTail();
+		
+		//Truck header info
+		curRow.createCell(0).setCellValue("Truck #");
+		curRow.createCell(1).setCellValue("MaxCap:");
+		curRow.createCell(2).setCellValue("Demand:");
+		
+		//loop through Depots, trucks, nodes
+		while (depotHead != depotTail) 
+		{
+			Truck truckHead = depotHead.getMainTrucks().getHead();
+			Truck truckTail = depotHead.getMainTrucks().getTail();
+			
+			//print truck data
+			while (truckHead != truckTail) 
+			{
+				try 
+				{
+					rowCounter++;
+					curRow = sheet.createRow(rowCounter);
+					
+					
+					curRow.createCell(1).setCellValue(truckHead.getTruckType().getMaxCapacity());
+					curRow.createCell(0).setCellValue(truckHead.getTruckNum());
+					curRow.createCell(2).setCellValue(truckHead.getAttributes().getTotalDemand());
+					
+					
+					Nodes nodesHead = truckHead.getMainNodes().getHead().getNext();
+					Nodes nodesTail = truckHead.getMainNodes().getTail();
+					
+					rowCounter++;
+					curRow = sheet.createRow(rowCounter);
+					
+					curRow.createCell(0).setCellValue("ROUTE:");
+					int cellCount = 1;
+					
+					//print rout data
+					while (nodesHead != nodesTail) 
+					{
+						curRow.createCell(cellCount).setCellValue(nodesHead.getIndex());
+
+						cellCount++;
+						nodesHead = nodesHead.getNext();
+					}
+					
+					cellCount = 0;
+				}
+				catch(NullPointerException ex)
+				{
+						System.out.println("Null truck types detected");
+						rowCounter--;
+				}
+					truckHead = truckHead.getNext();
+			}
+			depotHead = depotHead.getNext();
+		}
+			 
+			rowCounter +=2;
+			curRow = sheet.createRow(rowCounter);
+			
+			curRow.createCell(0).setCellValue("optimization Info");
+			
+			rowCounter ++;
+			curRow = sheet.createRow(rowCounter);
+			
+			//print Optimization information
+			for (int i = 0; i < optInformation.size(); i++) 
+			{
+				curRow.createCell(i).setCellValue(optInformation.elementAt(i).toString());
+			}
+			
+			try 
+		    {
+				FileOutputStream fout = new FileOutputStream(new File(ProblemInfo.outputPath + file + "_short.xlsx"));
+		    	workbook.write(fout); 
+		        fout.close();
+		    } 
+		    catch (Exception e) 
+		    { 
+		       e.printStackTrace(); 
+		    } 
+	}
+	
+	
+	/*
+	 * Create a excel file to put in the final solutions
+	 */
+	public void writeLongSolutionToExcel(String file) {
+		try {
+			// setting up workbook, row 1 information
+			XSSFWorkbook workbook = new XSSFWorkbook();
+			PrintStream fos = new PrintStream(new FileOutputStream(ProblemInfo.outputPath + file + "_long.xlsx"));
+			XSSFSheet sheet = workbook.createSheet("Sheet1");
+			XSSFRow row1 = sheet.createRow(0);
+			row1.createCell(0).setCellValue(ProblemInfo.numDepots); 
+			
+			// row 2 information, depot information(?)
+			XSSFRow row2 = sheet.createRow(1);
+			row2.createCell(0).setCellValue(mainDepots.getVRPHead().getNext().getNext().getDepotNum()); 
+			row2.createCell(1).setCellValue(mainDepots.getVRPHead().getNext().getXCoord()); // depot location x
+			row2.createCell(2).setCellValue(mainDepots.getVRPHead().getNext().getYCoord()); // depot location y
+			row2.createCell(3).setCellValue(mainDepots.getAttributes().getTotalDemand());
+			row2.createCell(4).setCellValue(mainDepots.getAttributes().getTotalDistance());
+			row2.createCell(5).setCellValue(ProblemInfo.noOfVehs);
+			
+			// row 3 information, truck information(?)
+			XSSFRow row3 = sheet.createRow(2);
+			row3.createCell(0).setCellValue(mainDepots.getVRPHead().getNext().getMainTrucks().getHead().getNext().getTruckNum()); // what is this
+			row3.createCell(1).setCellValue(mainDepots.getNumTrucksUsed());
+			row3.createCell(2).setCellValue(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getAttributes().getTotalDemand());
+			row3.createCell(3).setCellValue(mainDepots.getAttributes().getTotalCost());
+			row3.createCell(4).setCellValue(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getTruckType().getMaxDuration());
+			row3.createCell(5).setCellValue(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getTruckType().getMaxCapacity());
+			row3.createCell(6).setCellValue(ProblemInfo.noOfShips);
+			
+			int curRow = 3;
+			Depot depotHead = mainDepots.getHead();
+			Depot depotTail = mainDepots.getTail();
+			
+			// depots
+			while (depotHead != depotTail) {
+				Truck truckHead = depotHead.getMainTrucks().getHead();
+				Truck truckTail = depotHead.getMainTrucks().getTail();
+				
+				// trucks
+				while (truckHead != truckTail) {
+					Nodes nodesHead = truckHead.getMainNodes().getHead().getNext();
+					Nodes nodesTail = truckHead.getMainNodes().getTail();
+					
+					// nodes
+					while (nodesHead != nodesTail) {
+						XSSFRow newRow = sheet.createRow(curRow);
+						int isAssigned = (nodesHead) != null ? 1 : 0;
+						newRow.createCell(0).setCellValue(nodesHead.getIndex());
+						newRow.createCell(1).setCellValue(nodesHead.getShipment().getDemand());
+						newRow.createCell(2).setCellValue(nodesHead.getShipment().getXCoord());
+						newRow.createCell(3).setCellValue(nodesHead.getShipment().getYCoord());
+						newRow.createCell(4).setCellValue(isAssigned);
+						curRow++;
+						nodesHead = nodesHead.getNext();
+					}
+				truckHead = truckHead.getNext();
+				}
+			depotHead = depotHead.getNext();
+			}
+		workbook.write(fos);
+		fos.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}	
+	}
+	
 
 	/**
 	 * Will write a long detailed solution for the problem
