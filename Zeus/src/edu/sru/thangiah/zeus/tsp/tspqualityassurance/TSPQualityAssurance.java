@@ -41,7 +41,7 @@ public class TSPQualityAssurance
     //Might need another function that reads in the original files and checks if they are correct
     writeFiles();
     readShipmentFile();
-    readSolutionFile();
+    //readSolutionFile();
   }
 
   public boolean runQA() {
@@ -150,7 +150,7 @@ public class TSPQualityAssurance
     }
   }
 
-  public void readSolutionFile() {
+  /*public void readSolutionFile() {
     BufferedReader br = null;
     try {
       StringTokenizer st;
@@ -218,5 +218,5 @@ public class TSPQualityAssurance
         ioe.printStackTrace();
       }
     }
-  }
+  }*/
 }

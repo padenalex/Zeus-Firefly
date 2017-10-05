@@ -21,9 +21,9 @@ public class TSPRoot {
     //Paths for temporary, input and output files
     //ProblemInfo.currDir gives the working directory of the program
     ProblemInfo.tempFileLocation = ProblemInfo.workingDirectory+"\\temp";
-    ProblemInfo.inputPath = ProblemInfo.workingDirectory+"\\data\\tsp\\problems\\";
+    ProblemInfo.inputPath = ProblemInfo.workingDirectory+"\\data\\tsp\\Problems\\";
 
-    ProblemInfo.outputPath = ProblemInfo.workingDirectory+"\\data\\tsp\\results\\";
+    ProblemInfo.outputPath = ProblemInfo.workingDirectory+"\\data\\tsp\\Results\\";
 
     /* String path = "";
            String newpath = "SBTSP/new";
