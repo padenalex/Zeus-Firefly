@@ -60,7 +60,7 @@ public class TSP {
 	public TSP(String dataFile) {
 
 		//Truck types are placed into a vector
-		ProblemInfo.truckTypes = new Vector();
+		//ProblemInfo.truckTypes = new Vector();
 
 		//Type of shipment insterion to be performed
 		//ProblemInfo.insertShipType = new Object();
@@ -93,7 +93,7 @@ public class TSP {
 		//Set up the shipment selection type
 		//ProblemInfo.selectShipType = new ClosestEuclideanDistToDepot();
 		//Settings.printDebug(Settings.COMMENT,ClosestEuclideanDistToDepot.WhoAmI());
-		ProblemInfo.selectShipType = new SmallestPolarAngleToNode();
+		ProblemInfo.selectShipType = new ClosestEuclideanDistToNode();
 		Settings.printDebug(Settings.COMMENT, SmallestPolarAngleToNode.WhoAmI());
 		//ProblemInfo.selectShipType = new SmallestPolarAngleShortestDistToDepot();
 		//Settings.printDebug(Settings.COMMENT,SmallestPolarAngleShortestDistToDepot.WhoAmI());
