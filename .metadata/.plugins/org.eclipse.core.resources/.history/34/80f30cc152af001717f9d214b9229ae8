@@ -93,8 +93,8 @@ public class TSP {
 		//Set up the shipment selection type
 		//ProblemInfo.selectShipType = new ClosestEuclideanDistToDepot();
 		//Settings.printDebug(Settings.COMMENT,ClosestEuclideanDistToDepot.WhoAmI());
-		ProblemInfo.selectShipType = new ClosestEuclideanDistToNode();
-		Settings.printDebug(Settings.COMMENT, ClosestEuclideanDistToNode.WhoAmI());
+		ProblemInfo.selectShipType = new SmallestPolarAngleToNode();
+		Settings.printDebug(Settings.COMMENT, SmallestPolarAngleToNode.WhoAmI());
 		//ProblemInfo.selectShipType = new SmallestPolarAngleShortestDistToDepot();
 		//Settings.printDebug(Settings.COMMENT,SmallestPolarAngleShortestDistToDepot.WhoAmI());
 
@@ -604,7 +604,7 @@ public int readDataFromExcelFile(String TSPFileName) {
 				//Q        = 0;                           //maximum load of vehicle
 		//int p = 3; //Np neighborhood size
 
-		//int nodeIndex;
+		int depotIndex;
 
 		//Open the requested file
 		XSSFWorkbook workbook = new XSSFWorkbook();    
