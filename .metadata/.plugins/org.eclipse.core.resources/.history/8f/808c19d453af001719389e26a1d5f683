@@ -60,7 +60,7 @@ public class TSP {
 	public TSP(String dataFile) {
 
 		//Truck types are placed into a vector
-		//ProblemInfo.truckTypes = new Vector();
+		ProblemInfo.truckTypes = new Vector();
 
 		//Type of shipment insterion to be performed
 		//ProblemInfo.insertShipType = new Object();
@@ -187,7 +187,7 @@ public class TSP {
 		//capture the old attributes
 		info.setOldAttributes(mainNodes.getAttributes());
 		
-		
+		Settings.printDebug(Settings.COMMENT, "Setted Attributes ");
 		/* Get the shipment that is closest to a depot with respect to a criteria
      The method for assigning customers to the depots is as follows. As there are
      a fixed number of depots, start with the first depot and find closest customer
@@ -204,7 +204,6 @@ public class TSP {
 		 */
 
 		//countLoop=1;
-		
 		while (!mainShipments.isAllShipsAssigned()) {
 			double x, y;
 			int i = 0;

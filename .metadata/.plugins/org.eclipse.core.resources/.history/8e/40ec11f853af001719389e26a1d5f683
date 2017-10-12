@@ -60,7 +60,7 @@ public class TSP {
 	public TSP(String dataFile) {
 
 		//Truck types are placed into a vector
-		//ProblemInfo.truckTypes = new Vector();
+		ProblemInfo.truckTypes = new Vector();
 
 		//Type of shipment insterion to be performed
 		//ProblemInfo.insertShipType = new Object();
@@ -204,7 +204,7 @@ public class TSP {
 		 */
 
 		//countLoop=1;
-		
+		Settings.printDebug(Settings.COMMENT, "Setted currNode ");
 		while (!mainShipments.isAllShipsAssigned()) {
 			double x, y;
 			int i = 0;
