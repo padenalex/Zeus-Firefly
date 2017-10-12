@@ -94,7 +94,11 @@ public class TSP {
 		//ProblemInfo.selectShipType = new ClosestEuclideanDistToDepot();
 		//Settings.printDebug(Settings.COMMENT,ClosestEuclideanDistToDepot.WhoAmI());
 		ProblemInfo.selectShipType = new ClosestEuclideanDistToNode();
+<<<<<<< HEAD
 		Settings.printDebug(Settings.COMMENT, ClosestEuclideanDistToNode.WhoAmI());
+=======
+		Settings.printDebug(Settings.COMMENT, SmallestPolarAngleToNode.WhoAmI());
+>>>>>>> 3325069bba13a5bb41394500f1af7d827aece15a
 		//ProblemInfo.selectShipType = new SmallestPolarAngleShortestDistToDepot();
 		//Settings.printDebug(Settings.COMMENT,SmallestPolarAngleShortestDistToDepot.WhoAmI());
 

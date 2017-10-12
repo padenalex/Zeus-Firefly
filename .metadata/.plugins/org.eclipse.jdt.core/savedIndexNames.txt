@@ -1,16 +1,7 @@
-INDEX VERSION 1.130+C:\Users\ajl1012\Documents\GitHub\Firefly-Algorithm\.metadata\.plugins\org.eclipse.jdt.core
-2550703028.index
-1721329816.index
-54823749.index
-4283366990.index
-2683785869.index
-149379462.index
-2111634352.index
-2085925149.index
-2688774539.index
-1647328517.index
-2436933556.index
+INDEX VERSION 1.130+C:\Users\a.lee\Documents\GitHub\Firefly-Algorithm\.metadata\.plugins\org.eclipse.jdt.core
+2725125150.index
 1244241647.index
+<<<<<<< HEAD
 869677905.index
 3850742056.index
 774328777.index
@@ -32,3 +23,34 @@ INDEX VERSION 1.130+C:\Users\ajl1012\Documents\GitHub\Firefly-Algorithm\.metadat
 1670573854.index
 3725512027.index
 1043347612.index
+=======
+1526027794.index
+3895710775.index
+138051715.index
+3982276604.index
+3449055620.index
+3767740338.index
+3627084181.index
+923065958.index
+4225755172.index
+1924480154.index
+4005617011.index
+2567871334.index
+134360950.index
+1056031855.index
+2437551508.index
+2816613229.index
+1203243727.index
+2291857594.index
+197789008.index
+3608585563.index
+543409727.index
+3832635873.index
+2075892729.index
+4062329064.index
+3145607036.index
+189530877.index
+2662671231.index
+1852405843.index
+1654674800.index
+>>>>>>> 3325069bba13a5bb41394500f1af7d827aece15a
