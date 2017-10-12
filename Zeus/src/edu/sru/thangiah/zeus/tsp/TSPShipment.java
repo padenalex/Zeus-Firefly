@@ -18,6 +18,7 @@ public class TSPShipment
     implements java.io.Serializable, java.lang.Cloneable {
 
   private double extraVariable;
+  private Vector distances = new Vector();
 
   public TSPShipment() {
   }
@@ -30,6 +31,11 @@ public class TSPShipment
 	   //serviceTime = d;
 	   //pickUpPointName = p;
 	}
+    
+  public TSPShipment(Vector input)
+  {
+      distances = input;
+  }
 
   /**
    * Constructor
