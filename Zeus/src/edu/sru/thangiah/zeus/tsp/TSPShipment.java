@@ -2,6 +2,7 @@ package edu.sru.thangiah.zeus.tsp;
 
 //import the parent class
 import edu.sru.thangiah.zeus.core.Shipment;
+import java.util.Vector;
 
 /**
  *
@@ -124,6 +125,15 @@ public class TSPShipment
 
     extraVariable = Math.random();
   }
+  
+  public TSPShipment(int i, double x, double y, float q, float d,
+          String p) {
+	  setIndex(i);
+	  setXCoord(x);
+	  setYCoord(y);
+	  setDemand(q);
+
+}
 
   /**
    * Returns the value of extraVariable

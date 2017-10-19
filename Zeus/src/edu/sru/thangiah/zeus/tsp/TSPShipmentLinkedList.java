@@ -1,6 +1,10 @@
 package edu.sru.thangiah.zeus.tsp;
 
 import java.io.PrintStream;
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Vector;
+
 
 /**
  *
@@ -21,6 +25,11 @@ import edu.sru.thangiah.zeus.core.ProblemInfo;
 public class TSPShipmentLinkedList
     extends ShipmentLinkedList
     implements java.io.Serializable, java.lang.Cloneable {
+	
+	
+	int[][] DistanceArray = (int[][]) ProblemInfo.distanceMatrix;
+	int rowcounter = 0;
+	Vector<Integer> IndexVisited = new Vector<>();
 
 
   /**
@@ -75,6 +84,13 @@ public class TSPShipmentLinkedList
           "TSPShipmentLinkedList: Maximum number of combinations exceeded");
     }
   }
+  
+  public void insertShipment(int num, float x, float y, int q, int d, int e, String type) {    //
+		TSPShipment thisShip = new TSPShipment(num, x, y, d, q, type);		//
+		//add the instance to the linked list - in this case it is added at the end of the list
+		//the total number of shipments is incremented in the insert
+		insertLast(thisShip);	
+	}
 
   /**
    * Returns the first shipment in the linked list
@@ -585,3 +601,81 @@ class SmallestPolarAngleShortestDistToDepot
 
 }*/
 
+  
+//==============================================================================================================
+
+  //Select the shipment with the shortest distance to the depot
+  class ClosestMatrixDist
+  extends TSPShipmentLinkedList {
+	  public TSPShipment getSelectShipment(TSPNodesLinkedList currNodeLL,
+			  TSPNodes currNode,
+                                       TSPShipmentLinkedList currShipLL,
+                                       TSPShipment currShip) {
+
+   
+    TSPShipment temp = (TSPShipment) currShipLL.getTSPHead().getNext(); //point to the first shipment
+    TSPShipment foundShipment = null; //the shipment found with the criteria
+    
+    
+    int size = DistanceArray.length; 
+    
+	int DistToSave = 10000; //Stores The Distance You'll Save (Greedy Distance)
+	int DistToSaveIndex=999; //999 For QA Test
+	DistToSave = 9999;
+	
+	//Greedy//
+	for(int Counter = 0; Counter < size; Counter++) {
+		if(DistanceArray[rowcounter][Counter] != 0) {
+			if(!IndexVisited.contains(Counter) && !IndexVisited.contains(rowcounter)) {
+				if(DistanceArray[rowcounter][Counter] < DistToSave) {
+					DistToSave = DistanceArray[rowcounter][Counter];  //Set Current Smallest Value To DistToSave
+					DistToSaveIndex = Counter;
+				}
+			}
+		}
+		
+	} //End Times To Run Loop	
+
+	IndexVisited.add(rowcounter);	
+	System.out.println("The vector is: " + IndexVisited);
+	
+	//for(int Counter = 0; Counter < size; Counter++) {
+	//	DistanceArray[rowcounter][Counter] = 0;
+	//	DistanceArray[Counter][rowcounter] = 0;
+	//}
+	
+	rowcounter = DistToSaveIndex;	
+	
+	//Print Out Array For 0 Check
+	/*
+	for(int s = 0; s<size; s++){
+	    for(int w = 0; w<size; w++)
+	    {
+	        System.out.print(DistanceArray[s][w] + " ");
+	    }
+	    System.out.println();
+	}
+	*/
+    
+	for(int i = 0; i < rowcounter-1; i++) {
+		temp = (TSPShipment) temp.getNext(); 
+	}
+	
+	
+	foundShipment = temp;
+	
+    return foundShipment; //stub
+  }
+	  
+	  
+	  
+//-------------------------------------- WhoAmI
+  //The WhoAmI methods gives the id of the assigned object
+  //It is a static method so that it can be accessed without creating an object
+ public static String WhoAmI() {
+   return("Selection Type: Closest matrix distance to depot");
+ }
+
+}
+
+//==============================================================================================================

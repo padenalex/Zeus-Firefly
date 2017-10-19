@@ -1,7 +1,12 @@
 package edu.sru.thangiah.zeus.tsp;
 
 import edu.sru.thangiah.zeus.core.ProblemInfo;
+import java.io.FileInputStream;
 import edu.sru.thangiah.zeus.tsp.tspcostfunctions.*;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 public class TSPRoot {
   /**
@@ -25,41 +30,45 @@ public class TSPRoot {
 
     ProblemInfo.outputPath = ProblemInfo.workingDirectory+"\\data\\tsp\\Results\\";
 
-    /* String path = "";
-           String newpath = "SBTSP/new";
-           String oldpath = "SBTSP/old";
-           Settings.debugLevel = Settings.WARNING; //only show error messages
+    XSSFWorkbook workbook = new XSSFWorkbook();    
+	FileInputStream fis;
+	XSSFSheet sheet;
+	XSSFRow curRow;
+	int rowCounter = 0; //initial the row counter
+	String FileName;
+	int FileType;
+	
 
-           ProblemInfo.inputPath  = path + "data/" + newpath + "/";
-           ProblemInfo.outputPath = path + "results/" + newpath + "/";
-
-           ProblemInfo.inputPath  = path + "data/" + oldpath + "/";
-           ProblemInfo.outputPath = path + "results/" + oldpath + "/";
-     */
-
-
-    /* All problems are labeled as p01, p02,...,p10, p11.
-       This code generates the file names automatically and passes it to
-      algorithm to be solved.
-     */
-    /* for(int i=1; i<=2; i++){
-        String s = "p";
-        //all files that have single digits are named p01, p02 ..
-        if(i<10){
-          s += "0" + i;
-        }
-        //for files that have double digits such as p10,p11
-        else{
-          s += "" + i;
-        }
-
-        System.out.println("Executing old " + s);
-        new TSP(path + "data/" + oldpath + "/" + s);
-      }
-     */
-    //new tsp.MDTSP("mdtsp_p01.txt");
-    //new TSP("mdtsp_p01.txt"); //Reading from a text file
-    new TSP("a280.xlsx");
-    //new edu.sru.thangiah.zeus.tsp.TSP("mdtsp_p01.txt");
+	//    FileInputStream fis;
+	//    InputStreamReader isr;
+	//    BufferedReader br;
+	try { 
+		fis = new FileInputStream(ProblemInfo.inputPath+"master.xlsx");
+		workbook = new XSSFWorkbook(fis);
+		sheet = workbook.getSheetAt(0);
+		curRow = sheet.getRow(rowCounter); // the 2nd row is the problem data
+		//---------------------------------------------
+		
+		//while ((String)curRow.getCell(0).getStringCellValue() != "EOF") {
+		rowCounter++;
+		curRow = sheet.getRow(rowCounter); // the 2nd row is the problem data
+		FileName = (String)curRow.getCell(0).getStringCellValue();
+		//FileType = (int)curRow.getCell(1).getNumericCellValue();
+	   // new TSP(FileName+".xlsx", FileType);
+		//}
+		
+		FileType = 0;
+		FileName = "a280.xlsx";
+		FileType = 1;
+		FileName = "bayg29.xlsx";
+		new TSP(FileName, FileType);
+		
+		
+		//---------------------------------------------
+	}
+	catch (Exception e) {
+		System.out.println("readDataFromExcelFile - "+"master.xlsx"+" File is not present");
+		e.printStackTrace();
+	}
   }
 }
