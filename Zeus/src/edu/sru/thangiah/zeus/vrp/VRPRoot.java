@@ -20,10 +20,9 @@ public class VRPRoot {
     ProblemInfo.depotLLLevelCostF = new VRPDepotLLCostFunctions();
     //Paths for temporary, input and output files
     //ProblemInfo.currDir gives the working directory of the program
-    ProblemInfo.tempFileLocation = ProblemInfo.workingDirectory+"\\temp";
-    ProblemInfo.inputPath = ProblemInfo.workingDirectory+"\\data\\vrp\\problems\\";
-
-    ProblemInfo.outputPath = ProblemInfo.workingDirectory+"\\data\\vrp\\results\\";
+    ProblemInfo.tempFileLocation = ProblemInfo.workingDirectory+"/temp";
+    ProblemInfo.inputPath = ProblemInfo.workingDirectory+"/data/vrp/problems/";
+    ProblemInfo.outputPath = ProblemInfo.workingDirectory+"/data/vrp/results/";
 
     /* String path = "";
            String newpath = "SBVRP/new";

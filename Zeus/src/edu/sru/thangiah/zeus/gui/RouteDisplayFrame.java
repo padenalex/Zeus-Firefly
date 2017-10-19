@@ -62,7 +62,7 @@ public class RouteDisplayFrame
   private void jbInit() throws Exception {
     //this.setLayout(layout); -- Works on JBuilder 2006
      this.getContentPane().setLayout(layout);
-    rdfTrucks = createTree(ZeusGuiInfo.mainNodes);
+    rdfTrucks = createTree(ZeusGuiInfo.mainDepots);
     jSP = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, RDFPanel, rdfTrucks);
     this.getContentPane().add(jSP, "JSP");
     //this.getContentPane().add(RDFPanel, "RDFPanel");
@@ -159,7 +159,7 @@ public class RouteDisplayFrame
    * @param mainDepots depot linked list to show
    * @return the jtree
    */
-  private JCheckTree createTree(NodesLinkedList mainNodes) {
+  private JCheckTree createTree(DepotLinkedList mainDepots) {
     CheckTreeNode root = new CheckTreeNode(mainDepots, true);
 
     Depot depot = mainDepots.getHead().getNext();
@@ -214,7 +214,7 @@ public class RouteDisplayFrame
     // Read the layout constraints
     XmlConstraintBuilder db_XMLBuilderLayout = new XmlConstraintBuilder();
     try {
-      db_XMLBuilderLayout.addConstraints(new File("etc\\RouteDisplayFrameLayout.xml"), panelLayout);   // Read the contraints from the layout XML file.
+      db_XMLBuilderLayout.addConstraints(new File("etc/RouteDisplayFrameLayout.xml"), panelLayout);   // Read the contraints from the layout XML file.
     }
     catch (Exception ex) {
       ex.printStackTrace();

@@ -5,15 +5,7 @@ import edu.sru.thangiah.zeus.tsp.TSPNodes;
 //import the parent class
 import edu.sru.thangiah.zeus.core.NodesLinkedList;
 
-/**
- *
- * <p>Title:</p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2005</p>
- * <p>Company: </p>
- * @author Sam R. Thangiah
- * @version 2.0
- */
+
 
 public class TSPNodesLinkedList
     extends NodesLinkedList implements java.io.Serializable,
@@ -32,10 +24,11 @@ public class TSPNodesLinkedList
    * @param depotX depot x-coordinate
    * @param depotY depot y-coordinate
    */
-  public TSPNodesLinkedList(double depotX, double depotY, int tN) {
+  public TSPNodesLinkedList(TSPTruckType tT, double depotX, double depotY, int tN) {
 
 	  //super(tT, depotX, depotY, tN);
-	  
+	  setTruckType(tT);
+	  setTruckNum(tN);
 	  //Set the feasibility check to be done for the route
 	  setFeasibility(new TSPFeasibility(getTruckType().getMaxDuration(),
 			  getTruckType().getMaxCapacity(), this));
@@ -230,7 +223,11 @@ public class TSPNodesLinkedList
     else
     	clonedNodesLinkedList.setFeasibility(new TSPFeasibility());
     
-   
+    if (this.getTruckType() != null)
+    	clonedNodesLinkedList.setTruckType( (TSPTruckType)this.getTruckType().clone());
+    else
+    	clonedNodesLinkedList.setTruckType(new TSPTruckType());
+
     clonedNodesLinkedList.setTruckNum(this.getTruckNum());
     clonedNodesLinkedList.setHead( (TSPNodes)this.getHead().clone());
 
@@ -278,17 +275,7 @@ class LinearGreedyInsertShipment
       theCell.setPrev(currNodeLL.getHead());
       theCell.setNext(currNodeLL.getTail());
       
-      //print out current route
-      /*{
-    	  System.out.println("Printing TSPNodesLinkedList");
-    	  TSPNodes tempPtr= (TSPNodes)currNodeLL.getHead();
-    	  while (tempPtr != (TSPNodes)currNodeLL.getTail())
-    	  {
-    		  System.out.println("Node number and Demand is:"+tempPtr.getIndex()+" "+tempPtr.getDemand());
-    		  tempPtr = tempPtr.getTSPNext();
-    	  }
-    	  System.out.println("Done Printing");    	  
-      }*/
+
 
       //if its not feasible, return route to what it was and return false
       if (!currNodeLL.getFeasibility().isFeasible()) {
@@ -301,17 +288,6 @@ class LinearGreedyInsertShipment
         currNodeLL.setHeadNext(currNodeLL.getTail());
         currNodeLL.getTail().setPrev(currNodeLL.getHead());
         
-        //print out current route
-        /*{
-      	  System.out.println("Printing Undo TSPNodesLinkedList");
-      	  TSPNodes tempPtr= (TSPNodes)currNodeLL.getHead();
-      	  while (tempPtr != (TSPNodes)currNodeLL.getTail())
-      	  {
-      		  System.out.println("Node number and Demand is:"+tempPtr.getIndex()+" "+tempPtr.getDemand());
-      		  tempPtr = tempPtr.getTSPNext();
-      	  }
-      	  System.out.println("Done Printing");    	  
-        }*/
 
         return false;
       }
@@ -352,17 +328,6 @@ class LinearGreedyInsertShipment
         //set prevCell and nextCell to the next cells in linked list
         prevCell = nextCell;
         nextCell = (TSPNodes) prevCell.getNext();
-        //print out current route
-        /*{
-      	  System.out.println("Printing TSPNodesLinkedList");
-      	  TSPNodes tempPtr= (TSPNodes)currNodeLL.getHead();
-      	  while (tempPtr != (TSPNodes)currNodeLL.getTail())
-      	  {
-      		  System.out.println("Node number and Demand is:"+tempPtr.getIndex()+" "+tempPtr.getDemand());
-      		  tempPtr = tempPtr.getTSPNext();
-      	  }
-      	  System.out.println("Done Printing");    	  
-        }*/
       }
 
       

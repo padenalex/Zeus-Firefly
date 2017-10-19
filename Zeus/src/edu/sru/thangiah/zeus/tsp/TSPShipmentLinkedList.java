@@ -1,10 +1,8 @@
 package edu.sru.thangiah.zeus.tsp;
 
 import java.io.PrintStream;
-import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Vector;
-
 
 /**
  *
@@ -25,13 +23,12 @@ import edu.sru.thangiah.zeus.core.ProblemInfo;
 public class TSPShipmentLinkedList
     extends ShipmentLinkedList
     implements java.io.Serializable, java.lang.Cloneable {
-	
-	
+
+
 	int[][] DistanceArray = (int[][]) ProblemInfo.distanceMatrix;
 	int rowcounter = 0;
 	Vector<Integer> IndexVisited = new Vector<>();
-
-
+	
   /**
    * Constructor for the shipment linked list
    * Define it as below
@@ -42,12 +39,14 @@ public class TSPShipmentLinkedList
       setTail(new TSPShipment()); //tail node for tail
       linkHeadTail();			  //point head and tail to each other
       setNumShipments(0);
+      
+      
   }
   
+
   
-  
-  public void insertShipment(int num, float x, float y) {    
-		TSPShipment thisShip = new TSPShipment(num, x, y);
+  public void insertShipment(int num, float x, float y, int q, int d, int e, String type) {    //
+		TSPShipment thisShip = new TSPShipment(num, x, y, d, q, e, type);		//
 		//add the instance to the linked list - in this case it is added at the end of the list
 		//the total number of shipments is incremented in the insert
 		insertLast(thisShip);	
@@ -61,19 +60,20 @@ public class TSPShipmentLinkedList
    * @param ind index
    * @param x x-coordinate
    * @param y y-coordinate
-   * @param q demand ----no need
-   * @param d service time ----no need
-   * @param e frequency ----no need
+   * @param q demand
+   * @param d service time
+   * @param e frequency
    * @param comb number of combination
    * @param vComb list of combinations (vector)
    * @param cuComb number of combinations (matrix)
    */
 
-  public void insertShipment(int num, float x, float y,                             int comb, String type,
+  public void insertShipment(int num, float x, float y, int q, int d, int e,
+                             int comb, String type,
                              int[] vComb, int[][] cuComb) {
     if (vComb.length <= ProblemInfo.MAX_COMBINATIONS) {
       //create an instance of the Shipment
-      TSPShipment thisShip = new TSPShipment(num, x, y, comb,
+      TSPShipment thisShip = new TSPShipment(num, x, y, d, q, e, comb, type,
                                              vComb, cuComb);
       //add the instance to the linked list - in this case it is added at the end of the list
       //the total number of shipments is incremented in the insert
@@ -84,13 +84,6 @@ public class TSPShipmentLinkedList
           "TSPShipmentLinkedList: Maximum number of combinations exceeded");
     }
   }
-  
-  public void insertShipment(int num, float x, float y, int q, int d, int e, String type) {    //
-		TSPShipment thisShip = new TSPShipment(num, x, y, d, q, type);		//
-		//add the instance to the linked list - in this case it is added at the end of the list
-		//the total number of shipments is incremented in the insert
-		insertLast(thisShip);	
-	}
 
   /**
    * Returns the first shipment in the linked list
@@ -120,7 +113,7 @@ public class TSPShipmentLinkedList
    * @return TSPShipment the shipment to be inserted
    */
 
-  /*public TSPShipment getNextInsertShipment(TSPDepotLinkedList currDepotLL,
+  public TSPShipment getNextInsertShipment(TSPDepotLinkedList currDepotLL,
 		  TSPDepot currDepot,
 		  TSPShipmentLinkedList currShipmentLL,
 		  TSPShipment currShip) {
@@ -128,16 +121,6 @@ public class TSPShipmentLinkedList
 	  TSPShipmentLinkedList selectShip = (TSPShipmentLinkedList) ProblemInfo.
 			  selectShipType;
 	  return selectShip.getSelectShipment(currDepotLL, currDepot, currShipmentLL,currShip);
-  }*/
-  
-  public TSPShipment getNextInsertShipment(TSPNodesLinkedList currNodeLL,
-		  TSPNodes currNode,
-		  TSPShipmentLinkedList currShipmentLL,
-		  TSPShipment currShip) {
-
-	  TSPShipmentLinkedList selectShip = (TSPShipmentLinkedList) ProblemInfo.
-			  selectShipType;
-	  return selectShip.getSelectShipment(currNodeLL, currNode, currShipmentLL,currShip);
   }
 
   /**
@@ -149,20 +132,13 @@ public class TSPShipmentLinkedList
    * @return TSPShipment the shipment to be inserted
    */
 
-  /*public TSPShipment getSelectShipment(TSPDepotLinkedList currDepotLL,
+  public TSPShipment getSelectShipment(TSPDepotLinkedList currDepotLL,
 		  TSPDepot currDepot,
 		  TSPShipmentLinkedList currShipmentLL,
 		  TSPShipment currShip) {
 	  return null;
-  }*/
-  
-  
-  public TSPShipment getSelectShipment(TSPNodesLinkedList currNodeLL,
-		  TSPNodes currNode,
-		  TSPShipmentLinkedList currShipmentLL,
-		  TSPShipment currShip) {
-	  return null;
   }
+
 
 
   /**
@@ -209,206 +185,164 @@ public class TSPShipmentLinkedList
 		  ship = ship.getNext();
 	  }
   }
-
-
-
-	public int[] getCurrentComb(int[] list, int l) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
 
+
+//Select the shipment with the shortest distance to the depot
+class ClosestEuclideanDistToDepot
+extends TSPShipmentLinkedList {
+	  public TSPShipment getSelectShipment(TSPDepotLinkedList currDepotLL,
+			  TSPDepot currDepot,
+                                     TSPShipmentLinkedList currShipLL,
+                                     TSPShipment currShip) {
+  //currDepotLL is the depot linked list of the problem
+  //currDepot is the depot under consideration
+  //currShipLL is the set of avaialble shipments
+  boolean isDiagnostic = false;
+  //TSPShipment temp = (TSPShipment) getHead(); //point to the first shipment
+  TSPShipment temp = (TSPShipment) currShipLL.getTSPHead().getNext(); //point to the first shipment
+  TSPShipment foundShipment = null; //the shipment found with the criteria
+  //double angle;
+  //double foundAngle = 360; //initial value
+  double distance;
+  double foundDistance = 200; //initial distance
+  double depotX, depotY;
+
+  //Get the X and Y coordinate of the depot
+  depotX = currDepot.getXCoord();
+  depotY = currDepot.getYCoord();
+  
+  	
+	    while (temp != currShipLL.getTSPTail()) {
+	
+	      //if the shipment is assigned, skip it
+	      if (temp.getIsAssigned()) {
+	        if (isDiagnostic) {
+	          System.out.println("has been assigned");
+	        }
+	
+	        temp = (TSPShipment) temp.getNext();
+	
+	        continue;
+	      }
+	/** @todo Associate the quadrant with the distance to get the correct shipment.
+	       * Set up another insertion that takes the smallest angle and the smallest distance */
+	      distance = calcDist(depotX, temp.getXCoord(), depotY, temp.getYCoord());
+
+	
+	      if (isDiagnostic) {
+	        System.out.println("  " + distance);
+	      }
+	
+	      //check if this shipment should be tracked
+	      if (foundShipment == null) { //this is the first shipment being checked
+	        foundShipment = temp;
+	        foundDistance = distance;
+	      }
+	      else {
+	        if (distance < foundDistance) { //found an angle that is less
+	          foundShipment = temp;
+	          foundDistance = distance;
+	        }
+	      }
+	      temp = (TSPShipment) temp.getNext(); 
+	    }
+
+
+  return foundShipment; //stub
+}
+	  
+	  
+//The WhoAmI methods gives the id of the assigned object
+//It is a static method so that it can be accessed without creating an object
+public static String WhoAmI() {
+ return("Selection Type: Closest euclidean distance to depot");
+}
+
+}
+
+
+//==============================================================================================================
+
   //Select the shipment with the shortest distance to the depot
-  class ClosestEuclideanDistToNode
+  class ClosestMatrixDist
   extends TSPShipmentLinkedList {
-	  public TSPShipment getSelectShipment(TSPNodesLinkedList currNodeLL,
-			  TSPNodes currNode,
-			  TSPShipmentLinkedList currShipLL,
-              TSPShipment currShip) {
-    //currDepotLL is the depot linked list of the problem
-    //currDepot is the depot under consideration
-    //currShipLL is the set of avaialble shipments
-    boolean isDiagnostic = false;
-    //TSPShipment temp = (TSPShipment) getHead(); //point to the first shipment
+	  public TSPShipment getSelectShipment(TSPDepotLinkedList currDepotLL,
+			  TSPDepot currDepot,
+                                       TSPShipmentLinkedList currShipLL,
+                                       TSPShipment currShip) {
+
+   
     TSPShipment temp = (TSPShipment) currShipLL.getTSPHead().getNext(); //point to the first shipment
     TSPShipment foundShipment = null; //the shipment found with the criteria
-    //double angle;
-    //double foundAngle = 360; //initial value
-    double distance;
-    double foundDistance = 200; //initial distance
-    double nodeX, nodeY;
+    
+    
+    int size = DistanceArray.length; 
+    
+	int DistToSave = 10000; //Stores The Distance You'll Save (Greedy Distance)
+	int DistToSaveIndex=999; //999 For QA Test
+	DistToSave = 9999;
+	
+	//Greedy//
+	for(int Counter = 0; Counter < size; Counter++) {
+		if(DistanceArray[rowcounter][Counter] != 0) {
+			if(!IndexVisited.contains(Counter) && !IndexVisited.contains(rowcounter)) {
+				if(DistanceArray[rowcounter][Counter] < DistToSave) {
+					DistToSave = DistanceArray[rowcounter][Counter];  //Set Current Smallest Value To DistToSave
+					DistToSaveIndex = Counter;
+				}
+			}
+		}
+		
+	} //End Times To Run Loop	
 
-    //Get the X and Y coordinate of the depot
-    nodeX = currNode.getXCoord();
-    nodeY = currNode.getYCoord();
-
-    while (temp != currShipLL.getTSPTail()) {
-      if (isDiagnostic) {
-        System.out.print("Shipment " + temp.getIndex() + " ");
-
-        if ( ( (temp.getXCoord() - nodeX) >= 0) &&
-            ( (temp.getYCoord() - nodeX) >= 0)) {
-          System.out.print("Quadrant I ");
-        }
-        else if ( ( (temp.getXCoord() - nodeX) <= 0) &&
-                 ( (temp.getYCoord() - nodeY) >= 0)) {
-          System.out.print("Quadrant II ");
-        }
-        else if ( ( (temp.getXCoord()) <= (0 - nodeX)) &&
-                 ( (temp.getYCoord() - nodeY) <= 0)) {
-          System.out.print("Quadrant III ");
-        }
-        else if ( ( (temp.getXCoord() - nodeX) >= 0) &&
-                 ( (temp.getYCoord() - nodeY) <= 0)) {
-          System.out.print("Quadrant VI ");
-        }
-        else {
-          System.out.print("No Quadrant");
-        }
-      }
-
-      //if the shipment is assigned, skip it
-      if (temp.getIsAssigned()) {
-        if (isDiagnostic) {
-          System.out.println("has been assigned");
-        }
-
-        temp = (TSPShipment) temp.getNext();
-
-        continue;
-      }
-/** @todo Associate the quadrant with the distance to get the correct shipment.
-       * Set up another insertion that takes the smallest angle and the smallest distance */
-      distance = calcDist(nodeX, temp.getXCoord(), nodeY, temp.getYCoord());
-
-      if (isDiagnostic) {
-        System.out.println("  " + distance);
-      }
-
-      //check if this shipment should be tracked
-      if (foundShipment == null) { //this is the first shipment being checked
-        foundShipment = temp;
-        foundDistance = distance;
-      }
-      else {
-        if (distance < foundDistance) { //found an angle that is less
-          foundShipment = temp;
-          foundDistance = distance;
-        }
-      }
-      temp = (TSPShipment) temp.getNext();
-    }
+	IndexVisited.add(rowcounter);	
+	System.out.println("The vector is: " + IndexVisited);
+	
+	//for(int Counter = 0; Counter < size; Counter++) {
+	//	DistanceArray[rowcounter][Counter] = 0;
+	//	DistanceArray[Counter][rowcounter] = 0;
+	//}
+	
+	rowcounter = DistToSaveIndex;	
+	
+	//Print Out Array For 0 Check
+	/*
+	for(int s = 0; s<size; s++){
+	    for(int w = 0; w<size; w++)
+	    {
+	        System.out.print(DistanceArray[s][w] + " ");
+	    }
+	    System.out.println();
+	}
+	*/
+    
+	for(int i = 0; i < rowcounter-1; i++) {
+		temp = (TSPShipment) temp.getNext(); 
+	}
+	
+	
+	foundShipment = temp;
+	
     return foundShipment; //stub
   }
-
+	  
+	  
+	  
+//-------------------------------------- WhoAmI
   //The WhoAmI methods gives the id of the assigned object
   //It is a static method so that it can be accessed without creating an object
  public static String WhoAmI() {
-   return("Selection Type: Closest euclidean distance to depot");
+   return("Selection Type: Closest matrix distance to depot");
  }
 
 }
 
-  class SmallestPolarAngleToNode
-  	extends TSPShipmentLinkedList
-  	{
-	  public TSPShipment getSelectShipment(TSPNodesLinkedList currNodeLL,
-			  							   TSPNodes currNode,
-			  							   TSPShipmentLinkedList currShipLL,
-			  							   TSPShipment currShip)
-	  {
-		  boolean isDiagnostic = false;
-		  TSPShipment temp = (TSPShipment) currShipLL.getTSPHead().getNext();
-		  TSPShipment foundShipment = null; //the shipment found with the criteria
-		  double angle;
-		  double foundAngle = 360; //initial value
-		  
-		  //x and y of node
-		  double nodeX, nodeY;
-		  
-		  nodeX = currNode.getXCoord();
-		  nodeY = currNode.getYCoord();
-		  
-		  while (temp != currShipLL.getTSPTail())
-		  {
-			if (isDiagnostic)
-			{
-				System.out.println("Temp is " + temp);
-				System.out.println("Tail is "+getTail());
-				System.out.print("Shipment " + temp.getIndex() + " ");
-			}
-			
-			if ((( temp.getXCoord() - nodeX) >= 0) &&
-					((temp.getYCoord() - nodeY) >=0 ))
-			{
-				System.out.print("Quadrant I ");
-			}
-			else if ((( temp.getXCoord() - nodeX) <= 0) &&
-					((temp.getYCoord() - nodeY) >=0 ))
-			{
-				System.out.print("Quadrant II ");
-			}
-			else if ((( temp.getXCoord() - nodeX) <= 0) &&
-					((temp.getYCoord() - nodeY) <=0 ))
-			{
-				System.out.print("Quadrant III ");
-			}
-			else if ((( temp.getXCoord() - nodeX) >= 0) &&
-					((temp.getYCoord() - nodeY) <=0 ))
-			{
-				System.out.print("Quadrant IV ");
-			}
-			else
-			{
-				System.out.print("No Quadrant");
-			}
-			
-			if (temp.getIsAssigned())
-			{
-		    	if (isDiagnostic)
-		    	{
-		    		System.out.println("has been assigned");
-		    	}
-
-		    	temp = (TSPShipment) temp.getNext();
-
-		    	continue;
-		    }
-			
-			angle = calcPolarAngle(nodeX, nodeY, temp.getXCoord(),
-		    		  temp.getYCoord());
-			
-			if (isDiagnostic)
-			{
-		    	  System.out.println("  " + angle);
-		    }
-			
-			if (foundShipment == null)
-			{ //this is the first shipment being checked
-		    	  foundShipment = temp;
-		    	  foundAngle = angle;
-		    }
-		    else
-		    {
-		    	if (angle < foundAngle)
-		    	{ //found an angle that is less
-		    		foundShipment = temp;
-		    		foundAngle = angle;
-		    	}
-		    }
-		    temp =  (TSPShipment) temp.getNext();
-		    }
-		  return foundShipment;
-	  }
-	  
-	  public static String WhoAmI()
-	  {
-		  return("Selection Type: Smallest polar angle to the node");
-	  }
-  	}
-
+//==============================================================================================================
+  
+  
 //Select the shipment with the smallest polar coordinate angle to the depot
-/*class SmallestPolarAngleToDepot
+class SmallestPolarAngleToDepot
     extends TSPShipmentLinkedList {
   public TSPShipment getSelectShipment(TSPDepotLinkedList currDepotLL,
                                        TSPDepot currDepot,
@@ -428,6 +362,8 @@ public class TSPShipmentLinkedList
     //double foundDistance = 200; //initial distance
     double depotX, depotY;
     int type = 2;
+    
+
 
     //Get the X and Y coordinate of the depot
     depotX = currDepot.getXCoord();
@@ -436,8 +372,8 @@ public class TSPShipmentLinkedList
     while (temp != currShipLL.getTSPTail()) {
 
       if (isDiagnostic) {
-    	  System.out.println("Temp is "+temp);
-    	  System.out.println("Tail is "+getTail());
+    	  System.out.println("Temp is " +temp);
+    	  System.out.println("Tail is " +getTail());
     	  System.out.print("Shipment " + temp.getIndex() + " ");
 
     	  if ( ( (temp.getXCoord() - depotX) >= 0) &&
@@ -514,7 +450,7 @@ class SmallestPolarAngleShortestDistToDepot
     //currDepot is the depot under consideration
     //currShipLL is the set of avaialble shipments
     boolean isDiagnostic = false;
-    //TSPShipment temp = (TSPShipment) getHead(); //point to the first shipment
+
     TSPShipment temp = (TSPShipment)currShipLL.getTSPHead().getNext(); //point to the first shipment
     TSPShipment foundShipment = null; //the shipment found with the criteria
     double angle;
@@ -599,83 +535,5 @@ class SmallestPolarAngleShortestDistToDepot
    return("Selection Type: Smallest polar angle to the depot");
  }
 
-}*/
-
-  
-//==============================================================================================================
-
-  //Select the shipment with the shortest distance to the depot
-  class ClosestMatrixDist
-  extends TSPShipmentLinkedList {
-	  public TSPShipment getSelectShipment(TSPNodesLinkedList currNodeLL,
-			  TSPNodes currNode,
-                                       TSPShipmentLinkedList currShipLL,
-                                       TSPShipment currShip) {
-
-   
-    TSPShipment temp = (TSPShipment) currShipLL.getTSPHead().getNext(); //point to the first shipment
-    TSPShipment foundShipment = null; //the shipment found with the criteria
-    
-    
-    int size = DistanceArray.length; 
-    
-	int DistToSave = 10000; //Stores The Distance You'll Save (Greedy Distance)
-	int DistToSaveIndex=999; //999 For QA Test
-	DistToSave = 9999;
-	
-	//Greedy//
-	for(int Counter = 0; Counter < size; Counter++) {
-		if(DistanceArray[rowcounter][Counter] != 0) {
-			if(!IndexVisited.contains(Counter) && !IndexVisited.contains(rowcounter)) {
-				if(DistanceArray[rowcounter][Counter] < DistToSave) {
-					DistToSave = DistanceArray[rowcounter][Counter];  //Set Current Smallest Value To DistToSave
-					DistToSaveIndex = Counter;
-				}
-			}
-		}
-		
-	} //End Times To Run Loop	
-
-	IndexVisited.add(rowcounter);	
-	System.out.println("The vector is: " + IndexVisited);
-	
-	//for(int Counter = 0; Counter < size; Counter++) {
-	//	DistanceArray[rowcounter][Counter] = 0;
-	//	DistanceArray[Counter][rowcounter] = 0;
-	//}
-	
-	rowcounter = DistToSaveIndex;	
-	
-	//Print Out Array For 0 Check
-	/*
-	for(int s = 0; s<size; s++){
-	    for(int w = 0; w<size; w++)
-	    {
-	        System.out.print(DistanceArray[s][w] + " ");
-	    }
-	    System.out.println();
-	}
-	*/
-    
-	for(int i = 0; i < rowcounter-1; i++) {
-		temp = (TSPShipment) temp.getNext(); 
-	}
-	
-	
-	foundShipment = temp;
-	
-    return foundShipment; //stub
-  }
-	  
-	  
-	  
-//-------------------------------------- WhoAmI
-  //The WhoAmI methods gives the id of the assigned object
-  //It is a static method so that it can be accessed without creating an object
- public static String WhoAmI() {
-   return("Selection Type: Closest matrix distance to depot");
- }
-
 }
 
-//==============================================================================================================

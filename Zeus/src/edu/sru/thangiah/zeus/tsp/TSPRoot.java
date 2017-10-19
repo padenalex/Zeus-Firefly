@@ -1,12 +1,13 @@
 package edu.sru.thangiah.zeus.tsp;
 
-import edu.sru.thangiah.zeus.core.ProblemInfo;
 import java.io.FileInputStream;
-import edu.sru.thangiah.zeus.tsp.tspcostfunctions.*;
+
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import edu.sru.thangiah.zeus.core.ProblemInfo;
+import edu.sru.thangiah.zeus.tsp.tspcostfunctions.*;
 
 public class TSPRoot {
   /**
@@ -14,23 +15,19 @@ public class TSPRoot {
    */
   public TSPRoot() {
 
-    //Settings for the ProblemInfo class
-    //Problem info consists of a set of static values that are used by a number
-    //of different classes. The following has to be set in order for the program
-    //to function correctly.
     ProblemInfo.nodesLLLevelCostF = new TSPNodesLLCostFunctions();
-    //ProblemInfo.truckLevelCostF = new TSPTruckCostFunctions();
-    //ProblemInfo.truckLLLevelCostF = new TSPTruckLLCostFunctions();
-    //ProblemInfo.depotLevelCostF = new TSPDepotCostFunctions();
-    //ProblemInfo.depotLLLevelCostF = new TSPDepotLLCostFunctions();
-    //Paths for temporary, input and output files
-    //ProblemInfo.currDir gives the working directory of the program
+    ProblemInfo.truckLevelCostF = new TSPTruckCostFunctions();
+    ProblemInfo.truckLLLevelCostF = new TSPTruckLLCostFunctions();
+    ProblemInfo.depotLevelCostF = new TSPDepotCostFunctions();
+    ProblemInfo.depotLLLevelCostF = new TSPDepotLLCostFunctions();
     ProblemInfo.tempFileLocation = ProblemInfo.workingDirectory+"\\temp";
-    ProblemInfo.inputPath = ProblemInfo.workingDirectory+"\\data\\tsp\\Problems\\";
+    ProblemInfo.inputPath = ProblemInfo.workingDirectory+"\\data\\tsp\\problems\\";
 
-    ProblemInfo.outputPath = ProblemInfo.workingDirectory+"\\data\\tsp\\Results\\";
+    ProblemInfo.outputPath = ProblemInfo.workingDirectory+"\\data\\tsp\\results\\";
 
-    XSSFWorkbook workbook = new XSSFWorkbook();    
+    //-------------------------------------------------------------------------
+	//Open the requested file
+	XSSFWorkbook workbook = new XSSFWorkbook();    
 	FileInputStream fis;
 	XSSFSheet sheet;
 	XSSFRow curRow;
@@ -70,5 +67,11 @@ public class TSPRoot {
 		System.out.println("readDataFromExcelFile - "+"master.xlsx"+" File is not present");
 		e.printStackTrace();
 	}
+    
+	
+	//--------------------------------------------------------------------------
+    //Read In File
+    //new TSP("a280.xlsx");
+
   }
 }

@@ -21,7 +21,7 @@ public class ZeusGuiInfo {
   public static Dimension screenSize; // The dimenstions of the current screen
   public static boolean showMouseXY = true; // Should we display the mouse X and Y coordinates in the GUI?
 
-  public static NodesLinkedList mainNodes; // The DepotLinkedList passed into the GUI
+  public static DepotLinkedList mainDepots; // The DepotLinkedList passed into the GUI
   public static ShipmentLinkedList mainShipments; // The ShipmentLinkedList passed into the GUI
   public static double[] mainFeatures; // The space filling curve passed into the GUI as an array of doubles.
   public static String mainFeaturesInfo; // The features of the space filling curve which was passed into the GUI

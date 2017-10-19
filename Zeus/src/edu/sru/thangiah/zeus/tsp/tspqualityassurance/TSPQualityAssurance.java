@@ -18,9 +18,9 @@ import java.util.*;
 /** @todo Need to document the variables and the parameters */
 public class TSPQualityAssurance
     extends QualityAssurance {
-  TSPNodesLinkedList mainNodes;
+  TSPDepotLinkedList mainDepots;
   TSPShipmentLinkedList mainShipments;
-  TSPQANodesLinkedList tspQANodes;
+  TSPQADepotLinkedList tspQADepots;
   TSPQAShipmentLinkedList tspQAShipments;
 
   File shipFile;
@@ -29,19 +29,19 @@ public class TSPQualityAssurance
   public TSPQualityAssurance() {
   }
 
-  public TSPQualityAssurance(TSPNodesLinkedList mn, TSPShipmentLinkedList ms) {
+  public TSPQualityAssurance(TSPDepotLinkedList md, TSPShipmentLinkedList ms) {
     //used for writing out the files
-    mainNodes = mn;
+    mainDepots = md;
     mainShipments = ms;
     //used for reading in the information
     tspQAShipments = new TSPQAShipmentLinkedList();
-    tspQANodes = new TSPQANodesLinkedList();
+    tspQADepots = new TSPQADepotLinkedList();
 
     //Write out the information that is in the data structures. This does not read the original file
     //Might need another function that reads in the original files and checks if they are correct
     writeFiles();
     readShipmentFile();
-    //readSolutionFile();
+    readSolutionFile();
   }
 
   public boolean runQA() {
@@ -50,7 +50,7 @@ public class TSPQualityAssurance
      * available trucks */
     //Area all the customer being serviced and are they serviced only once
     System.out.print("Check on all customers being serviced and serviced no more than once:");
-    isGood = tspQAShipments.customerServicedOnlyOnce(tspQANodes);
+    isGood = tspQAShipments.customerServicedOnlyOnce(tspQADepots);
     if (isGood) {
       System.out.println("Passed");
     }
@@ -60,7 +60,7 @@ public class TSPQualityAssurance
 
     //Check on maximum travel time of truck
     System.out.print("Check on maximum travel time of trucks:");
-    isGood = isGood && tspQANodes.checkDistanceConstraint();
+    isGood = isGood && tspQADepots.checkDistanceConstraint();
     /** @todo Need a check to ensure that the constraints of the routes are met - maximum distance and capacity*/
     if (isGood) {
       System.out.println("Passed");
@@ -72,16 +72,14 @@ public class TSPQualityAssurance
     //Check on maximum demand of a truck
     System.out.print("Check on maximum demand of trucks:");
 
-    /*No need to check capacity
-     * 
-     * isGood = isGood && tspQADepots.checkCapacityConstraint();
-     @todo Need a check to ensure that the constraints of the routes are met - maximum distance and capacity
+    isGood = isGood && tspQADepots.checkCapacityConstraint();
+    /** @todo Need a check to ensure that the constraints of the routes are met - maximum distance and capacity*/
     if (isGood) {
       System.out.println("Passed");
     }
     else {
       System.out.println("Failed");
-    }*/
+    }
 
     return isGood;
   }
@@ -98,7 +96,7 @@ public class TSPQualityAssurance
       solFile = new File(ProblemInfo.tempFileLocation + "/sol.txt");
       out = new PrintStream(new FileOutputStream(solFile));
       //mainDepots.expandAllRoutes(); //not needed for the TSP
-      mainNodes.getRouteString();
+      mainDepots.printDepotLinkedList(out);
     }
     catch (IOException ioe) {
       ioe.printStackTrace();
@@ -150,7 +148,7 @@ public class TSPQualityAssurance
     }
   }
 
-  /*public void readSolutionFile() {
+  public void readSolutionFile() {
     BufferedReader br = null;
     try {
       StringTokenizer st;
@@ -179,9 +177,6 @@ public class TSPQualityAssurance
           t.setMaxDemand(Double.parseDouble(st.nextToken().trim()));
           t.setMaxDistance(Double.parseDouble(st.nextToken().trim()));
 
-          TSPQANodesLinkedList nodes = new TSPQANodesLinkedList();
-                    
-          
           int numNodes = Integer.parseInt(st.nextToken().trim());
           //the first node is the depot node
           TSPQANode n = new TSPQANode();
@@ -201,8 +196,9 @@ public class TSPQualityAssurance
             n.setType(st.nextToken().trim());
             t.getNodes().add(n);
           }
+          d.getTrucks().add(t);
         }
-        //tspQADepots.getDepots().add(d);
+        tspQADepots.getDepots().add(d);
       }
     }
     catch (Exception e) {
@@ -218,5 +214,5 @@ public class TSPQualityAssurance
         ioe.printStackTrace();
       }
     }
-  }*/
+  }
 }

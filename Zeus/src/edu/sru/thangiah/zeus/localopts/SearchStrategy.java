@@ -18,7 +18,7 @@ public abstract class SearchStrategy {
   protected boolean loopUntilNoChanges = true;
   protected Optimization optimization = null;
 
-  public abstract OptInfo run(NodesLinkedList nodes);
+  public abstract OptInfo run(DepotLinkedList depots);
 
   public abstract String toString();
 

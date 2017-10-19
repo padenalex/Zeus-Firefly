@@ -102,10 +102,10 @@ public class VRP {
 		
 		
 		// Set up the distance matrix
-		//ProblemInfo.distanceMatrix = 
-		
+		//ProblemInfo.distanceMatrix = new Vector(); 
+
 		//Set up the similarity matrix
-		///ProblemInfo.similarityMatrix
+		//ProblemInfo.similarityMatrix =
 
 		//Capture the CPU time required for solving the problem
 		startTime = System.currentTimeMillis();
@@ -124,17 +124,17 @@ public class VRP {
 		writeLongSolution(dataFile.substring(dataFile.lastIndexOf("/") + 1));
 		//writeShortSolution(dataFile.substring(dataFile.lastIndexOf("/") + 1));
 
-		/*//create a vector of search strategy/optimizations to execute
+		/* //create a vector of search strategy/optimizations to execute
 		mainOpts = new Vector(1); //vector capacity of 1
 		//sets the upperbound in LocalOneOpt and
 		//sets the name of the search to Best
 		//mainOpts.add(new FirstFirstIntraSearch(new ThreeOpt()));
 		//mainOpts.add(new FirstFirstIntraSearch(new OneOpt()));
-		mainOpts.add(new FirstBestIntraSearch(new OneOpt(true)));
+		mainOpts.add(new FirstBestIntraSearch(new OneOpt()));
 		//mainOpts.add(new BestBestIntraSearch(new OneOpt()));
 		//mainOpts.add(new FirstFirstInterSearch(new Exchange01()));
 		//mainOpts.add(new FirstFirstInterSearch(new Exchange10()));
-		mainOpts.add(new FirstFirstInterSearch(new Exchange11(true)));
+		mainOpts.add(new FirstFirstInterSearch(new Exchange11()));
 		//mainOpts.add(new FirstBestInterSearch(new Exchange01()));
 		//mainOpts.add(new FirstFirstInterSearch(new Exchange22()));
 		//mainOpts.add(new FirstFirstInterSearch(new Exchange11()));
@@ -143,9 +143,8 @@ public class VRP {
 		//mainOpts.add(new BestBestInterSearch(new Exchange11()));
 		//mainOpts.add(new Combination1(ProblemInfo.truckTypes));
 		runOptimizations();
+		
 		*/
-		
-		
 				
 
 		//create a vector of search strategy/optimizations to execute
@@ -153,10 +152,8 @@ public class VRP {
 		//add a first-first local 1-opt
 		//simAnnealOpts.add(new FirstBestIntraSearch(new LocalOneOpt()));
 		//add an intra and inter-opt search strategy
-		
-		mainOpts.add(new FirstFirstIntraSearch(new OneOpt(true)));
-		mainOpts.add(new FirstFirstInterSearch(new Exchange11(true)));
-		
+		//mainOpts.add(new FirstBestIntraSearch(new OneOpt()));
+		//mainOpts.add(new FirstFirstInterSearch(new Exchange11()));
 		////////////////////////////////////////////////////////////////////////////
 		///// This is an implementation of a simulated annealing metaheuristic /////
 		////////////////////////////////////////////////////////////////////////////

@@ -65,11 +65,11 @@ public class ZeusGui
    * @param mD DepotLinkedList
    * @param mS ShipmentLinkedList
    */
-  public ZeusGui(NodesLinkedList mN, ShipmentLinkedList mS) {
+  public ZeusGui(DepotLinkedList mD, ShipmentLinkedList mS) {
     //run the JFrame constructor
     //super("Zeus - Unified Model for Vehicle Routing Problems");
 
-    ZeusGuiInfo.mainNodes = mN;
+    ZeusGuiInfo.mainDepots = mD;
     ZeusGuiInfo.mainShipments = mS;
 
     createOptFrame = false;
@@ -98,13 +98,13 @@ public class ZeusGui
    * @param SFC double[]
    * @param info String
    */
-  public ZeusGui(NodesLinkedList mN, ShipmentLinkedList mS, double[] SFC, String info) {
+  public ZeusGui(DepotLinkedList mD, ShipmentLinkedList mS, double[] SFC, String info) {
     //run the JFrame constructor
     super("Zeus - Unified Model for Vehicle Routing Problems");
 
     ZeusGuiInfo.useSpaceFillingCurves = true;
 
-    ZeusGuiInfo.mainNodes = mN;
+    ZeusGuiInfo.mainDepots = mD;
     ZeusGuiInfo.mainShipments = mS;
     ZeusGuiInfo.mainFeatures = SFC;
     ZeusGuiInfo.mainFeaturesInfo = info;
@@ -144,10 +144,10 @@ public class ZeusGui
     createButtons();
 
     //create the depot frame and place it in the display
-    /*depotFrame = new DepotFrame(ZeusGuiInfo.mainDepots);
+    depotFrame = new DepotFrame(ZeusGuiInfo.mainDepots);
     depotFrame.setVisible(ZeusGuiInfo.showDepotPane);
     depotFrame.setBounds(0, 0, depotFrame.getWidth(), depotFrame.getHeight());
-    desktop.add(depotFrame);*/
+    desktop.add(depotFrame);
 
     //create the shipment frame and place in the display
     shipmentFrame = new ShipmentFrame(ZeusGuiInfo.mainShipments);
@@ -157,7 +157,7 @@ public class ZeusGui
     desktop.add(shipmentFrame);
 
       //create the info frame and place it in the display
-      infoFrame = new InfoFrame(ZeusGuiInfo.mainNodes.getRouteString());
+      infoFrame = new InfoFrame(ZeusGuiInfo.mainDepots.getSolutionString());
       infoFrame.setVisible(ZeusGuiInfo.showInfoPane);
       infoFrame.setBounds(this.getWidth() - infoFrame.getWidth(), 0,
                           infoFrame.getWidth(), infoFrame.getHeight());

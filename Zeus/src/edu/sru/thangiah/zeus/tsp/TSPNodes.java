@@ -3,15 +3,6 @@ package edu.sru.thangiah.zeus.tsp;
 //import the parent class
 import edu.sru.thangiah.zeus.core.Nodes;
 
-/**
- *
- * <p>Title:</p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2005</p>
- * <p>Company: </p>
- * @author Sam R. Thangiah
- * @version 2.0
- */
 
 public class TSPNodes
     extends Nodes
@@ -28,12 +19,7 @@ public class TSPNodes
     setShipment(s);
   }
 
-  public TSPNodes(int i, float x, float y) {
-	// TODO Auto-generated constructor stub
-	  setShipment(new TSPShipment(i, x, y));
-}
-
-/**
+  /**
    * Returns the next point cell in the linked list
    * @return next point cell
    */
@@ -60,13 +46,4 @@ public class TSPNodes
     return clonedNode;
   }
 
-	public double getXCoord()
-	{
-		return (this.getXCoord());
-	}
-	
-	public double getYCoord()
-	{
-		return (this.getYCoord());
-	}
 }
