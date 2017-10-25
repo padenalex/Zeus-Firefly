@@ -1,0 +1,5 @@
+package edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm;
+
+public class TSPCostFunction {
+
+}
