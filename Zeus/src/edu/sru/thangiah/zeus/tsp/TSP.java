@@ -22,9 +22,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
 
 
-//import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
+import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
 //import edu.sru.thangiah.zeus.metaheuristics.tabu.*;
-//import edu.sru.thangiah.zeus.qualityassurance.*;
+import edu.sru.thangiah.zeus.qualityassurance.*;
 //import edu.sru.thangiah.zeus.localopts.mixedfleet.*;
 
 
@@ -135,7 +135,47 @@ public class TSP {
 
 		//create a vector of search strategy/optimizations to execute
 		mainOpts = new Vector(1); //vector capacity of 1
+		runOptimizations();
+		
+		
 		//sets the upperbound in LocalOneOpt and
+		//add a first-first local 1-opt
+		//simAnnealOpts.add(new FirstBestIntraSearch(new LocalOneOpt()));
+		//add an intra and inter-opt search strategy
+		//mainOpts.add(new FirstBestIntraSearch(new OneOpt()));
+		//mainOpts.add(new FirstFirstInterSearch(new Exchange11()));
+		////////////////////////////////////////////////////////////////////////////
+		///// This is an implementation of a simulated annealing metaheuristic /////
+		////////////////////////////////////////////////////////////////////////////
+		int initialTemp = 200;    //the initial temperature
+		//Changed From 1,000 to 200^
+		int finalTemp   = 0;                           //the final temperature
+		int iterationsAtEachTemp = 50;                 //iterations at each temperature
+		int numTemps = 100;                            //number of temperatures to look at
+
+		//create a simulated annealing instance
+		SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(initialTemp,
+				finalTemp, iterationsAtEachTemp, numTemps);
+		//set the cooling schedule you would like to use, in this case linear
+		simulatedAnnealing.setCoolingSchedule(new LinearCoolingSchedule(
+				simulatedAnnealing.getMaxIterations(),
+				simulatedAnnealing.getInitTemperature(),
+				simulatedAnnealing.getFinalTemperature()));
+
+		System.out.println("Simulated Annealing Initiated");
+		//now pass the opts and the depot linked list at it will be annealed the
+		//return will be an optInfo class that contains the beginning and ending
+		//stats
+		OptInfo simAnnealResults = simulatedAnnealing.anneal(mainDepots,mainOpts);
+		//print results
+		System.out.println("Simulated Annealing Results: " +
+				simAnnealResults.toString());
+
+
+		
+		
+		
+		
 
 		//Check for the quality and integrity of the solution
 		System.out.println("Starting QA");

@@ -55,9 +55,9 @@ public class TSPRoot {
 		//}
 		
 		FileType = 0;
-		FileName = "a280.xlsx";
-		FileType = 1;
-		FileName = "bayg29.xlsx";
+		FileName = "ulysses16.xlsx";
+		//FileType = 1;
+		//FileName = "bayg29.xlsx";
 		new TSP(FileName, FileType);
 		
 		
