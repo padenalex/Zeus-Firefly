@@ -10,7 +10,7 @@ public class Configuration {
 	private int numGenerations;
 	private boolean isLocked;
 	private FireFly sampleFireFly;
-	//private AbstractFitnessFunction fitnessFunction;
+	private AbstractFitnessFunction fitnessFunction;
 	//private LinkedList<IGeneticOperator> geneticOperators;
 	//private LinkedList<ISelector> selectionOperators;
 	//private LinkedList<IGene> sampleGenes;
@@ -63,7 +63,9 @@ public class Configuration {
 	
 	public String getEncoding(){ return encoding; }
 	public IChromosome getSampleChromosome(){ return sampleChromosome; }
+	*/
 	public AbstractFitnessFunction getFitnessFunction(){ return fitnessFunction; }
+	/*
 	public LinkedList<IGeneticOperator> getGeneticOperators(){ return geneticOperators; }
 	public LinkedList<IGene> getSampleGenes(){return sampleGenes;}
 	public LinkedList<ISelector> getSelectors(){return selectionOperators;}

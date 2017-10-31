@@ -1,6 +1,6 @@
 package edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly;
 import java.util.LinkedList;
-
+import edu.sru.thangiah.zeus.tsp.*;
 
 	/*
 	 * A Population is a generation of chromosomes that are stored in a list.
@@ -20,14 +20,16 @@ public class Population
 	 * a parameter
 	 */
 	
-	public Population(Configuration currentConfiguration)
+	public Population(Configuration currentConfiguration, TSPNodesLinkedList head)
 	{
 		configuration = currentConfiguration;
 		fireFlies = new LinkedList<FireFly>();
-		//Class clazz;
-		for(int i = 0; i < configuration.getPopulationSize(); i++)
+		
+		fireFlies.add(new FireFly(head));
+		for(int i = 0; i < configuration.getPopulationSize() - 1; i++) //first one is original one
 		{
-			fireFlies.add(new FireFly());
+			//scramble and add to population
+			
 		}
 	}
 	
