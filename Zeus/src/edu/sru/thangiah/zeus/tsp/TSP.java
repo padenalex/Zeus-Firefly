@@ -18,6 +18,8 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly.FireFly;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly.Population;
 //For the Simulated Annealing metaheuristic
 import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
 
@@ -99,9 +101,13 @@ public class TSP {
 		}
         
 		//set up the shipment insertion type
-		ProblemInfo.insertShipType = new LinearGreedyInsertShipment();
-		Settings.printDebug(Settings.COMMENT, LinearGreedyInsertShipment.WhoAmI());
-
+		//ProblemInfo.insertShipType = new LinearGreedyInsertShipment();
+		//Settings.printDebug(Settings.COMMENT, LinearGreedyInsertShipment.WhoAmI());
+		//InsertAsGiven
+		ProblemInfo.insertShipType = new InsertAsGiven();
+		Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
+		
+		
 		
 		// Set up the distance matrix
 		//ProblemInfo.distanceMatrix = new int[][];
@@ -136,8 +142,10 @@ public class TSP {
 		//create a vector of search strategy/optimizations to execute
 		mainOpts = new Vector(1); //vector capacity of 1
 		runOptimizations();
+		Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
 		
 		
+/*		
 		//sets the upperbound in LocalOneOpt and
 		//add a first-first local 1-opt
 		//simAnnealOpts.add(new FirstBestIntraSearch(new LocalOneOpt()));
@@ -170,7 +178,7 @@ public class TSP {
 		//print results
 		System.out.println("Simulated Annealing Results: " +
 				simAnnealResults.toString());
-
+*/
 
 		
 		
