@@ -15,6 +15,7 @@ public class FireFly
 	public static int FireflyDimension;
 	static Vector <Nodes> IndexVector = new Vector<Nodes>();
 	static TSPNodesLinkedList StartList = new TSPNodesLinkedList();
+	public NodesLinkedList FireFlyt = new TSPNodesLinkedList();
 
 	public FireFly()
 	{
@@ -29,8 +30,10 @@ public class FireFly
 		}
 
 		
-		System.out.println("The attributes for This random firefly is " + FireFly.getAttributes());
-		System.out.println("The route is " + FireFly.getRouteString());
+		//System.out.println("The attributes for This random firefly is " + FireFly.getAttributes());
+		//System.out.println("The route is " + FireFly.getRouteString());
+		//System.out.println("The Cost is " + FireFly.getCost());
+		FireFlyt=FireFly;
 	}
 	
 //-------------------
@@ -48,9 +51,13 @@ public class FireFly
 			IndexVector.add(FireFly.getNodeByIndex(i));
 		}
 		
-		System.out.println("The Base Attributes are " + FireFly.getAttributes());
-		System.out.println("The route is " + FireFly.getRouteString());
+		//System.out.println("The Base Attributes are " + FireFly.getAttributes());
+		//System.out.println("The route is " + FireFly.getRouteString());
 		StartList = (TSPNodesLinkedList) FireFly.clone();
+		FireFlyt = mainNodes;
 	}
 
+	public FireFly(FireFly temp) {
+		System.out.println("Test----------->" );
+	}
 }

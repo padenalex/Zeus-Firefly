@@ -16,6 +16,7 @@ public class Population
 	private FireFly brightestFireFly;
 	private LinkedList<FireFly> fireFlies;
 	static int popsize = 20;
+	static int TotalGen = 100;
 	
 	public Population(NodesLinkedList mainNodes)
 	{
@@ -29,7 +30,9 @@ public class Population
 		fireFlies.add(new FireFly());
 		}
 		
+		Operators RunOpts = new Operators(fireFlies);
 		//System.out.println("Fireflies is "+fireFlies.toString());
+		
 	}
 
 
