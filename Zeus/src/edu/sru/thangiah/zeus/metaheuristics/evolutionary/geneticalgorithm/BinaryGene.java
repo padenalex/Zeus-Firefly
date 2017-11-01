@@ -28,7 +28,7 @@ public class BinaryGene extends AbstractGene
 	 * 
 	 */
 
-	public void mutate()
+	public int mutate()
 	{
 		if((int)getInternalValue() == 1)
 		{
@@ -37,6 +37,7 @@ public class BinaryGene extends AbstractGene
 		{
 			setValue(1);
 		}
+		return (int) getInternalValue();
 	}
 	
 	

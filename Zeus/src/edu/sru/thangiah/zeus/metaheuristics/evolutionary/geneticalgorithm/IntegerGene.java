@@ -16,10 +16,15 @@ public class IntegerGene extends AbstractGene
 		max = maximum;
 	}
 	
-	public void mutate()
+	public int mutate()
 	{
+		int i = (int) getInternalValue();
 		RandomGenerator gen = new RandomGenerator();
-		setValue(gen.nextInt(max));
+		while (i == (int) getInternalValue())
+		{
+			setValue(gen.nextInt(max));
+		}
+		return (int) getInternalValue();
 	}
 	
 	@Override

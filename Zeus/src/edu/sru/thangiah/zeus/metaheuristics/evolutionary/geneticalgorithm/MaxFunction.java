@@ -1,5 +1,7 @@
 package edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm;
 
+import edu.sru.thangiah.zeus.tsp.*;
+
 /**
  * Simple fitness function that evaluates the fitness of a given chromosome
  * This particular fitness function test to see if the IChromosome sent to is 
@@ -19,14 +21,15 @@ public class MaxFunction
 	 */	
 	
 	  public double evaluate(IChromosome chrome) {
-	    int total = 0;
+	    double total = 0;
+	    TSPNodesLinkedList headNode = new TSPNodesLinkedList();
 	
-	    for (int i = 0; i < chrome.size(); i++) {
-	      BinaryGene value = (BinaryGene) chrome.getGene(chrome.size() -
-	          (i + 1));
-	      
-	      	total += Math.pow(2.0, (double) i) * (int)value.getInternalValue();
+	    for (int i = 0; i < chrome.size(); i++) 
+	    {
+	    	TSPNodes temp = new TSPNodes(new TSPShipment((int) chrome.getGene(i).getInternalValue()));
+	    	headNode.insertNodeLast(temp);
 	    }
+	    total = headNode.getCost();
 	
 	    return total;
 	  }

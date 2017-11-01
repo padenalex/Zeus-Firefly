@@ -13,6 +13,11 @@ public class TSPShipment
   public TSPShipment() {
   }
   
+  public TSPShipment(int i)
+  {
+	  setIndex(i);
+  }
+  
   public TSPShipment(int i, float x, float y, int d, int q, int e, String t) {
 	    //super(i, x, y, q, d, t, p);
 	    setIndex(i);

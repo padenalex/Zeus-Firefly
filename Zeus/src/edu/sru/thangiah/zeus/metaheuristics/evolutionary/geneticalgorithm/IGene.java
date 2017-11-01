@@ -83,10 +83,11 @@ public interface IGene
 	
 	/**
 	 * Mutate this gene.  See Binary gene for an example.
+	 * @return 
 	 * 
 	 */
 
-	public void mutate();
+	public int mutate();
 	
 	
 	/**

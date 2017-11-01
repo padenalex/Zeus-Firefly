@@ -159,4 +159,11 @@ public class Population
 		return buffer.toString();
 	}
 	
+	public Population newPopulation()
+	{
+		Population newPop = new Population(configuration, chromosomes);
+		newPop.fittestChromosome = this.fittestChromosome;
+		
+		return newPop;
+	}
 }

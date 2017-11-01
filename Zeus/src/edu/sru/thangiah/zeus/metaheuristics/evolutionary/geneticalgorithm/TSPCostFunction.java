@@ -1,11 +1,23 @@
 package edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm;
 
+import edu.sru.thangiah.zeus.tsp.TSPNodes;
+import edu.sru.thangiah.zeus.tsp.TSPNodesLinkedList;
+import edu.sru.thangiah.zeus.tsp.TSPShipment;
+
 public class TSPCostFunction extends AbstractFitnessFunction
 {
 	public double evaluate(IChromosome chrome)
 	{
-		
-		return 0;
+	    double total = 0;
+	    TSPNodesLinkedList headNode = new TSPNodesLinkedList();
+	
+	    for (int i = 0; i < chrome.size(); i++) 
+	    {
+	    	TSPNodes temp = new TSPNodes(new TSPShipment((int) chrome.getGene(i).getInternalValue()));
+	    	headNode.insertNodeLast(temp);
+	    }
+	    total = headNode.getCost();
+	
+	    return total;
 	}
-
 }
