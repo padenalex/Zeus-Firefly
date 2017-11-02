@@ -1,19 +1,21 @@
 package edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm;
 
 import java.util.LinkedList;
-
-import edu.sru.thangiah.zeus.core.NodesLinkedList;
 import edu.sru.thangiah.zeus.tsp.*;
 
 public class TSPInteger {
 	
-	public TSPInteger(NodesLinkedList nodeHead)
+	public TSPInteger(TSPDepot headDepot)
 	{
 		int numEvolutions = 500;
 	    double maxFitness;
 	    //int numGenes = chromeSize;
+	    TSPDepot depotHead = headDepot;
+	    TSPTruck truckHead = (TSPTruck) depotHead.getMainTrucks().getHead();
 	    
+	    TSPNodesLinkedList nodeHead = truckHead.getTSPMainNodes();
 	    int numGenes = nodeHead.getNoNodes();
+	    System.out.println(numGenes);
 	    
 	    Configuration gaConf = new DefaultConfiguration();
 	    
