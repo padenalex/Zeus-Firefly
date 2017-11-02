@@ -14,7 +14,7 @@ import edu.sru.thangiah.zeus.tsp.*;
 public class Population
 {
 	private FireFly brightestFireFly;
-	private LinkedList<FireFly> fireFlies;
+	LinkedList<FireFly> fireFlies;
 	static int popsize = 20;
 	static int TotalGen = 100;
 	
@@ -31,8 +31,11 @@ public class Population
 		}
 		
 		Operators RunOpts = new Operators(fireFlies);
-		//System.out.println("Fireflies is "+fireFlies.toString());
+		//System.out.println("Fireflies is "+fireFlies.get(0).FireFlyt.);
 		
+	}
+	public Population() {
+		fireFlies = new LinkedList<FireFly>();
 	}
 
 

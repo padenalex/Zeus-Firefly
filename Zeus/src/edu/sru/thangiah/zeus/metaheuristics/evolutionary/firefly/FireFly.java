@@ -55,9 +55,12 @@ public class FireFly
 		//System.out.println("The route is " + FireFly.getRouteString());
 		StartList = (TSPNodesLinkedList) FireFly.clone();
 		FireFlyt = mainNodes;
+		//System.out.println("---.-.-.-.-.- " + FireFly.);
 	}
 
 	public FireFly(FireFly temp) {
-		System.out.println("Test----------->" );
+		NodesLinkedList FireFly = new NodesLinkedList();
+		FireFly = (NodesLinkedList) temp.FireFlyt.clone();
+		FireFlyt = FireFly;
 	}
 }
