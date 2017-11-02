@@ -174,7 +174,11 @@ public class StaticMutationOperator extends MutationOperator
 				}
 				
 				// get the gene and mutate it
-				pop.getChromosome(chromeNum).getGene(geneNum).mutate();
+				int oldValue = (int) pop.getChromosome(chromeNum).getGene(geneNum).getInternalValue();
+				int newValue = pop.getChromosome(chromeNum).getGene(geneNum).mutate();
+				int index = ((Chromosome) pop.getChromosome(chromeNum)).findGeneIndex(newValue);
+				((IntegerGene) pop.getChromosome(chromeNum).getGene(index)).setValue(oldValue);
+				
 				
 				//flip contains back to false for next iteration
 				contains = false;

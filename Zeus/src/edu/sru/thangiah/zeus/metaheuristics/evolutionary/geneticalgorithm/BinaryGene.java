@@ -79,5 +79,4 @@ public class BinaryGene extends AbstractGene
 		int random = numberGenerator.nextIntBetween(0,1);
 		setValue(random);	
 	}
-	
 }

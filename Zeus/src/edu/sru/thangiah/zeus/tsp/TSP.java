@@ -20,11 +20,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly.FireFly;
 import edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly.Population;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm.TSPInteger;
 //For the Simulated Annealing metaheuristic
-import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
+//import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
 
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm.*;
 
-import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
+//import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
 //import edu.sru.thangiah.zeus.metaheuristics.tabu.*;
 import edu.sru.thangiah.zeus.qualityassurance.*;
 //import edu.sru.thangiah.zeus.localopts.mixedfleet.*;
@@ -198,7 +200,11 @@ public class TSP {
 		}
 		//--------------------------------------------------------------(TURN ON/OFF GUI)---------
 		//ZeusGui guiPost = new ZeusGui(mainDepots, mainShipments);
-
+		
+		
+		//bring in metaheuristics
+		Settings.printDebug(Settings.COMMENT, "Starting GA");
+		TSPInteger ga = new TSPInteger((TSPDepot) mainDepots.getHead().getNext());
 	} 
 
 	/**

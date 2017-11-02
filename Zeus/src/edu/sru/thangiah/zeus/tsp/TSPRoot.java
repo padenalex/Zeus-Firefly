@@ -59,8 +59,6 @@ public class TSPRoot {
 		//FileType = 1;
 		//FileName = "bayg29.xlsx";
 		new TSP(FileName, FileType);
-		
-		
 		//---------------------------------------------
 	}
 	catch (Exception e) {

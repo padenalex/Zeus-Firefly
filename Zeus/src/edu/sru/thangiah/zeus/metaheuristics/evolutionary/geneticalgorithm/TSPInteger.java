@@ -38,7 +38,7 @@ public class TSPInteger {
 			    gaConf.setPopulationSize(20);
 			    gaConf.setFitnessFunction(new TSPCostFunction());
 			    gaConf.addGeneticOperator(new StaticMutationOperator(gaConf));
-			    gaConf.addGeneticOperator(new BasicCrossoverOperator(gaConf));
+			    gaConf.addGeneticOperator(new PMXGeneticOperator(gaConf));
 			    gaConf.addSelectionOperator(new RouletteSelectionOperator(gaConf));
 			    gaConf.setNumGenerations(numEvolutions);
 			    gaConf.setCrossoverProbability(0.7);

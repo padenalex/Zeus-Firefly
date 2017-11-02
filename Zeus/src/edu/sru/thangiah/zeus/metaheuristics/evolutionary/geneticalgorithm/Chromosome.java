@@ -94,5 +94,17 @@ public class Chromosome extends AbstractChromosome
 
 	}
 	
-	
+	public int findGeneIndex(int valueToFind)
+	{
+		int index = -1;
+		for (int i = 0; i < super.size(); i++)
+		{
+			if ((int) super.getGenes().get(i).getInternalValue() == valueToFind)
+			{
+				index = i;
+			}
+		}
+		
+		return index;
+	}
 }
