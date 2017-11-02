@@ -203,8 +203,13 @@ public class TSP {
 		
 		
 		//bring in metaheuristics
+<<<<<<< HEAD
 		Settings.printDebug(Settings.COMMENT, "Starting GA");
 		TSPInteger ga = new TSPInteger(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
+=======
+		//Settings.printDebug(Settings.COMMENT, "Starting GA");
+		//TSPInteger ga = new TSPInteger((TSPDepot) mainDepots.getHead().getNext());
+>>>>>>> e56156b225c14a68a5406903a0677ef2658cbd1e
 	} 
 
 	/**

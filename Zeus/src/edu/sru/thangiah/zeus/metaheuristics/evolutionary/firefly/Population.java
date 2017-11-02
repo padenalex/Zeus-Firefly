@@ -14,7 +14,7 @@ import edu.sru.thangiah.zeus.tsp.*;
 public class Population
 {
 	private FireFly brightestFireFly;
-	LinkedList<FireFly> fireFlies;
+	static LinkedList<FireFly> fireFlies;
 	static int popsize = 20;
 	static int TotalGen = 100;
 	
