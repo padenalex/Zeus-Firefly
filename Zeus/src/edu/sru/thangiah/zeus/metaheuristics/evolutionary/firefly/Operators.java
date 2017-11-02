@@ -164,5 +164,4 @@ System.out.println("New List is    " + NewPopulation.fireFlies.get(0).FireFlyt.g
 		
 		return NewFly;
 	}
-	
 }
