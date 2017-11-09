@@ -23,6 +23,7 @@ public class OXGeneticOperator implements IGeneticOperator
 		int chromosomeSize = getConfiguration().getChromosomeSize();
 		
 		IChromosome chr1, chr2, resultChromosome1, resultChromosome2;
+		LinkedList<IntegerGene> tempGenes = new LinkedList<IntegerGene>();
 		
 		for(IChromosome chrome : chromes)
 		{
@@ -60,27 +61,13 @@ public class OXGeneticOperator implements IGeneticOperator
 				
 				for (int i = point1; i <= point2; i++)
 				{
+					tempGenes.add((IntegerGene) chr2.getGene(i));
 					resultChromosome1.setGene(i, (IntegerGene) chr2.getGene(i));
 				}
 				
-				for (int i = 0; i < point1; i++)
+				for (int i = 0; i < chromosomeSize; i++)
 				{
-					int count = 0;
-					while (resultChromosome1.getGenes().contains(chr1.getGene(count)))
-					{
-						count ++;
-					}
-					resultChromosome1.setGene(i, chr1.getGene(count));
-				}
-				
-				for (int i = point2 +1; i < chromosomeSize; i++)
-				{
-					int count = 0;
-					while (resultChromosome1.getGenes().contains(chr1.getGene(count)))
-					{
-						count ++;
-					}
-					resultChromosome1.setGene(i, chr1.getGene(count));
+					
 				}
 			}
 		}
