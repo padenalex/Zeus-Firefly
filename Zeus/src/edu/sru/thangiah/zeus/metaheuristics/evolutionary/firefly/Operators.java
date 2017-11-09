@@ -19,15 +19,14 @@ public class Operators {
 //test
 FireFly Brightest = fireFlies.get(GetBrightestFly(fireFlies));	
 Population NewPopulation = new Population();
-//NewPopulation.fireFlies.add(XtowardsY(Brightest, fireFlies.get(1)));
+NewPopulation.fireFlies.add(XtowardsY(Brightest, fireFlies.get(1)));
 System.out.println("New List size is " + NewPopulation.fireFlies.size());
 System.out.println("Best List is   " + Brightest.FireFlyt.getRouteString());
-System.out.println("Second List is " + fireFlies.get(1).FireFlyt.getRouteString() + " --- Cost is " + fireFlies.get(1).FireFlyt.getCost());
-//System.out.println("New List is    " + NewPopulation.fireFlies.get(0).FireFlyt.getRouteString());
+System.out.println("Second List is " + fireFlies.get(1).FireFlyt.getRouteString());
+System.out.println("New List is    " + NewPopulation.fireFlies.get(0).FireFlyt.getRouteString());
 		for(int i=0; i < Population.TotalGen; i++) {
 			//FireFly Brightest = fireFlies.get(GetBrightestFly(fireFlies));	
-NewPopulation.fireFlies.add(XtowardsY(Brightest, fireFlies.get(1)));
-System.out.println("New List is    " + NewPopulation.fireFlies.get(i).FireFlyt.getRouteString() + " -- Cost is " + NewPopulation.fireFlies.get(i).FireFlyt.getCost());			
+			
 			for(int x=0; x < listsize; x++) {
 
 				//XtowardsY(Brightest, fireFlies.get(x));
@@ -68,7 +67,7 @@ System.out.println("New List is    " + NewPopulation.fireFlies.get(i).FireFlyt.g
 			int tempB = BrightestFly.FireFlyt.getNodesAtPosition(i).getIndex();
 			int tempT = ThisFly.FireFlyt.getNodesAtPosition(i).getIndex();
 			if(tempB == tempT) {
-				//System.out.println("Match at index " + tempB);
+				System.out.println("Match at index " + tempB);
 				MatchHolder.add(tempB);
 				//ListPosition.add(i);
 			}
@@ -99,12 +98,12 @@ System.out.println("New List is    " + NewPopulation.fireFlies.get(i).FireFlyt.g
 			}
 			Check2 = ThisFly.FireFlyt.getNodeByIndex(FirstIndex).getPrev().getIndex();
 			Check1 = ThisFly.FireFlyt.getNodeByIndex(FirstIndex).getNext().getIndex();
-			//System.out.println("Bright Index is: " +SecondIndex+ " Check1 is " +Check1+ " Check2 is " + Check2);
+			System.out.println("Bright Index is: " +SecondIndex+ " Check1 is " +Check1+ " Check2 is " + Check2);
 			
-			if(Check1 != SecondIndex && Check2 != SecondIndex) {Run1 = 0;}
+			if(Check1 != SecondIndex && Check2 != SecondIndex) {Run1 = 0; System.out.println("Inside if");}
 			
 			HowManyTimesRan++;
-			//System.out.println("DoWhile For Find A Random Edge Not In List 2 Ran # Times: " + HowManyTimesRan);
+			System.out.println("DoWhile For Find A Random Edge Not In List 2 Ran # Times: " + HowManyTimesRan);
 			}
 			
 	
@@ -135,22 +134,24 @@ System.out.println("New List is    " + NewPopulation.fireFlies.get(i).FireFlyt.g
 			
 			temp1 = FirstIndex;
 			temp2 = SecondIndex;
-			TSPNodes leftnode;
-			TSPNodes rightnode;
-			//TSPNodes xnode;
-			//TSPNodes ynode;
+			TSPNodes tempnode;
+			TSPNodes tempnode2;
 			System.out.println("The index to move is " +FirstIndex+ " and moved to " +SecondIndex);
 			
 			for(int i = 0; i < NodeSetLeft.size(); i++) {
 				temp1 = NodeSetLeft.get(i);
-				leftnode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(temp1);
-				//leftnode.setShipment(NewFly.FireFlyt.getNodeByIndex(temp1).getShipment());
-				rightnode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(temp2);
-				NewFly.FireFlyt.removeNodeByIndex(temp1);
-				NewFly.FireFlyt.insertAfterNodes(leftnode, rightnode.getPrev());
-
-
+				tempnode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(temp1);
+				tempnode2 = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(temp2);
+				
+				//NewFly.FireFlyt.removeNodeByIndex(temp1);
+				//NewFly.FireFlyt.insertAfterNodes(tempnode, tempnode2);
+				NewFly.FireFlyt.getNodeByIndex(temp2).setPrev(tempnode);
+				//NewFly.FireFlyt.getNodeByIndex(temp2).getShipment().setPrev(tempnode);
+				//NewFly.FireFlyt.
 				temp2 = temp1;
+				
+				//NodeSetLeft.
+				//Just make a vector for changes? 
 			}
 			
 			
@@ -159,7 +160,8 @@ System.out.println("New List is    " + NewPopulation.fireFlies.get(i).FireFlyt.g
 			//InvertMutation(1, FireFly)
 			System.out.println("~~~InvertMutation~~~");
 		}
-
+		
+		
 		return NewFly;
 	}
 }
