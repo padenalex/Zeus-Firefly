@@ -20,7 +20,7 @@ public class FireFly
 	public FireFly()
 	{
 		TSPNodesLinkedList FireFly = new TSPNodesLinkedList();
-		FireFly = StartList;
+		FireFly = (TSPNodesLinkedList) StartList.clone();
 		FireFly.emptyList();
 		Collections.shuffle(IndexVector);
 
@@ -31,9 +31,10 @@ public class FireFly
 
 		
 		//System.out.println("The attributes for This random firefly is " + FireFly.getAttributes());
-		//System.out.println("The route is " + FireFly.getRouteString());
+		//System.out.println("The new pop is " + FireFly.getRouteString());
 		//System.out.println("The Cost is " + FireFly.getCost());
-		FireFlyt=FireFly;
+		this.FireFlyt = FireFly;
+		
 	}
 	
 //-------------------
@@ -61,6 +62,6 @@ public class FireFly
 	public FireFly(FireFly temp) {
 		NodesLinkedList FireFly = new NodesLinkedList();
 		FireFly = (NodesLinkedList) temp.FireFlyt.clone();
-		FireFlyt = FireFly;
+		this.FireFlyt = FireFly;
 	}
 }
