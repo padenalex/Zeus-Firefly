@@ -3,6 +3,8 @@ package edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm;
 import java.lang.reflect.Constructor;
 import java.util.LinkedList;
 
+import edu.sru.thangiah.zeus.core.Settings;
+
 public class Chromosome extends AbstractChromosome
 {
 	public Chromosome(final Configuration a_configuration, final int chromosomeSize)
@@ -73,6 +75,17 @@ public class Chromosome extends AbstractChromosome
 			this.getGenes().get(i).setToRandomValue(generator);
 		}	
 		
+	}
+	
+	public void fillRandomGenes(RandomGenerator generator)
+	{
+		this.setGenes(new LinkedList<IGene>());
+		int[] geneList = generator.nextNonRepeatingRandomIntArray(0, this.size(), this.size());
+		for(int i = 0; i < this.size(); i++)
+		{
+			this.getGenes().add(new IntegerGene(super.getConfiguration(), geneList[i], this.size()));
+			Settings.printDebug(Settings.COMMENT, this.getGene(i -1).toString());
+		}
 	}
 	
 	

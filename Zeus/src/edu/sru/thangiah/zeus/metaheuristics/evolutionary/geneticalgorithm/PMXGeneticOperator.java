@@ -2,6 +2,8 @@ package edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm;
 
 import java.util.LinkedList;
 
+import edu.sru.thangiah.zeus.core.Settings;
+
 public class PMXGeneticOperator implements IGeneticOperator
 {
 	private Configuration configuration;
@@ -11,6 +13,12 @@ public class PMXGeneticOperator implements IGeneticOperator
 	{
 		configuration = currentConfiguration;
 		crossoverCount = 0;
+	}
+	
+	@Override
+	public void operate(Population pop)
+	{
+		operate(pop, pop.getChromosomes());
 	}
 
 	@Override
@@ -60,7 +68,12 @@ public class PMXGeneticOperator implements IGeneticOperator
 				}
 				
 				//get first offspring
-				resultChromosome1 = chr1.newChromosome();
+				resultChromosome1 = new Chromosome(getConfiguration(), chromosomeSize);
+				for (int i = 0; i < chromosomeSize; i++)
+				{
+					//Settings.printDebug(Settings.COMMENT, Integer.toString(chr1.getGenes().size()));
+					resultChromosome1.setGene(i, new IntegerGene(getConfiguration(), (int) chr1.getGene(i).getInternalValue(), chromosomeSize)); 
+				}
 				for (int i = point1; i <= point2; i++)
 				{
 					resultChromosome1.setGene(i, chr2.getGene(i).newGene());//move gene from second chromosome into child at index i
@@ -72,7 +85,11 @@ public class PMXGeneticOperator implements IGeneticOperator
 				}
 				
 				//get second offspring
-				resultChromosome2 = chr2.newChromosome();
+				resultChromosome2 = new Chromosome(getConfiguration(), chromosomeSize);
+				for (int i = 0; i < chromosomeSize; i++)
+				{
+					resultChromosome2.setGene(i, new IntegerGene(getConfiguration(), (int) chr1.getGene(i).getInternalValue(), chromosomeSize)); 
+				}
 				for (int i = point1; i <= point2; i++)
 				{
 					//same as above but reversed

@@ -44,6 +44,13 @@ public class MutationOperator extends AbstractGeneticOperator
 	 * See StaticMutationOperator.java for an example
 	 * 
 	 */
+	
+	@Override
+	public void operate(Population pop)
+	{
+		operate(pop, pop.getChromosomes());
+	}
+	
 	@Override
 	public void operate(Population pop, LinkedList<IChromosome> chromo) {
 		// TODO Auto-generated method stub

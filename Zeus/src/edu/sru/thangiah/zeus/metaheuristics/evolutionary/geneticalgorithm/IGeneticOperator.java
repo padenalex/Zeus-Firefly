@@ -25,5 +25,6 @@ public interface IGeneticOperator {
 	
 	
 	public void operate(Population pop, LinkedList<IChromosome> chromo);
+	public void operate(Population pop);
 	
 }

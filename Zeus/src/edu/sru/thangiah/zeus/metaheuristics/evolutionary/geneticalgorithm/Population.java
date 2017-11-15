@@ -2,6 +2,8 @@ package edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm;
 
 import java.util.LinkedList;
 
+import edu.sru.thangiah.zeus.core.Settings;
+
 
 /*
  * A Population is a generation of chromosomes that are stored in a list.
@@ -26,10 +28,12 @@ public class Population
 		configuration = currentConfiguration;
 		chromosomes = new LinkedList<IChromosome>();
 		//Class clazz;
+		Settings.printDebug(Settings.COMMENT, "New Population");
 		for(int i = 0; i < configuration.getPopulationSize(); i++)
 		{
-			
-			chromosomes.add(configuration.getSampleChromosome().newChromosome());
+			Chromosome temp = new Chromosome(currentConfiguration, currentConfiguration.getChromosomeSize());
+			temp.fillRandomGenes(currentConfiguration.getRandomGenerator());
+			chromosomes.add(temp);
 		}
 	}
 	

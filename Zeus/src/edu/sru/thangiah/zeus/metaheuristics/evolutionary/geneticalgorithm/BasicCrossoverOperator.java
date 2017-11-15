@@ -33,6 +33,12 @@ public class BasicCrossoverOperator implements IGeneticOperator
 		 * 
 		 */
 		
+		@Override
+		public void operate(Population pop)
+		{
+			operate(pop, pop.getChromosomes());
+		}
+		
 		public void operate(Population pop, LinkedList<IChromosome> chromes) 
 		{
 			RandomGenerator random = getConfiguration().getRandomGenerator();

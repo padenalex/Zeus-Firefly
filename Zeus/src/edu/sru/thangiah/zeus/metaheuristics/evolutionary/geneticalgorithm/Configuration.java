@@ -23,7 +23,15 @@ public class Configuration
 	private RandomGenerator randomGenerator;
 	private ISampleGeneChooser sampleGeneChooser;
 	private int currentGenerationNum;
+	/*private Population pops;
 	
+	
+	public Population getThePopulation() {
+		return pops;
+	}
+	public void setThePopulation(Population thePopulation) {
+		pops = thePopulation;
+	}*/
 	
 	public void setPopulationSize(int populationSize){ this.populationSize = populationSize; } 
 	public void setChromosomeSize(int chromosomeSize){ this.chromosomeSize = chromosomeSize; }
