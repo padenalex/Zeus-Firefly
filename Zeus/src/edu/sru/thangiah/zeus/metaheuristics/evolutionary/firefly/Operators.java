@@ -15,45 +15,45 @@ import edu.sru.thangiah.zeus.core.Attributes;
 import edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly.Population;
 
 public class Operators {
-
+	public FireFly FinalBright;
 	Operators(LinkedList<FireFly> fireFlies){
 		int listsize = fireFlies.size();
-
-FireFly Brightest = fireFlies.get(GetBrightestFly(fireFlies));	
-
-Population NewPopulation = new Population();
-for(int i=0; i < fireFlies.size(); i++) {
-	NewPopulation.fireFlies.add(fireFlies.get(i));
-	
-	//System.out.println("the old pop is " + fireFlies.get(i).FireFlyt.getRouteString());
-}
-//for(int i = 0; i < 4; i++) {NewPopulation.fireFlies.add(InvertMutation(Brightest));}
-
-
-//NewPopulation.fireFlies.add(YtowardsX(Brightest, fireFlies.get(1)));
-
-//System.out.println("New List size is " + NewPopulation.fireFlies.size());
-//System.out.println("Best List is   " + Brightest.FireFlyt.getRouteString());
-//System.out.println("Second List is " + fireFlies.get(1).FireFlyt.getRouteString() + " cost is " + fireFlies.get(1).FireFlyt.getCost() );
-//System.out.println("New List is    " + NewPopulation.fireFlies.get(21).FireFlyt.getRouteString() + " cost is " + NewPopulation.fireFlies.get(21).FireFlyt.getCost());
-	
-		for(int i=0; i < 50; i++) {
+		Population NewPopulation = new Population();
+		for(int i=0; i < fireFlies.size(); i++) {NewPopulation.fireFlies.add(fireFlies.get(i));} //Set New Pop to passed in pop
 			
-			Brightest = NewPopulation.fireFlies.get(GetBrightestFly(NewPopulation.fireFlies));	
-			for(int x=0; x < 20; x++)  {
-				NewPopulation.fireFlies.add(XtowardsY(Brightest, NewPopulation.fireFlies.get(x)));
-				NewPopulation.fireFlies.add(YtowardsX(Brightest, NewPopulation.fireFlies.get(x)));
-			}
-			for(int x = 0; x < 4; x++) {NewPopulation.fireFlies.add(InvertMutation(Brightest));}
+		for(int x=0; x < Population.TotalGen; x++) {
+			int BrightIndex = GetBrightestFly(NewPopulation.fireFlies);
+			FireFly Brightest = NewPopulation.fireFlies.get(BrightIndex);
+			System.out.println("The New Best Is: " + Brightest.FireFlyt.getCost()); //Show cost Improve as generation
+			
+			for(int i=0; i < 4; i++) {NewPopulation.fireFlies.add(InvertMutation(NewPopulation.fireFlies.get(0)));}
+				for(int i=1; i < Population.popsize; i++) {
+					//System.out.println("The list is " + i);
+					FindNewEdge Edge = new FindNewEdge(Brightest, NewPopulation.fireFlies.get(i));
+					NewPopulation.fireFlies.add(XtoY(Edge, NewPopulation.fireFlies.get(i)));
+					NewPopulation.fireFlies.add(YtoX(Edge, NewPopulation.fireFlies.get(i)));
+					NewPopulation.fireFlies.add(XfromY(Edge, NewPopulation.fireFlies.get(i)));
+					NewPopulation.fireFlies.add(YfromX(Edge, NewPopulation.fireFlies.get(i)));
+					//System.out.println("end list for " + i);
+				}
+			//System.out.println("Pre trim pop " + NewPopulation.fireFlies.size());
 			NewPopulation = TrimPopulation(NewPopulation);
-
 		}
+		int BrightIndex = GetBrightestFly(NewPopulation.fireFlies);
+		FireFly Brightest = NewPopulation.fireFlies.get(BrightIndex);
+		System.out.println("The brightest found is " + Brightest.FireFlyt.getRouteString());
+		System.out.println(" cost is " + Brightest.FireFlyt.getCost());
 		
-		System.out.println("Best List is   " + Brightest.FireFlyt.getRouteString() + " cost is " + Brightest.FireFlyt.getCost());
-		
+		//for(int i=0; i < 20; i++) {
+			//System.out.println("List " +i+ " is: " + NewPopulation.fireFlies.get(i).FireFlyt.getRouteString() + " cost is: " + NewPopulation.fireFlies.get(i).FireFlyt.getCost());
+		//}
+		this.FinalBright = Brightest;
 	}
 	
 	
+
+
+
 	public int GetBrightestFly(LinkedList<FireFly> fireFlies) {
 			//System.out.println("TTTTTTTTTTTTTTTT");
 			double lowestcost= 999999998;
@@ -68,126 +68,7 @@ for(int i=0; i < fireFlies.size(); i++) {
 			}
 			return lowcostindex;
 		}
-		
-		
-	public FireFly XtowardsY(FireFly BrightestFly, FireFly ThisFly) {
-			Vector<Integer> MatchHolder = new Vector<Integer>();
-			Vector<Integer> NodeSetLeft = new Vector<Integer>();
-			FireFly NewFly = new FireFly(ThisFly);
-			Random rand = new Random();
-			//System.out.println(BrightestFly.FireFlyt.getRouteString());
-			//System.out.println(ThisFly.FireFlyt.getRouteString());
-			
-			for(int i=0; i < FireFly.FireflyDimension; i++) {
-				int tempB = BrightestFly.FireFlyt.getNodesAtPosition(i).getIndex();
-				int tempT = ThisFly.FireFlyt.getNodesAtPosition(i).getIndex();
-				if(tempB == tempT) {
-					//System.out.println("Match at index " + tempB);
-					MatchHolder.add(tempB);
-					//ListPosition.add(i);
-				}
-			}
-	
-			//System.out.println("The Index Vector is " + NodeIndex);
-			
-			if(MatchHolder.size() >= 1 && !BrightestFly.equals(ThisFly)) {
-				int FirstIndex = 999999999;
-				int SecondIndex = 999999999;
-				int Check1 = 999999997;
-				int Check2 = 999999997;
-				int HowManyTimesRan = 0;
-				int Run1 = 1;
-				int Run2 = 1;
-				int SecondLeft = 0;
-		
-				
-//infinite loop was in here --- Some lists are remaining the same?
-				while(Run1 == 1) {
-					int  n = rand.nextInt(FireFly.FireflyDimension-1) + 0;
-					FirstIndex = BrightestFly.FireFlyt.getNodesAtPosition(n).getIndex();
-		
-					if(n == FireFly.FireflyDimension-1) {
-						SecondIndex = BrightestFly.FireFlyt.getNodesAtPosition(n-1).getIndex();
-						SecondLeft = 1;
-					}
-					else {
-						SecondIndex = BrightestFly.FireFlyt.getNodesAtPosition(n+1).getIndex();
-					}
-					Check2 = ThisFly.FireFlyt.getNodeByIndex(FirstIndex).getPrev().getIndex();
-					Check1 = ThisFly.FireFlyt.getNodeByIndex(FirstIndex).getNext().getIndex();
-					//System.out.println("Bright Index is: " +SecondIndex+ " Check1 is " +Check1+ " Check2 is " + Check2);
-					
-					if(Check1 != SecondIndex && Check2 != SecondIndex) {Run1 = 0;}
-					HowManyTimesRan++;
-					if(FireFly.FireflyDimension == HowManyTimesRan) {Run1 = 0;}
-					//System.out.println("DoWhile For Find A Random Edge Not In List 2 Ran # Times: " + HowManyTimesRan);
-				}
-		
-		
-				if(SecondLeft == 1) {
-					int temp = FirstIndex;
-					FirstIndex = SecondIndex;
-					SecondIndex = temp;
-				}
-				
-				int temp1 = FirstIndex;
-				int temp2 = FirstIndex;
-				NodeSetLeft.addElement(FirstIndex);
-				 while(Run2 == 1) {
-					try {
-						temp1 = BrightestFly.FireFlyt.getNodeByIndex(temp1).getPrev().getIndex();
-						temp2 = NewFly.FireFlyt.getNodeByIndex(temp2).getPrev().getIndex();
-						
-						if(temp1 == temp2) {
-							if(temp1 > 0) {
-								NodeSetLeft.add(temp2); //System.out.println("the temp is " + temp2 + " " + temp1);
-								System.out.println("-------->>>>>>  The Left Node Set is Size " + NodeSetLeft.size());
-							} 
-							else {Run2 =0;}
-						}
-						else {Run2 = 0;}
-					}
-					catch(Exception e){
-						System.out.println("Hit Tail?");
-						Run2 = 0;
-					}
-				}
-				
-				
-				temp1 = FirstIndex;
-				temp2 = SecondIndex;
-				TSPNodes leftnode;
-				TSPNodes rightnode;
-	
-				System.out.println("The index to move is " +FirstIndex+ " and moved to " +SecondIndex);
-				System.out.println("the route is  " + NewFly.FireFlyt.getRouteString());
-				System.out.println("best route is " + BrightestFly.FireFlyt.getRouteString());
-	
-				for(int i = 0; i < NodeSetLeft.size(); i++) {
-					temp1 = NodeSetLeft.get(i);
-					leftnode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(temp1);
-					rightnode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(temp2);
-					NewFly.FireFlyt.removeNodeByIndex(temp1);
-					NewFly.FireFlyt.insertAfterNodes(leftnode, rightnode.getPrev()); //if rightnode = pos 0 then sethead instead of getprev ?
-					temp2 = temp1;
-				}
-				System.out.println("the new route " + NewFly.FireFlyt.getRouteString());
-				// -------Find total cost new
-				ProblemInfo.nodesLLLevelCostF.calculateTotalsStats(NewFly.FireFlyt);
-				//System.out.println("new cost test " + ProblemInfo.nodesLLLevelCostF.getTotalCost(NewFly.FireFlyt));
-				//System.out.println("old cost test " + ProblemInfo.nodesLLLevelCostF.getTotalCost(ThisFly.FireFlyt));
-				//System.out.println("test cost is " + NewFly.FireFlyt.getCost());
-				
-			}
-			else {
-				NewFly = InvertMutation(ThisFly);
-				System.out.println("~~~InvertMutation~~~");
-			}
-			
-		return NewFly;
-		}
-	
-		
+
 	public FireFly InvertMutation(FireFly CurrFly) {
 			
 	
@@ -233,9 +114,7 @@ for(int i=0; i < fireFlies.size(); i++) {
 				int temp2 = 0;
 				
 				if(Rand1 != 0) {
-					for(int i = 0; i < Rand1; i++) {
-						NewFly.FireFlyt.insertNodeLast(LeftVect.elementAt(i));
-					}
+					for(int i = 0; i < Rand1; i++) {NewFly.FireFlyt.insertNodeLast(LeftVect.elementAt(i));}
 				}
 				for(int i = Rand1; i < Rand2; i++) {
 					NewFly.FireFlyt.insertNodeLast(FlipVect.elementAt(temp1));
@@ -249,178 +128,164 @@ for(int i=0; i < fireFlies.size(); i++) {
 				}
 				ProblemInfo.nodesLLLevelCostF.calculateTotalsStats(NewFly.FireFlyt);
 				
+				//System.out.println("Cur: " + CurrFly.FireFlyt.getRouteString());
+				//System.out.println("New: " + NewFly.FireFlyt.getRouteString());
+				
 		return NewFly;
 		}
 	
-		
+	//Remove possibility of duplicates from trim pop	
 	public Population TrimPopulation(Population TempPop) {
 			
 			Population NewPop = new Population();
-			
 			int temp;
-			
-			//for(int i = 0; i < 44; i++) {
-			//	System.out.println("the old pop is " + TempPop.fireFlies.get(i).FireFlyt.getRouteString());
-			//}
-			//System.out.println(" ");
-			//System.out.println("=================");
-			//System.out.println(" ");
+			int shouldAdd = 1;
+			String routeString;
 			
 			for(int i = 0; i < Population.popsize; i++) {
-				//System.out.println("test");
 				temp = GetBrightestFly(TempPop.fireFlies);
-				NewPop.fireFlies.add(TempPop.fireFlies.get(temp));
+				FireFly tempFly = TempPop.fireFlies.get(temp);
 				TempPop.fireFlies.remove(temp);
+				routeString = tempFly.FireFlyt.getRouteString();
+				shouldAdd = 1;
 				
-				//System.out.println("temp pop size is " + TempPop.fireFlies.size() + " new pop is " + NewPop.fireFlies.size());
-				//System.out.println("the new pop is " + NewPop.fireFlies.get(i).FireFlyt.getRouteString());
+				for(int x=0; x < NewPop.fireFlies.size(); x++) {
+					String newLS = NewPop.fireFlies.get(x).FireFlyt.getRouteString();
+					if (routeString.equals(newLS)) {shouldAdd = 0; break;}
+				}
 				
-				
+				if(shouldAdd == 1) {NewPop.fireFlies.add(tempFly);}
+
 			}
+			//System.out.println("New pop size is " + NewPop.fireFlies.size());
+			
+			//Fills remaining population with inverts of the best ones to reach popsize (20)
+			int AddInvNumb = Population.popsize - NewPop.fireFlies.size();
+			for(int i=0; i < AddInvNumb; i++) {NewPop.fireFlies.add(InvertMutation(NewPop.fireFlies.get(i)));}
+			//System.out.println("New pop size is " + NewPop.fireFlies.size());
 			
 			return NewPop;
 		}
 	
 	
-//---------------------------- YtoX
-//----------------------------
 	
-	public FireFly YtowardsX(FireFly BrightestFly, FireFly ThisFly) {
-		Vector<Integer> MatchHolder = new Vector<Integer>();
-		Vector<Integer> NodeSetRight = new Vector<Integer>();
-		FireFly NewFly = new FireFly(ThisFly);
-		Random rand = new Random();
-		//System.out.println(BrightestFly.FireFlyt.getRouteString());
-		//System.out.println(ThisFly.FireFlyt.getRouteString());
-		
-		for(int i=0; i < FireFly.FireflyDimension; i++) {
-			int tempB = BrightestFly.FireFlyt.getNodesAtPosition(i).getIndex();
-			int tempT = ThisFly.FireFlyt.getNodesAtPosition(i).getIndex();
-			if(tempB == tempT) {
-				//System.out.println("Match at index " + tempB);
-				MatchHolder.add(tempB);
-				//ListPosition.add(i);
-			}
-		}
-
-		//System.out.println("The Index Vector is " + NodeIndex);
-		
-		if(MatchHolder.size() >= 1 && !BrightestFly.equals(ThisFly)) {
-			int FirstIndex = 999999996;
-			int SecondIndex = 999999996;
-			int Check1 = 999999995;
-			int Check2 = 999999995;
-			int HowManyTimesRan = 0;
-			int Run1 = 1;
-			int Run2 = 1;
-			int SecondLeft = 0;
 	
-			
-//infinite loop was in here --- Some lists are remaining the same?
-			while(Run1 == 1) {
-				int  n = rand.nextInt(FireFly.FireflyDimension-1) + 0;
-				FirstIndex = BrightestFly.FireFlyt.getNodesAtPosition(n).getIndex();
+	private FireFly XtoY(FindNewEdge edge, FireFly CurrentFly) {
 	
-				if(n == FireFly.FireflyDimension-1) {
-					SecondIndex = BrightestFly.FireFlyt.getNodesAtPosition(n-1).getIndex();
-					SecondLeft = 1;
-				}
-				else {
-					SecondIndex = BrightestFly.FireFlyt.getNodesAtPosition(n+1).getIndex();
-				}
-				Check2 = ThisFly.FireFlyt.getNodeByIndex(FirstIndex).getPrev().getIndex();
-				Check1 = ThisFly.FireFlyt.getNodeByIndex(FirstIndex).getNext().getIndex();
-				//System.out.println("Bright Index is: " +SecondIndex+ " Check1 is " +Check1+ " Check2 is " + Check2);
-				
-				if(Check1 != SecondIndex && Check2 != SecondIndex) {Run1 = 0;}
-				HowManyTimesRan++;
-				if(FireFly.FireflyDimension == HowManyTimesRan) {Run1 = 0;}
-				//System.out.println("DoWhile For Find A Random Edge Not In List 2 Ran # Times: " + HowManyTimesRan);
+			Vector<Integer> NSLout = new Vector<Integer>();
+			NSLout = edge.NSLout;
+			int SRindex = edge.SRindex;
+			FireFly NewFly = new FireFly(CurrentFly);
+		try {
+			TSPNodes RightNode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(SRindex);
+			
+			for(int i=0; i < NSLout.size(); i++) {
+				TSPNodes tempNode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(NSLout.get(i));
+				NewFly.FireFlyt.removeNodeByIndex(NSLout.get(i));
+				NewFly.FireFlyt.insertAfterNodes(tempNode, RightNode.getPrev());
+				RightNode = tempNode;
 			}
-	
-			//vchanged from to  to check fix ---- This puts y in front of x
-			if(SecondLeft == 1) {
-				int temp = FirstIndex;
-				FirstIndex = SecondIndex;
-				SecondIndex = temp;
-			}
-			
-//########	--Build set up from right side instead of left //.getnext not .getprev + Hard limit at max+1 instead of min.getprev (0)	
-			int temp1 = SecondIndex;
-			int temp2 = SecondIndex;
-			NodeSetRight.addElement(SecondIndex);
-			 while(Run2 == 1) {
-				try {
-					temp1 = BrightestFly.FireFlyt.getNodeByIndex(temp1).getNext().getIndex();
-					temp2 = NewFly.FireFlyt.getNodeByIndex(temp2).getNext().getIndex();
-					
-					if(temp1 == temp2) {
-						if(temp1 > -1) {
-							NodeSetRight.add(temp2); //System.out.println("the temp is " + temp2 + " " + temp1);
-							System.out.println("~~~~~~~>>>>>>  The Right Node Set is Size " + NodeSetRight.size());
-						} 
-						else {Run2 =0;}
-					}
-					else {Run2 = 0;}
-				}
-				catch(Exception e){
-					System.out.println("Hit Tail?");
-					Run2 = 0;
-				}
-			}
-//########			
-			
-			temp1 = FirstIndex;
-			temp2 = SecondIndex;
-			TSPNodes leftnode;
-			TSPNodes rightnode;
-
-			System.out.println("The index to move is " +SecondIndex+ " and moved to " +FirstIndex);
-			System.out.println("best route is " + BrightestFly.FireFlyt.getRouteString());
-			System.out.println("the route is  " + NewFly.FireFlyt.getRouteString());
-			
-			for(int i = 0; i < NodeSetRight.size(); i++) {
-				temp2 = NodeSetRight.get(i);
-				leftnode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(temp1);
-				rightnode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(temp2);
-				NewFly.FireFlyt.removeNodeByIndex(temp2);
-				NewFly.FireFlyt.insertAfterNodes(rightnode, leftnode);
-				temp1 = temp2;
-			}
-			
-			
-/*
-			for(int i = 0; i < NodeSetRight.size(); i++) {
-				temp2 = NodeSetRight.get(i);
-				leftnode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(temp1);
-				rightnode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(temp2);
-				NewFly.FireFlyt.removeNodeByIndex(temp2);
-				NewFly.FireFlyt.insertAfterNodes(rightnode, leftnode); //if rightnode = pos 0 then sethead instead of getprev ?
-				temp1 = temp2;
-			}
-*/						
-			
-			
-			
-			System.out.println("the new route " + NewFly.FireFlyt.getRouteString());
-			// -------Find total cost new
 			ProblemInfo.nodesLLLevelCostF.calculateTotalsStats(NewFly.FireFlyt);
-			//System.out.println("new cost test " + ProblemInfo.nodesLLLevelCostF.getTotalCost(NewFly.FireFlyt));
-			//System.out.println("old cost test " + ProblemInfo.nodesLLLevelCostF.getTotalCost(ThisFly.FireFlyt));
-			//System.out.println("test cost is " + NewFly.FireFlyt.getCost());
-			
+			//System.out.println("Old Fly-: " + CurrentFly.FireFlyt.getRouteString() + " cost is " + CurrentFly.FireFlyt.getCost());
+			//System.out.println("New Fly1: " + NewFly.FireFlyt.getRouteString() + " cost is " + NewFly.FireFlyt.getCost());
 		}
-		else {
-			NewFly = InvertMutation(ThisFly);
-			System.out.println("~~~InvertMutation~~~");
-		}
-		
-	return NewFly;
+		catch(Exception e) {System.out.println("error in XtoY"); e.printStackTrace();}
+		return NewFly;
+
 	}
 	
+//=====
+
+	private FireFly YtoX(FindNewEdge edge, FireFly CurrentFly) {
+			Vector<Integer> NSRout = new Vector<Integer>();
+			NSRout = edge.NSRout;
+			int SLindex = edge.SLindex;
+			FireFly NewFly = new FireFly(CurrentFly);
+		try {
+			TSPNodes LeftNode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(SLindex);
+			
+			for(int i=0; i < NSRout.size(); i++) {
+				TSPNodes tempNode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(NSRout.get(i));
+				NewFly.FireFlyt.removeNodeByIndex(NSRout.get(i));
+				NewFly.FireFlyt.insertAfterNodes(tempNode, LeftNode);
+				LeftNode = tempNode;
+			}
+			
+			ProblemInfo.nodesLLLevelCostF.calculateTotalsStats(NewFly.FireFlyt);
+			//System.out.println("Old Fly: " + CurrentFly.FireFlyt.getRouteString() + " cost is " + CurrentFly.FireFlyt.getCost());
+			//System.out.println("New Fly2: " + NewFly.FireFlyt.getRouteString() + " cost is " + NewFly.FireFlyt.getCost());
+		}
+		catch(Exception e) {System.out.println("error in YtoX"); e.printStackTrace();}
+		return NewFly;
+	}
 	
+//====
 	
+	private FireFly XfromY(FindNewEdge edge, FireFly CurrentFly) {
+			Vector<Integer> NSLin = new Vector<Integer>();
+			Vector<Integer> NSRin = new Vector<Integer>();
+			NSLin = edge.NSLin;
+			NSRin = edge.NSRin;
+			int SRindex = edge.SRindex;
+			FireFly NewFly = new FireFly(CurrentFly);
+		try {
+			TSPNodes LeftNode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(SRindex).getPrev();
+			
+			for(int i=0; i < NSRin.size(); i++) {
+				TSPNodes tempNode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(NSRin.get(i));
+				NewFly.FireFlyt.removeNodeByIndex(NSRin.get(i));
+				NewFly.FireFlyt.insertAfterNodes(tempNode, LeftNode);
+				LeftNode = tempNode;
+			}
+			
+			for(int i=0; i < NSLin.size(); i++) {	
+				TSPNodes tempNode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(NSLin.get(i));
+				NewFly.FireFlyt.removeNodeByIndex(NSLin.get(i));
+				NewFly.FireFlyt.insertAfterNodes(tempNode, LeftNode);
+				LeftNode = tempNode;
+			}
+			
+			ProblemInfo.nodesLLLevelCostF.calculateTotalsStats(NewFly.FireFlyt);
+			//System.out.println("Old Fly: " + CurrentFly.FireFlyt.getRouteString() + " cost is " + CurrentFly.FireFlyt.getCost());
+			//System.out.println("New Fly3: " + NewFly.FireFlyt.getRouteString() + " cost is " + NewFly.FireFlyt.getCost());
+		}
+		catch(Exception e) {System.out.println("error in XfromY"); e.printStackTrace();}
+			return NewFly;
+	}
 	
+//=====
 	
+	private FireFly YfromX(FindNewEdge edge, FireFly CurrentFly) {
+			Vector<Integer> NSLin = new Vector<Integer>();
+			Vector<Integer> NSRin = new Vector<Integer>();
+			NSLin = edge.NSLin;
+			NSRin = edge.NSRin;
+			int SRindex = edge.SRindex;
+			int SLindex = edge.SLindex;
+			FireFly NewFly = new FireFly(CurrentFly);
+		try {
+			TSPNodes LeftNode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(NSLin.get(0)).getPrev();
+//Flips Y (NSRin) and puts before X			
+			for(int i=0; i < NSRin.size(); i++) {
+				TSPNodes tempNode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(NSRin.get(i));
+				NewFly.FireFlyt.removeNodeByIndex(NSRin.get(i));
+				NewFly.FireFlyt.insertAfterNodes(tempNode, LeftNode);
+				LeftNode = tempNode;
+			}
+//flips X after Y
+			for(int i=0; i < NSLin.size(); i++) {	
+				TSPNodes tempNode = (TSPNodes) NewFly.FireFlyt.getNodeByIndex(NSLin.get(i));
+				NewFly.FireFlyt.removeNodeByIndex(NSLin.get(i));
+				NewFly.FireFlyt.insertAfterNodes(tempNode, LeftNode);
+				LeftNode = tempNode;
+			}
+			
+			ProblemInfo.nodesLLLevelCostF.calculateTotalsStats(NewFly.FireFlyt);
+			//System.out.println("Old Fly: " + CurrentFly.FireFlyt.getRouteString() + " cost is " + CurrentFly.FireFlyt.getCost());
+			//System.out.println("New Fly4: " + NewFly.FireFlyt.getRouteString() + " cost is " + NewFly.FireFlyt.getCost());
+		}
+		catch(Exception e) {System.out.println("error in YfromX"); e.printStackTrace();}
+			return NewFly;
+	}
 	
 }

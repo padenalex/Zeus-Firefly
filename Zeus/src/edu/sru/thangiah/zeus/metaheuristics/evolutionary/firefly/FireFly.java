@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import edu.sru.thangiah.zeus.core.Nodes;
 import edu.sru.thangiah.zeus.core.NodesLinkedList;
+import edu.sru.thangiah.zeus.core.ProblemInfo;
 import edu.sru.thangiah.zeus.tsp.*;
 
 
@@ -17,19 +18,19 @@ public class FireFly
 	static TSPNodesLinkedList StartList = new TSPNodesLinkedList();
 	public NodesLinkedList FireFlyt = new TSPNodesLinkedList();
 
-	public FireFly()
-	{
+	public FireFly(){
 		TSPNodesLinkedList FireFly = new TSPNodesLinkedList();
 		FireFly = (TSPNodesLinkedList) StartList.clone();
 		FireFly.emptyList();
 		Collections.shuffle(IndexVector);
 
-		
+		//FireFly.insertShipment(IndexVector.elementAt(0).getShipment());
 		for(int i=0; i < FireflyDimension; i++) {
-				FireFly.insertShipment(IndexVector.elementAt(i).getShipment());
+			FireFly.insertShipment(IndexVector.elementAt(i).getShipment());
+			//FireFly.insertNodes(IndexVector.elementAt(i));
 		}
 
-		
+		//ProblemInfo.nodesLLLevelCostF.calculateTotalsStats(FireFly);
 		//System.out.println("The attributes for This random firefly is " + FireFly.getAttributes());
 		//System.out.println("The new pop is " + FireFly.getRouteString());
 		//System.out.println("The Cost is " + FireFly.getCost());

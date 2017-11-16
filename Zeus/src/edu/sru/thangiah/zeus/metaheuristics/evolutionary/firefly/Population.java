@@ -19,8 +19,8 @@ public class Population {
 	
 	//private FireFly brightestFireFly;
 	LinkedList<FireFly> fireFlies;
-	static int popsize = 20;
-	static int TotalGen = 10;
+	static int popsize = 40;
+	static int TotalGen = 250;
 	
 	public Population(NodesLinkedList mainNodes) {
 
@@ -29,7 +29,7 @@ public class Population {
 		fireFlies.add(new FireFly(mainNodes));
 		int FireFlySize = FireFly.FireflyDimension;
 		
-		for(int i = 0; i < 20; i++) {
+		for(int i = 0; i < popsize; i++) {
 			//FireFly test = new FireFly();
 			//System.out.println("> " + test.FireFlyt.getRouteString());
 			fireFlies.add(new FireFly());			

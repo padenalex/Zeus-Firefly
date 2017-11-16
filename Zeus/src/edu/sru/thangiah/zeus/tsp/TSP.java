@@ -103,11 +103,11 @@ public class TSP {
 		}
         
 		//set up the shipment insertion type
-		//ProblemInfo.insertShipType = new LinearGreedyInsertShipment();
-		//Settings.printDebug(Settings.COMMENT, LinearGreedyInsertShipment.WhoAmI());
+		ProblemInfo.insertShipType = new LinearGreedyInsertShipment();
+		Settings.printDebug(Settings.COMMENT, LinearGreedyInsertShipment.WhoAmI());
 		//InsertAsGiven
-		ProblemInfo.insertShipType = new InsertAsGiven();
-		Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
+		//ProblemInfo.insertShipType = new InsertAsGiven();
+		//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
 		
 		
 		
@@ -199,12 +199,12 @@ public class TSP {
 
 		}
 		//--------------------------------------------------------------(TURN ON/OFF GUI)---------
-		//ZeusGui guiPost = new ZeusGui(mainDepots, mainShipments);
+		ZeusGui guiPost = new ZeusGui(mainDepots, mainShipments);
 		
 		
 		//bring in metaheuristics
-		Settings.printDebug(Settings.COMMENT, "Starting GA");
-		TSPInteger ga = new TSPInteger(mainShipments.getNumShipments());
+		//Settings.printDebug(Settings.COMMENT, "Starting GA");
+		//TSPInteger ga = new TSPInteger(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
 	} 
 
 	/**
