@@ -24,6 +24,7 @@ public class PMXGeneticOperator implements IGeneticOperator
 	@Override
 	public void operate(Population pop, LinkedList<IChromosome> chromes)
 	{
+		Settings.printDebug(Settings.COMMENT, "Into Operator");
 		// TODO Auto-generated method stub
 		RandomGenerator random = getConfiguration().getRandomGenerator();
 		int chrome1, chrome2, point1, point2;
@@ -53,13 +54,13 @@ public class PMXGeneticOperator implements IGeneticOperator
 			{
 				point2 = random.nextIntBetween(1, chromosomeSize-2);
 			}
-			
 			chr1 = pop.getChromosome(chrome1);
 			chr2 = pop.getChromosome(chrome2);
 			
 			doCrossover = random.nextDouble();
 			if(doCrossover < getConfiguration().getCrossoverProbability())
 			{
+				Settings.printDebug(Settings.COMMENT, "Doing Crossover");
 				if (point1 > point2)//swap so that point one is less than point 2
 				{
 					int i = point2;
@@ -69,10 +70,10 @@ public class PMXGeneticOperator implements IGeneticOperator
 				
 				//get first offspring
 				resultChromosome1 = new Chromosome(getConfiguration(), chromosomeSize);
+				
 				for (int i = 0; i < chromosomeSize; i++)
 				{
-					//Settings.printDebug(Settings.COMMENT, Integer.toString(chr1.getGenes().size()));
-					resultChromosome1.setGene(i, new IntegerGene(getConfiguration(), (int) chr1.getGene(i).getInternalValue(), chromosomeSize)); 
+					resultChromosome1.getGenes().add(new IntegerGene(getConfiguration(), (int) (chr1.getGene(i).getInternalValue()), chromosomeSize));
 				}
 				for (int i = point1; i <= point2; i++)
 				{
@@ -80,26 +81,27 @@ public class PMXGeneticOperator implements IGeneticOperator
 					
 					//finds the index of the gene in first chromosome with the value of the gene in the second chromosome at index i
 					int index = findGeneIndex((Chromosome) chr1, (int) chr2.getGene(i).getInternalValue());
-					
-					resultChromosome1.setGene(index, chr1.getGene(i).newGene());
+					resultChromosome1.setGene(index, new IntegerGene(getConfiguration(), (int) chr2.getGene(i).getInternalValue(), getConfiguration().getChromosomeSize()));
 				}
 				
 				//get second offspring
 				resultChromosome2 = new Chromosome(getConfiguration(), chromosomeSize);
 				for (int i = 0; i < chromosomeSize; i++)
 				{
-					resultChromosome2.setGene(i, new IntegerGene(getConfiguration(), (int) chr1.getGene(i).getInternalValue(), chromosomeSize)); 
+					resultChromosome2.getGenes().add(new IntegerGene(getConfiguration(), (int) chr2.getGene(i).getInternalValue(), chromosomeSize)); 
 				}
 				for (int i = point1; i <= point2; i++)
 				{
 					//same as above but reversed
 					resultChromosome2.setGene(i, chr1.getGene(i).newGene());
 					int index = findGeneIndex((Chromosome) chr2, (int) chr1.getGene(i).getInternalValue());
-					resultChromosome2.setGene(index, chr2.getGene(i).newGene());
+					resultChromosome2.setGene(index, new IntegerGene(getConfiguration(), (int) chr1.getGene(i).getInternalValue(), chromosomeSize));
 				}
 				
 				pop.addChromosome(resultChromosome1);
-				pop.addChromosome(resultChromosome1);
+				pop.addChromosome(resultChromosome2);
+				Settings.printDebug(Settings.COMMENT, "New Child 1 : " + resultChromosome1.toString());
+				Settings.printDebug(Settings.COMMENT, "New Child 2 : " + "");
 			}
 			
 			Population tempPop = new Population(configuration);

@@ -31,6 +31,7 @@ public class Genotype
 		fitnessFunction = configuration.getFitnessFunction();
 		chromosomeSize = configuration.getChromosomeSize();
 		lastPop = null;
+		population = new Population(configuration);
 	}
 	
 	public Genotype(Configuration config, Population pop)

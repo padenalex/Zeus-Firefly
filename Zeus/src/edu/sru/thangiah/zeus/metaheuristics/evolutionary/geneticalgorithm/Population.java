@@ -28,10 +28,9 @@ public class Population
 		configuration = currentConfiguration;
 		chromosomes = new LinkedList<IChromosome>();
 		//Class clazz;
-		Settings.printDebug(Settings.COMMENT, "New Population");
-		for(int i = 0; i < configuration.getPopulationSize(); i++)
+				for(int i = 0; i < configuration.getPopulationSize(); i++)
 		{
-			Chromosome temp = new Chromosome(currentConfiguration, currentConfiguration.getChromosomeSize());
+			Chromosome temp = new Chromosome(currentConfiguration);
 			temp.fillRandomGenes(currentConfiguration.getRandomGenerator());
 			chromosomes.add(temp);
 		}

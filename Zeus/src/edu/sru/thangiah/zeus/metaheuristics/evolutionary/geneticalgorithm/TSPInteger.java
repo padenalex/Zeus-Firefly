@@ -15,7 +15,6 @@ public class TSPInteger {
 	    int chromeSize = numGenes;
 	    
 	    Configuration gaConf = new DefaultConfiguration();
-	    Population pop;
 	    
 	    Genotype genotype = null;
 	    
@@ -23,12 +22,11 @@ public class TSPInteger {
 	    		gaConf.setChromosomeSize(numGenes);
 	    		gaConf.setFitnessFunction(new TSPCostFunction());
 	    		gaConf.setNumGenerations(numEvolutions);
-	    		//Settings.printDebug(Settings.COMMENT, "Setting pop from TSPInteger");
-	    		//pop = new Population(gaConf);
-	    		//gaConf.setThePopulation(pop);
+	    		gaConf.addGeneticOperator(new PMXGeneticOperator(gaConf));
 	    		gaConf.setGeneticOperators(new LinkedList<IGeneticOperator>());
 	    		gaConf.addGeneticOperator(new PMXGeneticOperator(gaConf));
-	    		//gaConf.getGeneticOperators().getFirst().operate(pop);
+	    		genotype = new Genotype(gaConf);
+	    		gaConf.getGeneticOperators().getLast().operate(genotype.getPopulation());
 	    		
 		    }
 		    catch (Exception e) {

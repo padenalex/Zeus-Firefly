@@ -204,7 +204,7 @@ public class TSP {
 		
 		//bring in metaheuristics
 		Settings.printDebug(Settings.COMMENT, "Starting GA");
-		//TSPInteger ga = new TSPInteger(mainShipments.getNumShipments());
+		TSPInteger ga = new TSPInteger(mainShipments.getNumShipments());
 	} 
 
 	/**
