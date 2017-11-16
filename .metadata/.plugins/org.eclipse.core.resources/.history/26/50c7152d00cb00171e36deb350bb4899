@@ -79,7 +79,7 @@ public class PMXGeneticOperator implements IGeneticOperator
 				}
 				for (int i = point1; i <= point2; i++)
 				{
-					resultChromosome1.setGene(i, new IntegerGene(getConfiguration(), (int) chr2.getGene(i).getInternalValue(), getConfiguration().getChromosomeSize()));//move gene from second chromosome into child at index i
+					resultChromosome1.setGene(i, chr2.getGene(i).newGene());//move gene from second chromosome into child at index i
 					
 					//finds the index of the gene in first chromosome with the value of the gene in the second chromosome at index i
 					int index = findGeneIndex((Chromosome) chr1, (int) chr2.getGene(i).getInternalValue());
@@ -95,7 +95,7 @@ public class PMXGeneticOperator implements IGeneticOperator
 				for (int i = point1; i <= point2; i++)
 				{
 					//same as above but reversed
-					resultChromosome2.setGene(i, new IntegerGene(getConfiguration(), (int) chr1.getGene(i).getInternalValue(), getConfiguration().getChromosomeSize()));
+					resultChromosome2.setGene(i, chr1.getGene(i).newGene());
 					int index = findGeneIndex((Chromosome) chr2, (int) chr1.getGene(i).getInternalValue());
 					resultChromosome2.setGene(index, new IntegerGene(getConfiguration(), (int) chr1.getGene(i).getInternalValue(), chromosomeSize));
 				}
@@ -103,7 +103,7 @@ public class PMXGeneticOperator implements IGeneticOperator
 				pop.addChromosome(resultChromosome1);
 				pop.addChromosome(resultChromosome2);
 				Settings.printDebug(Settings.COMMENT, "New Child 1 : " + resultChromosome1.toString());
-				Settings.printDebug(Settings.COMMENT, "New Child 2 : " + resultChromosome2.toString());
+				Settings.printDebug(Settings.COMMENT, "New Child 2 : " + "");
 			}
 			
 			Population tempPop = new Population(configuration);
