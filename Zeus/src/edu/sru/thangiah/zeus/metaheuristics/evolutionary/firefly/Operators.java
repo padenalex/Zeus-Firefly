@@ -15,7 +15,9 @@ import edu.sru.thangiah.zeus.core.Attributes;
 import edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly.Population;
 
 public class Operators {
+
 	public FireFly FinalBright;
+	
 	Operators(LinkedList<FireFly> fireFlies){
 		int listsize = fireFlies.size();
 		Population NewPopulation = new Population();
@@ -24,8 +26,6 @@ public class Operators {
 		for(int x=0; x < Population.TotalGen; x++) {
 			int BrightIndex = GetBrightestFly(NewPopulation.fireFlies);
 			FireFly Brightest = NewPopulation.fireFlies.get(BrightIndex);
-			System.out.println("The New Best Is: " + Brightest.FireFlyt.getCost()); //Show cost Improve as generation
-			
 			for(int i=0; i < 4; i++) {NewPopulation.fireFlies.add(InvertMutation(NewPopulation.fireFlies.get(0)));}
 				for(int i=1; i < Population.popsize; i++) {
 					//System.out.println("The list is " + i);
@@ -38,19 +38,16 @@ public class Operators {
 				}
 			//System.out.println("Pre trim pop " + NewPopulation.fireFlies.size());
 			NewPopulation = TrimPopulation(NewPopulation);
+			//System.out.println("New pop is " + NewPopulation.fireFlies.size());
 		}
 		int BrightIndex = GetBrightestFly(NewPopulation.fireFlies);
 		FireFly Brightest = NewPopulation.fireFlies.get(BrightIndex);
-		System.out.println("The brightest found is " + Brightest.FireFlyt.getRouteString());
-		System.out.println(" cost is " + Brightest.FireFlyt.getCost());
-		
-		//for(int i=0; i < 20; i++) {
-			//System.out.println("List " +i+ " is: " + NewPopulation.fireFlies.get(i).FireFlyt.getRouteString() + " cost is: " + NewPopulation.fireFlies.get(i).FireFlyt.getCost());
-		//}
+		System.out.println("The brightest found is " + Brightest.FireFlyt.getRouteString() + " cost is " + Brightest.FireFlyt.getCost());
+
 		this.FinalBright = Brightest;
 	}
 	
-	
+
 
 
 
@@ -114,7 +111,9 @@ public class Operators {
 				int temp2 = 0;
 				
 				if(Rand1 != 0) {
-					for(int i = 0; i < Rand1; i++) {NewFly.FireFlyt.insertNodeLast(LeftVect.elementAt(i));}
+					for(int i = 0; i < Rand1; i++) {
+						NewFly.FireFlyt.insertNodeLast(LeftVect.elementAt(i));
+					}
 				}
 				for(int i = Rand1; i < Rand2; i++) {
 					NewFly.FireFlyt.insertNodeLast(FlipVect.elementAt(temp1));
@@ -127,9 +126,6 @@ public class Operators {
 					}
 				}
 				ProblemInfo.nodesLLLevelCostF.calculateTotalsStats(NewFly.FireFlyt);
-				
-				//System.out.println("Cur: " + CurrFly.FireFlyt.getRouteString());
-				//System.out.println("New: " + NewFly.FireFlyt.getRouteString());
 				
 		return NewFly;
 		}
@@ -157,12 +153,6 @@ public class Operators {
 				if(shouldAdd == 1) {NewPop.fireFlies.add(tempFly);}
 
 			}
-			//System.out.println("New pop size is " + NewPop.fireFlies.size());
-			
-			//Fills remaining population with inverts of the best ones to reach popsize (20)
-			int AddInvNumb = Population.popsize - NewPop.fireFlies.size();
-			for(int i=0; i < AddInvNumb; i++) {NewPop.fireFlies.add(InvertMutation(NewPop.fireFlies.get(i)));}
-			//System.out.println("New pop size is " + NewPop.fireFlies.size());
 			
 			return NewPop;
 		}

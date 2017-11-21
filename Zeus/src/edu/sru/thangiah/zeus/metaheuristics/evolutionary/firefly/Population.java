@@ -19,37 +19,37 @@ public class Population {
 	
 	//private FireFly brightestFireFly;
 	LinkedList<FireFly> fireFlies;
-	static int popsize = 40;
-	static int TotalGen = 250;
+	static int popsize = 50;
+	static int TotalGen = 1000;
+	public NodesLinkedList FinalFly;
 	
 	public Population(NodesLinkedList mainNodes) {
 
-		fireFlies = new LinkedList<FireFly>();
+		this.fireFlies = new LinkedList<FireFly>();
 		
-		fireFlies.add(new FireFly(mainNodes));
+		this.fireFlies.add(new FireFly(mainNodes));
 		int FireFlySize = FireFly.FireflyDimension;
 		
-		for(int i = 0; i < popsize; i++) {
-			//FireFly test = new FireFly();
-			//System.out.println("> " + test.FireFlyt.getRouteString());
-			fireFlies.add(new FireFly());			
+		for(int i = 0; i < 20; i++) {
+			this.fireFlies.add(new FireFly());			
 		}
-
-		
-		
-		//System.out.println(" \n ===== \n");
-		//for(int i=0; i < 20; i++) {
-		//System.out.println("the old pop is " + fireFlies.get(i).FireFlyt.getRouteString());
-		//}
 		
 		Operators RunOpts = new Operators(fireFlies);
+		SetFinalFly(RunOpts);
 		//System.out.println("Fireflies is "+fireFlies.get(0).FireFlyt.);
 
 	}
 	public Population() {
-		fireFlies = new LinkedList<FireFly>();
+		this.fireFlies = new LinkedList<FireFly>();
 	}
 
+	void SetFinalFly(Operators RunOpts) {
+		this.FinalFly = RunOpts.FinalBright.FireFlyt;
+	}
+	
+	public NodesLinkedList GetFinalFly() {
+		return FinalFly;
+	}
 
 
 }

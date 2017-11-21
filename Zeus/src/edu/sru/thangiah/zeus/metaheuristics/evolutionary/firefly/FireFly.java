@@ -32,7 +32,7 @@ public class FireFly
 
 		//ProblemInfo.nodesLLLevelCostF.calculateTotalsStats(FireFly);
 		//System.out.println("The attributes for This random firefly is " + FireFly.getAttributes());
-		//System.out.println("The new pop is " + FireFly.getRouteString());
+		System.out.println("The new pop is " + FireFly.getRouteString());
 		//System.out.println("The Cost is " + FireFly.getCost());
 		this.FireFlyt = FireFly;
 		
@@ -43,6 +43,7 @@ public class FireFly
 	public FireFly(NodesLinkedList mainNodes) {
 		NodesLinkedList FireFly = new NodesLinkedList();
 		FireFly = (NodesLinkedList) mainNodes.clone();
+		IndexVector.clear();
 		
 		int size = FireFly.getSize();
 		FireflyDimension = size;

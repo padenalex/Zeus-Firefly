@@ -144,9 +144,16 @@ public class TSP {
 		//create a vector of search strategy/optimizations to execute
 		mainOpts = new Vector(1); //vector capacity of 1
 		runOptimizations();
+		
+		//ProblemInfo.insertShipType = new InsertAsGiven();
+		//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
 		Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
+		//mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(FFOptimization.GetFinalFly());
 		
-		
+		//Re run FF with the Previous FF route
+		//ProblemInfo.insertShipType = new InsertAsGiven();
+		//Population NewOptFF = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
+		//mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(NewOptFF.GetFinalFly());
 /*		
 		//sets the upperbound in LocalOneOpt and
 		//add a first-first local 1-opt
@@ -199,7 +206,7 @@ public class TSP {
 
 		}
 		//--------------------------------------------------------------(TURN ON/OFF GUI)---------
-		ZeusGui guiPost = new ZeusGui(mainDepots, mainShipments);
+		//ZeusGui guiPost = new ZeusGui(mainDepots, mainShipments);
 		
 		
 		//bring in metaheuristics
