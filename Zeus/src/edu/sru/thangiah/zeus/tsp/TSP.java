@@ -147,7 +147,10 @@ public class TSP {
 		
 		//ProblemInfo.insertShipType = new InsertAsGiven();
 		//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
-		Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
+		//Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
+		TSPInteger ga = new TSPInteger(mainDepots);
+		
+		
 		//mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(FFOptimization.GetFinalFly());
 		
 		//Re run FF with the Previous FF route
@@ -211,7 +214,7 @@ public class TSP {
 		
 		//bring in metaheuristics
 		//Settings.printDebug(Settings.COMMENT, "Starting GA");
-		//TSPInteger ga = new TSPInteger(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
+		
 	} 
 
 	/**

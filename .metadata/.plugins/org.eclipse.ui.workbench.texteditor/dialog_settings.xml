@@ -2,12 +2,18 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="newCh" key="selection"/>
+		<item value="Shipment" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="shipment"/>
+			<item value="insertasgiven"/>
+			<item value="insertas"/>
+			<item value="insert"/>
+			<item value="class"/>
+			<item value="public class"/>
 			<item value="newch"/>
 			<item value="new"/>
 			<item value="null truck types detected"/>
