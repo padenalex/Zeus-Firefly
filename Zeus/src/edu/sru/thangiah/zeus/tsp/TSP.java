@@ -147,16 +147,19 @@ public class TSP {
 		
 		//ProblemInfo.insertShipType = new InsertAsGiven();
 		//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
-		//Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
-		TSPInteger ga = new TSPInteger(mainDepots);
+		Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
+		mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(FFOptimization.GetFinalFly());
 		
 		
-		//mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(FFOptimization.GetFinalFly());
+		//TSPInteger ga = new TSPInteger(mainDepots);
+		
 		
 		//Re run FF with the Previous FF route
 		//ProblemInfo.insertShipType = new InsertAsGiven();
 		//Population NewOptFF = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
 		//mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(NewOptFF.GetFinalFly());
+
+		
 /*		
 		//sets the upperbound in LocalOneOpt and
 		//add a first-first local 1-opt
@@ -493,9 +496,6 @@ public class TSP {
 				ProblemInfo.distanceMatrix = new int[n][n];
 				ProblemInfo.distanceMatrix = DataArray;
 				
-				//Test Array
-				//int[][] TestArray = new int[n][n];
-				//TestArray = (int[][]) ProblemInfo.distanceMatrix;
 
 				//PRINT OUT 2D ARRAY 
 				for(int s = 0; s<n; s++){
