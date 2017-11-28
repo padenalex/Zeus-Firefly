@@ -8,7 +8,7 @@ import java.util.Collections;
 
 public class FindNewEdge {
 
-	public int SLindex;
+	public int SLindex; 
 	public int SRindex;
 	public Vector<Integer> NSLin = new Vector<Integer>();  // --> <--
 	public Vector<Integer> NSRin = new Vector<Integer>();  // --> <--

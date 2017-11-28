@@ -20,7 +20,7 @@ public class Population {
 	//private FireFly brightestFireFly;
 	LinkedList<FireFly> fireFlies;
 	static int popsize = 40;
-	static int TotalGen = 500;
+	static int TotalGen = 250;
 	public NodesLinkedList FinalFly;
 	
 	public Population(NodesLinkedList mainNodes) {
