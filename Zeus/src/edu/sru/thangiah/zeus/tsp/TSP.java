@@ -84,6 +84,7 @@ public class TSP {
 					"TSP: Shipment linked list is empty");
 		}
 
+		System.out.println("\n\n\n");
 		//Set up the shipment selection type
 		if (FileType == 0) {
 			//ProblemInfo.selectShipType = new SmallestPolarAngleToDepot();
@@ -216,9 +217,9 @@ public class TSP {
 						"> cannot be routed");
 			}
 			else {
-				Settings.printDebug(Settings.COMMENT,
-						"The Shipment: <" + theShipment.getIndex() +// " " + theShipment +
-						"> was routed");
+				//Settings.printDebug(Settings.COMMENT,
+				//		"The Shipment: <" + theShipment.getIndex() +// " " + theShipment +
+				//		"> was routed");
 				//tag the shipment as being routed
 				theShipment.setIsAssigned(true);
 			}

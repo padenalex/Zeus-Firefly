@@ -178,11 +178,11 @@ public class TSPDepotLLCostFunctions
     
     if (isDiagnostic)
     {
-    	System.out.println("Total Demand = "+getTotalDemand(o));
+    	//System.out.println("Total Demand = "+getTotalDemand(o));
     	System.out.println("Total Distance = "+getTotalDistance(o));
     	System.out.println("Total TravelTime = "+getTotalTravelTime(o));
-    	System.out.println("MaxTravel Time = "+getMaxTravelTime(o));
-    	System.out.println("Average Travel Time = "+getAvgTravelTime(o));
+    	//System.out.println("MaxTravel Time = "+getMaxTravelTime(o));
+    	//System.out.println("Average Travel Time = "+getAvgTravelTime(o));
     }
     
   }
