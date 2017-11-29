@@ -17,27 +17,40 @@ import edu.sru.thangiah.zeus.tsp.*;
 
 public class Population {
 	
-	//private FireFly brightestFireFly;
 	LinkedList<FireFly> fireFlies;
-	static int popsize = 40;
+	//Pop Size is the number of Randon TSP Populations Generated
+	//TotalGen is the number of times operators will run on these random TSPs
+	static int popsize = 30;
 	static int TotalGen = 250;
 	public NodesLinkedList FinalFly;
 	
 	public Population(NodesLinkedList mainNodes) {
 
-		this.fireFlies = new LinkedList<FireFly>();
+		System.out.println("\n --- FireFly Algorithm Engaged... ---");
+		double startTime = System.currentTimeMillis();
+		double ogCost = mainNodes.getCost();
 		
+		this.fireFlies = new LinkedList<FireFly>();
 		this.fireFlies.add(new FireFly(mainNodes));
 		int FireFlySize = FireFly.FireflyDimension;
 		
 		for(int i = 0; i < 20; i++) {
 			this.fireFlies.add(new FireFly());			
 		}
-		
+		//Runs Operators Then Sets Best Fly
 		Operators RunOpts = new Operators(fireFlies);
 		SetFinalFly(RunOpts);
-		//System.out.println("Fireflies is "+fireFlies.get(0).FireFlyt.);
-
+		
+		double newCost = this.FinalFly.getCost();
+		double effPercent = (1-(newCost/ogCost))*100;
+		double endTime   = System.currentTimeMillis();
+		double totalTime = (endTime - startTime)/1000;
+		
+		//Final Firefly Output
+		System.out.println("\n" + "FireFly route found is: " + this.FinalFly.getRouteString());
+		System.out.println("FireFly route cost is: " + this.FinalFly.getCost());
+		System.out.println("FireFly Aglorithm Runtime (Seconds) Is: " + totalTime);
+		System.out.println("FireFly Reduced Cost By: " + effPercent + "%");
 	}
 	public Population() {
 		this.fireFlies = new LinkedList<FireFly>();

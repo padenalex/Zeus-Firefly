@@ -42,7 +42,7 @@ public class Operators {
 		}
 		int BrightIndex = GetBrightestFly(NewPopulation.fireFlies);
 		FireFly Brightest = NewPopulation.fireFlies.get(BrightIndex);
-		System.out.println("The brightest found is " + Brightest.FireFlyt.getRouteString() + " cost is " + Brightest.FireFlyt.getCost());
+		//System.out.println("The brightest found is " + Brightest.FireFlyt.getRouteString() + " cost is " + Brightest.FireFlyt.getCost());
 
 		this.FinalBright = Brightest;
 	}

@@ -73,7 +73,7 @@ public class TSPQATruck
 	  tempright = node2.getIndex();
 	   
 	  distance = DistanceArray[templeft][tempright];
-	  System.out.println("The Next Distance Is " + distance);
+	  //System.out.println("The Next Distance Is " + distance);
 	  totalDistance += distance;
 	
 	  node1 = node2;
@@ -94,19 +94,19 @@ public class TSPQATruck
 
     //Check if the computed distances are the same
     if (intDistance1 != intDistance2) {
-      Settings.printDebug(Settings.ERROR,
-                          "Truck # " + truck.getIndex() +
-                          " distance does not match computed distance " +
-                          truck.getDistance() + " " + totalDistance);
+     // Settings.printDebug(Settings.ERROR,
+                       //   "Truck # " + truck.getIndex() +
+                        //  " distance does not match computed distance " +
+                         // truck.getDistance() + " " + totalDistance);
       status = false;
       return status;
     }
     //check if it exceeds the maximum distance
     if (totalDistance > truck.getMaxDistance()) {
-      Settings.printDebug(Settings.ERROR,
-                          "Truck # " + truck.getIndex() +
-                          "distance does exceeds maximum distance " +
-                          totalDistance + " " + getMaxDistance());
+     // Settings.printDebug(Settings.ERROR,
+                    //      "Truck # " + truck.getIndex() +
+                     //     "distance does exceeds maximum distance " +
+                     //     totalDistance + " " + getMaxDistance());
       status = false;
       return status;
     }

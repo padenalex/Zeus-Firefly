@@ -134,29 +134,6 @@ public class TSP {
 		//create a vector of search strategy/optimizations to execute
 		mainOpts = new Vector(1); //vector capacity of 1
 		runOptimizations();
-		
-
-//====== Metaheuristic Call Section ===================================================
-		//ProblemInfo.insertShipType = new InsertAsGiven();
-		//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
-		Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
-		mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(FFOptimization.GetFinalFly());
-		
-		
-		//Re run FF with the Previous FF route
-		//Insert As Given Turns Off The LinearGreedy And Makes Provides The Route In Order Nodes Are Inserted
-		//ProblemInfo.insertShipType = new InsertAsGiven();
-		//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
-		//Population NewOptFF = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
-		//mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(NewOptFF.GetFinalFly());
-
-		
-		
-		//TSPInteger ga = new TSPInteger(mainDepots);
-
-//====== END Metaheuristic Call Section ================================================		
-		
-		
 
 		//Check for the quality and integrity of the solution
 		System.out.println("Starting QA");
@@ -171,6 +148,28 @@ public class TSP {
 		}
 		//--------------------------------------------------------------(TURN ON/OFF GUI)---------
 		//ZeusGui guiPost = new ZeusGui(mainDepots, mainShipments);
+		
+
+	//====== Metaheuristic Call Section ===================================================
+			//ProblemInfo.insertShipType = new InsertAsGiven();
+			//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
+			Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
+			
+			//To Set The original List Passed in Equal To New List Uncomment Below
+			//mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(FFOptimization.GetFinalFly());
+			
+			//Re run FF with the Previous FF route
+			//Insert As Given Turns Off The LinearGreedy And Makes Provides The Route In Order Nodes Are Inserted
+			//ProblemInfo.insertShipType = new InsertAsGiven();
+			//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
+			//Population NewOptFF = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
+			//mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(NewOptFF.GetFinalFly());
+
+			
+			
+			//TSPInteger ga = new TSPInteger(mainDepots);
+
+	//====== END Metaheuristic Call Section ================================================	
 		
 	} 
 
@@ -625,7 +624,7 @@ public class TSP {
 				}
 				catch(NullPointerException ex)
 				{
-						System.out.println("Null truck types detected");
+						//System.out.println("Null truck types detected");
 						rowCounter--;
 				}
 					truckHead = truckHead.getNext();

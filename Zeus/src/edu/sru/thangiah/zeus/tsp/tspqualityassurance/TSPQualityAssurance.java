@@ -59,7 +59,7 @@ public class TSPQualityAssurance
     }
 
     //Check on maximum travel time of truck
-    System.out.print("Check on maximum travel time of trucks:");
+    //System.out.print("Check on maximum travel time of trucks:");
     isGood = isGood && tspQADepots.checkDistanceConstraint();
     /** @todo Need a check to ensure that the constraints of the routes are met - maximum distance and capacity*/
     if (isGood) {
