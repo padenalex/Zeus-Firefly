@@ -24,15 +24,12 @@ public class FireFly
 		FireFly.emptyList();
 		Collections.shuffle(IndexVector);
 
-		//FireFly.insertShipment(IndexVector.elementAt(0).getShipment());
 		for(int i=0; i < FireflyDimension; i++) {
 			FireFly.insertShipment(IndexVector.elementAt(i).getShipment());
-			//FireFly.insertNodes(IndexVector.elementAt(i));
 		}
-
-		//ProblemInfo.nodesLLLevelCostF.calculateTotalsStats(FireFly);
+		
 		//System.out.println("The attributes for This random firefly is " + FireFly.getAttributes());
-		System.out.println("The new pop is " + FireFly.getRouteString());
+		//System.out.println("The new pop is " + FireFly.getRouteString());
 		//System.out.println("The Cost is " + FireFly.getCost());
 		this.FireFlyt = FireFly;
 		
@@ -48,8 +45,6 @@ public class FireFly
 		int size = FireFly.getSize();
 		FireflyDimension = size;
 		
-		//System.out.println("The Size is --------------- " + size);
-		
 		for(int i=1; i <= FireflyDimension; i++) {
 			IndexVector.add(FireFly.getNodeByIndex(i));
 		}
@@ -58,7 +53,6 @@ public class FireFly
 		//System.out.println("The route is " + FireFly.getRouteString());
 		StartList = (TSPNodesLinkedList) FireFly.clone();
 		FireFlyt = mainNodes;
-		//System.out.println("---.-.-.-.-.- " + FireFly.);
 	}
 
 	public FireFly(FireFly temp) {

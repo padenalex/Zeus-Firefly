@@ -110,14 +110,6 @@ public class TSP {
 		//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
 		
 		
-		
-		// Set up the distance matrix
-		//ProblemInfo.distanceMatrix = new int[][];
-		
-		//Set up the similarity matrix
-		//ProblemInfo.similarityMatrix =
-		
-		
 		//Capture the CPU time required for solving the problem
 		startTime = System.currentTimeMillis();
 		// captures the initial information on solving the problem
@@ -135,68 +127,34 @@ public class TSP {
 		
 		//At this point all shipments have been assigned
        //-------- CALL WRITE LONG/SHORT TO EXCEL BELOW -------------------------------------------------
-		
-		
 		writeLongSolutionToExcel(dataFile.substring(dataFile.lastIndexOf("/") + 1));
 		writeShortSolutionExcel(dataFile.substring(dataFile.lastIndexOf("/") + 1));
-		
+
 
 		//create a vector of search strategy/optimizations to execute
 		mainOpts = new Vector(1); //vector capacity of 1
 		runOptimizations();
 		
+
+//====== Metaheuristic Call Section ===================================================
 		//ProblemInfo.insertShipType = new InsertAsGiven();
 		//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
 		Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
 		mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(FFOptimization.GetFinalFly());
 		
 		
-		//TSPInteger ga = new TSPInteger(mainDepots);
-		
-		
 		//Re run FF with the Previous FF route
+		//Insert As Given Turns Off The LinearGreedy And Makes Provides The Route In Order Nodes Are Inserted
 		//ProblemInfo.insertShipType = new InsertAsGiven();
+		//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
 		//Population NewOptFF = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
 		//mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(NewOptFF.GetFinalFly());
 
 		
-/*		
-		//sets the upperbound in LocalOneOpt and
-		//add a first-first local 1-opt
-		//simAnnealOpts.add(new FirstBestIntraSearch(new LocalOneOpt()));
-		//add an intra and inter-opt search strategy
-		//mainOpts.add(new FirstBestIntraSearch(new OneOpt()));
-		//mainOpts.add(new FirstFirstInterSearch(new Exchange11()));
-		////////////////////////////////////////////////////////////////////////////
-		///// This is an implementation of a simulated annealing metaheuristic /////
-		////////////////////////////////////////////////////////////////////////////
-		int initialTemp = 200;    //the initial temperature
-		//Changed From 1,000 to 200^
-		int finalTemp   = 0;                           //the final temperature
-		int iterationsAtEachTemp = 50;                 //iterations at each temperature
-		int numTemps = 100;                            //number of temperatures to look at
-
-		//create a simulated annealing instance
-		SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(initialTemp,
-				finalTemp, iterationsAtEachTemp, numTemps);
-		//set the cooling schedule you would like to use, in this case linear
-		simulatedAnnealing.setCoolingSchedule(new LinearCoolingSchedule(
-				simulatedAnnealing.getMaxIterations(),
-				simulatedAnnealing.getInitTemperature(),
-				simulatedAnnealing.getFinalTemperature()));
-
-		System.out.println("Simulated Annealing Initiated");
-		//now pass the opts and the depot linked list at it will be annealed the
-		//return will be an optInfo class that contains the beginning and ending
-		//stats
-		OptInfo simAnnealResults = simulatedAnnealing.anneal(mainDepots,mainOpts);
-		//print results
-		System.out.println("Simulated Annealing Results: " +
-				simAnnealResults.toString());
-*/
-
 		
-		
+		//TSPInteger ga = new TSPInteger(mainDepots);
+
+//====== END Metaheuristic Call Section ================================================		
 		
 		
 
@@ -213,10 +171,6 @@ public class TSP {
 		}
 		//--------------------------------------------------------------(TURN ON/OFF GUI)---------
 		//ZeusGui guiPost = new ZeusGui(mainDepots, mainShipments);
-		
-		
-		//bring in metaheuristics
-		//Settings.printDebug(Settings.COMMENT, "Starting GA");
 		
 	} 
 

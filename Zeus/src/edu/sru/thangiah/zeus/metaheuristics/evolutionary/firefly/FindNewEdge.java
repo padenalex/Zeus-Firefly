@@ -112,7 +112,7 @@ try {
 }
 catch(Exception e) {System.out.println("error in NSout");}
 //End NS out ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		System.out.println("Current route: " + CurrentFly.FireFlyt.getRouteString() + " cost is: " + CurrentFly.FireFlyt.getCost());
+		//System.out.println("Current route: " + CurrentFly.FireFlyt.getRouteString() + " cost is: " + CurrentFly.FireFlyt.getCost());
 		//System.out.println("Best    route: " + BrightestFly.FireFlyt.getRouteString());
 //Start NSin----------------------------------------------------------------------
 try {
