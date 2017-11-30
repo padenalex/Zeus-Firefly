@@ -158,8 +158,9 @@ public class TSPShipmentLinkedList
    */
   public void printTSPShipmentsToConsole() {
 	  System.out.println("Number of shipments: " + this.getNumShipments());
+	  
+	 /*
 	  System.out.println("INDEX | X  |  Y");
-
 	  Shipment ship = super.getHead();
 	  TSPShipment tspShip;
 	  while (ship != getTail())
@@ -169,6 +170,7 @@ public class TSPShipmentLinkedList
 				  tspShip.getYCoord());
 		  ship = ship.getNext();
 	  }
+	  */
   }
 
 

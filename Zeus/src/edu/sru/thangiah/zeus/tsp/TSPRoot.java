@@ -57,22 +57,22 @@ public class TSPRoot {
 		curRow = sheet.getRow(rowCounter); // the 2nd row is the problem data
 		//---------------------------------------------
 		
-		//while ((String)curRow.getCell(0).getStringCellValue() != "EOF") {
+			 while ((String)curRow.getCell(0).getStringCellValue() != "EOF") {
 		rowCounter++;
 		curRow = sheet.getRow(rowCounter); // the 2nd row is the problem data
 		FileName = (String)curRow.getCell(0).getStringCellValue();
-		//FileType = (int)curRow.getCell(1).getNumericCellValue();
-	   // new TSP(FileName+".xlsx", FileType);
-		//}
+			 FileType = (int)curRow.getCell(1).getNumericCellValue();
+			 new TSP(FileName+".xlsx", FileType);
+			 }
 		
-		FileType = 0;
-		FileName = "a280.xlsx";
+		//FileType = 0;
+		//FileName = "a280.xlsx";
 		//FileName = "fl1400.xlsx";
 		//FileName = "Ulysses16.xlsx";
 		//FileName = "d1655.xlsx";
 		//FileType = 1;
 		//FileName = "bayg29.xlsx";
-		new TSP(FileName, FileType);
+		//new TSP(FileName, FileType);
 		//---------------------------------------------
 	}
 	catch (Exception e) {

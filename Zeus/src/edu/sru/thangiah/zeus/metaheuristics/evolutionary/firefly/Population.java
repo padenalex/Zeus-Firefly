@@ -22,13 +22,17 @@ public class Population {
 	//TotalGen is the number of times operators will run on these random TSPs
 	static int popsize = 30;
 	static int TotalGen = 250;
-	public NodesLinkedList FinalFly;
+	private NodesLinkedList FinalFly;
+	public double totalTime;
+	public double effPercent;
+	public double newCost;
+	public double ogCost;
 	
 	public Population(NodesLinkedList mainNodes) {
 
 		System.out.println("\n --- FireFly Algorithm Engaged... ---");
 		double startTime = System.currentTimeMillis();
-		double ogCost = mainNodes.getCost();
+		this.ogCost = mainNodes.getCost();
 		
 		this.fireFlies = new LinkedList<FireFly>();
 		this.fireFlies.add(new FireFly(mainNodes));
@@ -41,10 +45,10 @@ public class Population {
 		Operators RunOpts = new Operators(fireFlies);
 		SetFinalFly(RunOpts);
 		
-		double newCost = this.FinalFly.getCost();
-		double effPercent = (1-(newCost/ogCost))*100;
+		this.newCost = this.FinalFly.getCost();
+		this.effPercent = (1-(newCost/ogCost))*100;
 		double endTime   = System.currentTimeMillis();
-		double totalTime = (endTime - startTime)/1000;
+		this.totalTime = (endTime - startTime)/1000;
 		
 		//Final Firefly Output
 		System.out.println("\n" + "FireFly route found is: " + this.FinalFly.getRouteString());
