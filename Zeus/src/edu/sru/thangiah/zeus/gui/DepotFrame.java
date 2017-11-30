@@ -102,7 +102,7 @@ public class DepotFrame extends JInternalFrame {
     // Read the layout constraints
     XmlConstraintBuilder db_XMLBuilderLayout = new XmlConstraintBuilder();
     try {
-      db_XMLBuilderLayout.addConstraints(new File("etc/DepotFrameLayout.xml"), layout);   // Read the contraints from the layout XML file.
+      db_XMLBuilderLayout.addConstraints(new File("etc\\DepotFrameLayout.xml"), layout);   // Read the contraints from the layout XML file.
     }
     catch (Exception ex) {
       ex.printStackTrace();
