@@ -157,20 +157,22 @@ public class TSP {
 			//ProblemInfo.insertShipType = new InsertAsGiven();
 			//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
 		    //To Set The original List Passed in Equal To New List Uncomment .setMainNodes()
-			Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
+		
+		
+			/*Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
 			mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(FFOptimization.GetFinalFly());
-			mainDepots.setAttributes(FFOptimization.GetFinalFly().getAttributes());
+			mainDepots.setAttributes(FFOptimization.GetFinalFly().getAttributes());*/
 			
 			//Re run FF with the Previous FF route
 			//Insert As Given Turns Off The LinearGreedy And Makes Provides The Route In Order Nodes Are Inserted
-			//ProblemInfo.insertShipType = new InsertAsGiven();
+			ProblemInfo.insertShipType = new InsertAsGiven();
 			//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
 			//Population NewOptFF = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
 			//mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(NewOptFF.GetFinalFly());
 
 			
 			
-			//TSPInteger ga = new TSPInteger(mainDepots);
+			TSPInteger ga = new TSPInteger(mainDepots);
 
 	//====== END Metaheuristic Call Section ================================================	
 		

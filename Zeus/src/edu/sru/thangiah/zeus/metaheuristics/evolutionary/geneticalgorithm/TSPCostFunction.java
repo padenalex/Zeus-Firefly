@@ -2,16 +2,16 @@ package edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm;
 
 import edu.sru.thangiah.zeus.core.ProblemInfo;
 import edu.sru.thangiah.zeus.core.Settings;
-import edu.sru.thangiah.zeus.tsp.TSPNodes;
-import edu.sru.thangiah.zeus.tsp.TSPNodesLinkedList;
-import edu.sru.thangiah.zeus.tsp.TSPShipment;
+import edu.sru.thangiah.zeus.tsp.*;
 
 public class TSPCostFunction extends AbstractFitnessFunction
 {
+	TSPDepotLinkedList depotList;
 	TSPNodesLinkedList nodes;
-	public TSPCostFunction(TSPNodesLinkedList nodesIn)
+	public TSPCostFunction(TSPDepotLinkedList depotIn)
 	{
-		nodes = nodesIn;
+		depotList = depotIn;
+		nodes = (TSPNodesLinkedList) depotList.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes();
 	}
 	
 	public double evaluate(IChromosome chrome)
@@ -22,7 +22,6 @@ public class TSPCostFunction extends AbstractFitnessFunction
 	    Settings.printDebug(Settings.COMMENT, Integer.toString(nodes.getSize()));
 	    for (int i = 0; i < nodes.getSize(); i++)
 	    {
-	    	Settings.printDebug(Settings.COMMENT, Integer.toString(i));
 	    	newList.insertShipment(nodes.getNodeByIndex((int) chrome.getGene(i).getInternalValue()).getShipment());
 	    }
 	    

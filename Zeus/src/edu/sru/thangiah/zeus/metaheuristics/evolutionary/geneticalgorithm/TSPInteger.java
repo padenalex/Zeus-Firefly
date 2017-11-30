@@ -8,12 +8,11 @@ import edu.sru.thangiah.zeus.tsp.*;
 
 public class TSPInteger {
 	
-	public TSPInteger(TSPDepotLinkedList mainDepot)
+	public TSPInteger(TSPDepotLinkedList mainDepots)
 	{
 		int numEvolutions = 500;
 	    double maxFitness;
-	    TSPNodesLinkedList mainNodes;
-	    mainNodes = (TSPNodesLinkedList) mainDepot.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes();
+	    TSPNodesLinkedList mainNodes = (TSPNodesLinkedList) mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes();
 	    int chromeSize = mainNodes.getSize();
 	    
 	    Configuration gaConf = new DefaultConfiguration();
@@ -22,7 +21,7 @@ public class TSPInteger {
 	    
 	    try {
 	    		gaConf.setChromosomeSize(chromeSize);
-	    		gaConf.setFitnessFunction(new TSPCostFunction(mainNodes));
+	    		gaConf.setFitnessFunction(new TSPCostFunction(mainDepots));
 	    		gaConf.setNumGenerations(numEvolutions);
 	    		gaConf.addGeneticOperator(new PMXGeneticOperator(gaConf));
 	    		gaConf.setGeneticOperators(new LinkedList<IGeneticOperator>());
