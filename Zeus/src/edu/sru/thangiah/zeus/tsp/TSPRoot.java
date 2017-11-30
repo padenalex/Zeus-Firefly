@@ -56,7 +56,7 @@ public class TSPRoot {
 		sheet = workbook.getSheetAt(0);
 		curRow = sheet.getRow(rowCounter); // the 2nd row is the problem data
 		//---------------------------------------------
-		
+			//Indented to comment out if you want to run individual files instead of looping master
 			 while ((String)curRow.getCell(0).getStringCellValue() != "EOF") {
 		rowCounter++;
 		curRow = sheet.getRow(rowCounter); // the 2nd row is the problem data
@@ -65,13 +65,9 @@ public class TSPRoot {
 			 new TSP(FileName+".xlsx", FileType);
 			 }
 		
+		//uncomment to run individual files with indented while loop commented out
 		//FileType = 0;
 		//FileName = "a280.xlsx";
-		//FileName = "fl1400.xlsx";
-		//FileName = "Ulysses16.xlsx";
-		//FileName = "d1655.xlsx";
-		//FileType = 1;
-		//FileName = "bayg29.xlsx";
 		//new TSP(FileName, FileType);
 		//---------------------------------------------
 	}
