@@ -396,8 +396,7 @@ public class TSP {
 		
 				rowCounter++; //go to next row          
 			}// end for
-
-//==========		
+		
 					i = 0;
 					x = 0;
 					y= 0;
@@ -415,7 +414,6 @@ public class TSP {
 					depot.getMainTrucks().insertTruckLast(new TSPTruck(ttype,
 							depot.getXCoord(), depot.getYCoord()));   
 				}		
-//===========	
 		} 
 //--------------------------------END X/Y READIN METHOD
 		
