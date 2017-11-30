@@ -14,6 +14,7 @@ import edu.sru.thangiah.zeus.localopts.OptInfo;
 import edu.sru.thangiah.zeus.localopts.*;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -86,7 +87,6 @@ public class TSP {
 					"TSP: Shipment linked list is empty");
 		}
 
-		System.out.println("\n\n\n");
 		//Set up the shipment selection type
 		if (FileType == 0) {
 			//ProblemInfo.selectShipType = new SmallestPolarAngleToDepot();
@@ -157,22 +157,24 @@ public class TSP {
 			//ProblemInfo.insertShipType = new InsertAsGiven();
 			//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
 		    //To Set The original List Passed in Equal To New List Uncomment .setMainNodes()
-		
-		
-			/*Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
+			Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
 			mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(FFOptimization.GetFinalFly());
-			mainDepots.setAttributes(FFOptimization.GetFinalFly().getAttributes());*/
+			mainDepots.setAttributes(FFOptimization.GetFinalFly().getAttributes());
+			
+			//Create Comparison Sheet In Excel
+			//createFinalExcelFile(dataFile, FFOptimization);
+			
 			
 			//Re run FF with the Previous FF route
 			//Insert As Given Turns Off The LinearGreedy And Makes Provides The Route In Order Nodes Are Inserted
-			ProblemInfo.insertShipType = new InsertAsGiven();
+			//ProblemInfo.insertShipType = new InsertAsGiven();
 			//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
 			//Population NewOptFF = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
 			//mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(NewOptFF.GetFinalFly());
 
 			
 			
-			TSPInteger ga = new TSPInteger(mainDepots);
+			//TSPInteger ga = new TSPInteger(mainDepots);
 
 	//====== END Metaheuristic Call Section ================================================	
 		
@@ -181,6 +183,8 @@ public class TSP {
 		       //-------- CALL WRITE LONG/SHORT TO EXCEL BELOW -------------------------------------------------
 				writeLongSolutionToExcel(dataFile.substring(dataFile.lastIndexOf("/") + 1));
 				writeShortSolutionExcel(dataFile.substring(dataFile.lastIndexOf("/") + 1));
+	//Signal End of This TSP
+	System.out.println(" \n\n =================== END OF TSP SECTION ===================  \n\n");
 	} 
 
 	/**
@@ -739,45 +743,31 @@ public class TSP {
 	
 	 // Create a excel file to put in the final solutions
 	
-	public static void createFinalExcelFile(int numSolution){
-		  
-		  
-		  int rowCounter = 0;
-		  int curCol = 0;	//column counter
-		  XSSFWorkbook workbook = new XSSFWorkbook(); // create a book
-		  XSSFSheet sheet = workbook.createSheet("Sheet1");// create a sheet
-		  XSSFRow curRow = sheet.createRow(rowCounter++); // create a row
-		  
-		  //fill the first row of excel, Solution numbers
-		  curCol = 2;
-		  for(int i=0; i<numSolution; i++){
-			  curRow.createCell(curCol).setCellValue("Solution " + (i));
-			  curCol = curCol+4;		  
-		  }
-		  
-		  curRow = sheet.createRow(rowCounter++); // create a row
-		  curCol = 0;
-		  curRow.createCell(curCol++).setCellValue("Problem");
-		  curRow.createCell(curCol++).setCellValue("Best Known Solution");	  
-		  for(int i=0; i<numSolution; i++){
-			  curRow.createCell(curCol++).setCellValue("Num of Vehicle");
-			  curRow.createCell(curCol++).setCellValue("Distance");
-			  curRow.createCell(curCol++).setCellValue("Cost");
-			  curRow.createCell(curCol++).setCellValue("Percentage");		  	  
-		  }
-		  	  
-	      //save the file
-	      try 
-	      {
-	    	  FileOutputStream fout = new FileOutputStream(new File(ProblemInfo.outputPath + "Comparison.xlsx"));
-	    	  workbook.write(fout); 
-	          fout.close();
-	      } 
-	      catch (Exception e) 
-	      { 
-	          e.printStackTrace(); 
-	      } 
-		  
+	public static void createFinalExcelFile(String FileName, Population FireFly){
+
+		try {
+            FileInputStream file = new FileInputStream(new File(ProblemInfo.outputPath + "Comparison.xlsx"));
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            XSSFRow row = null;
+            Cell cell = null;
+            
+            int runTill = 0;
+            int i = 0;
+            
+            while(runTill == 0) {
+            	i++;
+            	XSSFCell TempCell = sheet.getRow(i).getCell(0);
+            	String TempName = TempCell.toString();
+            	if(TempName.equals(FileName)) {runTill = 1; break;}
+            }
+            
+            //if()
+            
+
+	    } 
+	     
+		catch (Exception e) { System.out.println("Error in createFinalExcel"); e.printStackTrace(); } 
 	  }
 
 

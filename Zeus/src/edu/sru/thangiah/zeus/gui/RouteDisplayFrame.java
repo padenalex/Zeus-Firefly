@@ -214,7 +214,7 @@ public class RouteDisplayFrame
     // Read the layout constraints
     XmlConstraintBuilder db_XMLBuilderLayout = new XmlConstraintBuilder();
     try {
-      db_XMLBuilderLayout.addConstraints(new File("etc\\RouteDisplayFrameLayout.xml"), panelLayout);   // Read the contraints from the layout XML file.
+      db_XMLBuilderLayout.addConstraints(new File("etc/RouteDisplayFrameLayout.xml"), panelLayout);   // Read the contraints from the layout XML file.
     }
     catch (Exception ex) {
       ex.printStackTrace();
