@@ -157,18 +157,16 @@ public class TSPShipmentLinkedList
    * @param out PrintStream stream to output to
    */
   public void printTSPShipmentsToConsole() {
-	  System.out.println(this.getNumShipments());
+	  System.out.println("Number of shipments: " + this.getNumShipments());
+	  System.out.println("INDEX | X  |  Y");
 
 	  Shipment ship = super.getHead();
 	  TSPShipment tspShip;
 	  while (ship != getTail())
 	  {
 		  tspShip = (TSPShipment)ship ;
-		  System.out.println(tspShip.getIndex() + " " + tspShip.getTruckTypeNeeded() + " " +
-				  tspShip.getDemand() + " " + tspShip.getXCoord() + " " +
-				  //ship.getYCoord() + " " + ship.getPickUpPointName() +
-				  tspShip.getYCoord() + " " +
-				  tspShip.getExtraVariable());
+		  System.out.println(tspShip.getIndex() + "   " + tspShip.getXCoord() + "  " +
+				  tspShip.getYCoord());
 		  ship = ship.getNext();
 	  }
   }

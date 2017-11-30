@@ -52,6 +52,8 @@ public class TSP {
 
 	//constructor for the class
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	
+	
 	public TSP(String dataFile, int FileType) {
 
 		//Truck types are placed into a vector
@@ -128,8 +130,8 @@ public class TSP {
 		
 		//At this point all shipments have been assigned
        //-------- CALL WRITE LONG/SHORT TO EXCEL BELOW -------------------------------------------------
-		writeLongSolutionToExcel(dataFile.substring(dataFile.lastIndexOf("/") + 1));
-		writeShortSolutionExcel(dataFile.substring(dataFile.lastIndexOf("/") + 1));
+		//writeLongSolutionToExcel(dataFile.substring(dataFile.lastIndexOf("/") + 1));
+		//writeShortSolutionExcel(dataFile.substring(dataFile.lastIndexOf("/") + 1));
 
 
 		//create a vector of search strategy/optimizations to execute
@@ -147,17 +149,17 @@ public class TSP {
 
 
 		}
-		//--------------------------------------------------------------(TURN ON/OFF GUI)---------
+		//--------------------------------------------------------------(TURN GUI ON/OFF )---------
 		//ZeusGui guiPost = new ZeusGui(mainDepots, mainShipments);
 		
 
 	//====== Metaheuristic Call Section ===================================================
 			//ProblemInfo.insertShipType = new InsertAsGiven();
 			//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
+		    //To Set The original List Passed in Equal To New List Uncomment .setMainNodes()
 			Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
-			
-			//To Set The original List Passed in Equal To New List Uncomment Below
-			//mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(FFOptimization.GetFinalFly());
+			mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(FFOptimization.GetFinalFly());
+			mainDepots.setAttributes(FFOptimization.GetFinalFly().getAttributes());
 			
 			//Re run FF with the Previous FF route
 			//Insert As Given Turns Off The LinearGreedy And Makes Provides The Route In Order Nodes Are Inserted
@@ -172,6 +174,11 @@ public class TSP {
 
 	//====== END Metaheuristic Call Section ================================================	
 		
+			
+			//At this point all shipments have been assigned
+		       //-------- CALL WRITE LONG/SHORT TO EXCEL BELOW -------------------------------------------------
+				writeLongSolutionToExcel(dataFile.substring(dataFile.lastIndexOf("/") + 1));
+				writeShortSolutionExcel(dataFile.substring(dataFile.lastIndexOf("/") + 1));
 	} 
 
 	/**
@@ -331,8 +338,8 @@ public class TSP {
 		}
 
 		//Some problems tend to have different customer types. In this problem
-		//there is only one customter type. The integer value for the customer type
-		//should match with the integer value for the truck type for the compatibiliy
+		//there is only one customer type. The integer value for the customer type
+		//should match with the integer value for the truck type for the compatibility
 		//check to work
 		//read in the different customer types
 		Vector custTypes = new Vector();
@@ -473,7 +480,7 @@ public class TSP {
 			
 			
 			
-//~~~~~~~~ Populate with (n) InsertShipments
+//~~~~~~~~ Populate with (n) InsertShipments For Matrices Problems
 			
 			for(int TimesToRun = 0; TimesToRun < n-1; TimesToRun++){	//Times To Run Loop
 				Integer custType = 1;
@@ -481,7 +488,6 @@ public class TSP {
 				
 			} //End Times To Run Loop		
 			
-			//==========	-> Grabbed From x/y method.
 			int ia = 0;
 			int xa = 0;
 			int ya= 0;
@@ -499,7 +505,6 @@ public class TSP {
 				depot.getMainTrucks().insertTruckLast(new TSPTruck(ttype,
 						depot.getXCoord(), depot.getYCoord()));   
 			}		
-			//===========	
 		}
 //~~~~~~End Populate with (n) InsertShipments
 
