@@ -1,6 +1,7 @@
 package edu.sru.thangiah.zeus.tsp;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.*;
 
 import edu.sru.thangiah.zeus.core.*;
@@ -162,7 +163,7 @@ public class TSP {
 			mainDepots.setAttributes(FFOptimization.GetFinalFly().getAttributes());
 			
 			//Create Comparison Sheet In Excel
-			//createFinalExcelFile(dataFile, FFOptimization);
+			createFinalExcelFile(dataFile, FFOptimization);
 			
 			
 			//Re run FF with the Previous FF route
@@ -743,15 +744,18 @@ public class TSP {
 	
 	 // Create a excel file to put in the final solutions
 	
-	public static void createFinalExcelFile(String FileName, Population FireFly){
+	public static void createFinalExcelFile(String FileName, Population FFOpt){
 
 		try {
             FileInputStream file = new FileInputStream(new File(ProblemInfo.outputPath + "Comparison.xlsx"));
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheetAt(0);
-            XSSFRow row = null;
-            Cell cell = null;
-            
+            double ogCost = FFOpt.ogCost;
+            double newCost = FFOpt.newCost;
+            double effPercent = FFOpt.effPercent;
+            double runTime = FFOpt.totalTime;
+            int popSize = FFOpt.popsize;
+            int totalGen = FFOpt.TotalGen;
             int runTill = 0;
             int i = 0;
             
@@ -760,19 +764,51 @@ public class TSP {
             	XSSFCell TempCell = sheet.getRow(i).getCell(0);
             	String TempName = TempCell.toString();
             	if(TempName.equals(FileName)) {runTill = 1; break;}
+            	if(TempName.equals("EOF")) {runTill = 1; break;} //Needs set so creates new file space or doesn't log at all
+            }
+            int isnull = 0;
+            double TempCost = 999999999;
+            try {
+            TempCost = sheet.getRow(i).getCell(1).getNumericCellValue();
+//Getcell(i) error -- need to check for null and should be looking at getcell(3)
+            } catch(Exception e) {isnull = 1;}
+            
+            if(TempCost > newCost || isnull == 1) {
+            	sheet.getRow(i).createCell(2).setCellValue(ogCost);
+            	sheet.getRow(i).createCell(3).setCellValue(newCost);
+            	sheet.getRow(i).createCell(4).setCellValue(effPercent);
+            	sheet.getRow(i).createCell(5).setCellValue(runTime+"s");
+            	sheet.getRow(i).createCell(6).setCellValue(popSize);
+            	sheet.getRow(i).createCell(7).setCellValue(totalGen);
             }
             
-            //if()
-            
-
+  	      //save the file
+  	      try 
+  	      {
+  	    	  FileOutputStream fout = new FileOutputStream(new File(ProblemInfo.outputPath + "Comparison.xlsx"));
+  	    	  workbook.write(fout); 
+  	          fout.close();
+  	      } 
+  	      catch (Exception e) 
+  	      { 
+  	          e.printStackTrace(); 
+  	      } 
 	    } 
 	     
 		catch (Exception e) { System.out.println("Error in createFinalExcel"); e.printStackTrace(); } 
 	  }
 
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	 // Runs optmizations inserted into the mainOpts vector
-
 	public void runOptimizations() {
 		OptInfo info = new OptInfo();
 		for (int i = 0; i < mainOpts.size(); i++) {

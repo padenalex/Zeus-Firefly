@@ -20,8 +20,8 @@ public class Population {
 	LinkedList<FireFly> fireFlies;
 	//Pop Size is the number of Randon TSP Populations Generated
 	//TotalGen is the number of times operators will run on these random TSPs
-	static int popsize = 30;
-	static int TotalGen = 250;
+	public static int popsize = 30;
+	public static int TotalGen = 300;
 	private NodesLinkedList FinalFly;
 	public double totalTime;
 	public double effPercent;
