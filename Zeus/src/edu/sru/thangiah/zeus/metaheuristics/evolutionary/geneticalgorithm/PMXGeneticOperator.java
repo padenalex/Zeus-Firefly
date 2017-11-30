@@ -35,7 +35,7 @@ public class PMXGeneticOperator implements IGeneticOperator
 		IChromosome chr1, chr2, resultChromosome1, resultChromosome2;
 		LinkedList<IChromosome> tempChromes = new LinkedList<IChromosome>();
 		
-		for(IChromosome chrome : chromes)
+		for(int j = 0; j < getConfiguration().getPopulationSize() ; j++)
 		{
 			double doCrossover;
 			
@@ -105,15 +105,27 @@ public class PMXGeneticOperator implements IGeneticOperator
 				Settings.printDebug(Settings.COMMENT, "New Child 1 : " + resultChromosome1.toString());
 				Settings.printDebug(Settings.COMMENT, "New Child 2 : " + resultChromosome2.toString());
 			}
-			
-			Population tempPop = new Population(configuration);
-			for (int i = 0; i < getConfiguration().getPopulationSize() - 1; i ++)
-			{
-				pop.calculateFittestChromosome();
-				tempPop.addChromosome(pop.getFittestChromosome());
-				pop.getChromosomes().remove(pop.getFittestChromosome());
-			}
 		}
+		//reduce population back down to configuration population size
+		Population tempPop = new Population(configuration);
+		for (int i = 0; i < getConfiguration().getPopulationSize(); i ++)
+		{
+			pop.calculateFittestChromosome();
+			tempPop.addChromosome(pop.getFittestChromosome());
+			pop.getChromosomes().remove(pop.getFittestChromosome());
+		}
+		
+		Settings.printDebug(Settings.COMMENT, "Pop size" + getConfiguration().getPopulationSize());
+		
+		pop = new Population(getConfiguration());
+		Settings.printDebug(Settings.COMMENT, "Pop size" + pop.size());
+		for (int i = 0; i < getConfiguration().getPopulationSize(); i ++)
+		{
+			pop.setChromosome(i, tempPop.getChromosome(i));
+		}
+		//pop.calculateFittestChromosome();
+		Settings.printDebug(Settings.COMMENT, "Pop size" + pop.size());
+		
 	}
 	
 	public int findGeneIndex(Chromosome chromey, int geneValue)

@@ -1,11 +1,17 @@
 package edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm;
 
+import edu.sru.thangiah.zeus.core.Depot;
+import edu.sru.thangiah.zeus.core.DepotLinkedList;
+import edu.sru.thangiah.zeus.core.Nodes;
+import edu.sru.thangiah.zeus.core.NodesLinkedList;
 import edu.sru.thangiah.zeus.core.ProblemInfo;
 import edu.sru.thangiah.zeus.core.Settings;
+import edu.sru.thangiah.zeus.core.Truck;
 import edu.sru.thangiah.zeus.tsp.*;
 
 public class TSPCostFunction extends AbstractFitnessFunction
 {
+	static TSPNodesLinkedList StartList = new TSPNodesLinkedList();
 	TSPDepotLinkedList depotList;
 	TSPNodesLinkedList nodes;
 	public TSPCostFunction(TSPDepotLinkedList depotIn)
@@ -17,13 +23,18 @@ public class TSPCostFunction extends AbstractFitnessFunction
 	public double evaluate(IChromosome chrome)
 	{
 		//Settings.printDebug(Settings.COMMENT, Integer.toString(chrome.size()));
-	    TSPNodesLinkedList newList = new TSPNodesLinkedList();
-	    Settings.printDebug(Settings.COMMENT, Integer.toString(chrome.size()));
-	    Settings.printDebug(Settings.COMMENT, Integer.toString(nodes.getSize()));
-	    for (int i = 0; i < nodes.getSize(); i++)
+	    NodesLinkedList newList = (NodesLinkedList) StartList.clone();
+	    //Settings.printDebug(Settings.COMMENT, Integer.toString(chrome.size()));
+	    //Settings.printDebug(Settings.COMMENT, Integer.toString(nodes.getSize()));
+	    for (int i = 0; i < chrome.size(); i++)
 	    {
-	    	newList.insertShipment(nodes.getNodeByIndex((int) chrome.getGene(i).getInternalValue()).getShipment());
+	    	int index = (int) chrome.getGene(i).getInternalValue() + 1; //+1 Zeus stores indexes from 1 not 0
+	    	TSPNodes nodey = new TSPNodes(); 
+	    	nodey.setShipment(nodes.getNodeByIndex(index).getShipment());
+	    	newList.insertNodeLast(nodey);
 	    }
+	    
+	    ProblemInfo.nodesLLLevelCostF.calculateTotalsStats(newList);
 	    
 	    return newList.getCost();
 	}

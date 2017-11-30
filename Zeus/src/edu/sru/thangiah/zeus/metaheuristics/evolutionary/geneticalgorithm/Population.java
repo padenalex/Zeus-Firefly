@@ -63,7 +63,7 @@ public class Population
 	 * Set the IChromosome at the given index in the list of chromosomes in the population.
 	 */
 	
-	public void setChromosome(final int index, final IChromosome chrome){ chromosomes.add(index, chrome); }
+	public void setChromosome(final int index, final IChromosome chrome){ chromosomes.set(index, chrome); }
 	
 	
 	/*
@@ -122,14 +122,16 @@ public class Population
 		
 		double currentHighestFitness = 0.0, nextFitness = 0.0;
 		
+		currentHighestFitness = fitnessFunction.evaluate(currentFittest);
+		
 		for (int i = 1; i < chromosomes.size(); i++) 
 		{
-			currentHighestFitness = fitnessFunction.evaluate(currentFittest);
 			nextFitness = fitnessFunction.evaluate(chromosomes.get(i));
 			
             if(currentHighestFitness < nextFitness )
             {
             	currentFittest = chromosomes.get(i);
+            	currentHighestFitness = nextFitness;
             }
         }
 		
