@@ -52,6 +52,7 @@ public class Population {
 		System.out.println("FireFly Aglorithm Runtime (Seconds) Is: " + totalTime);
 		System.out.println("FireFly Reduced Cost By: " + effPercent + "%");
 	}
+	
 	public Population() {
 		this.fireFlies = new LinkedList<FireFly>();
 	}

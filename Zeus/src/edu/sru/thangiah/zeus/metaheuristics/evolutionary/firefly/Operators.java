@@ -65,70 +65,6 @@ public class Operators {
 			}
 			return lowcostindex;
 		}
-
-	public FireFly InvertMutation(FireFly CurrFly) {
-			
-	
-				FireFly NewFly = new FireFly(CurrFly);
-				Random rand = new Random();
-				Vector<Nodes> LeftVect = new Vector<Nodes>();
-				Vector<Nodes> FlipVect = new Vector<Nodes>();
-				Vector<Nodes> RightVect = new Vector<Nodes>();
-				
-				//System.out.println("The original NewFly is " + NewFly.FireFlyt.getRouteString() + " size is " + NewFly.FireFlyt.getSize());
-				int  Rand1 = rand.nextInt(FireFly.FireflyDimension) + 0;
-				int  Rand2 = rand.nextInt(FireFly.FireflyDimension) + 0;
-				while(Rand1 == Rand2 || Rand1==Rand2-1 || Rand1==Rand2+1) {Rand2 = rand.nextInt(FireFly.FireflyDimension) + 0;}
-				
-				if(Rand1 > Rand2) { //Set Rand1 to smaller Rand2 larger
-					int temp;
-					temp = Rand1;
-					Rand1 = Rand2;
-					Rand2 = temp;
-				}
-				int loopSize = Rand2-Rand1;
-				//System.out.println("rand1 is " + Rand1 + " rand2 is " + Rand2 + " loop size is " + loopSize);
-	//--copy
-				if(Rand1 != 0) {
-					for(int i = 0; i < Rand1; i++) {
-						LeftVect.add((Nodes) NewFly.FireFlyt.getNodesAtPosition(i));
-					}
-				}
-				for(int i = Rand1; i < Rand2; i++) {
-					FlipVect.add((Nodes) NewFly.FireFlyt.getNodesAtPosition(i));
-				}
-				if(Rand2 != FireFly.FireflyDimension) {
-					for(int i = Rand2; i < FireFly.FireflyDimension; i++) {
-						RightVect.add((Nodes) NewFly.FireFlyt.getNodesAtPosition(i));
-					}
-				}
-				//System.out.println("left size is " + LeftVect.size() + " flip vect is " + FlipVect.size() + " right vect is " + RightVect.size());
-	//--flip/empty			
-				Collections.reverse(FlipVect);
-				NewFly.FireFlyt.emptyList();			
-	//---- populate
-				int temp1 = 0;
-				int temp2 = 0;
-				
-				if(Rand1 != 0) {
-					for(int i = 0; i < Rand1; i++) {
-						NewFly.FireFlyt.insertNodeLast(LeftVect.elementAt(i));
-					}
-				}
-				for(int i = Rand1; i < Rand2; i++) {
-					NewFly.FireFlyt.insertNodeLast(FlipVect.elementAt(temp1));
-					temp1++;
-				}
-				if(Rand2 != FireFly.FireflyDimension) {
-					for(int i = Rand2; i < FireFly.FireflyDimension; i++) {
-						NewFly.FireFlyt.insertNodeLast(RightVect.elementAt(temp2));;
-						temp2++;
-					}
-				}
-				ProblemInfo.nodesLLLevelCostF.calculateTotalsStats(NewFly.FireFlyt);
-				
-		return NewFly;
-		}
 	
 	//Remove possibility of duplicates from trim pop	
 	public Population TrimPopulation(Population TempPop) {
@@ -156,9 +92,76 @@ public class Operators {
 			
 			return NewPop;
 		}
+
 	
 	
+//OPERATORS BELOW ------------- 
 	
+	public FireFly InvertMutation(FireFly CurrFly) {
+		
+		
+		FireFly NewFly = new FireFly(CurrFly);
+		Random rand = new Random();
+		Vector<Nodes> LeftVect = new Vector<Nodes>();
+		Vector<Nodes> FlipVect = new Vector<Nodes>();
+		Vector<Nodes> RightVect = new Vector<Nodes>();
+		
+		//System.out.println("The original NewFly is " + NewFly.FireFlyt.getRouteString() + " size is " + NewFly.FireFlyt.getSize());
+		int  Rand1 = rand.nextInt(FireFly.FireflyDimension) + 0;
+		int  Rand2 = rand.nextInt(FireFly.FireflyDimension) + 0;
+		while(Rand1 == Rand2 || Rand1==Rand2-1 || Rand1==Rand2+1) {Rand2 = rand.nextInt(FireFly.FireflyDimension) + 0;}
+		
+		if(Rand1 > Rand2) { //Set Rand1 to smaller Rand2 larger
+			int temp;
+			temp = Rand1;
+			Rand1 = Rand2;
+			Rand2 = temp;
+		}
+		int loopSize = Rand2-Rand1;
+		//System.out.println("rand1 is " + Rand1 + " rand2 is " + Rand2 + " loop size is " + loopSize);
+//--copy
+		if(Rand1 != 0) {
+			for(int i = 0; i < Rand1; i++) {
+				LeftVect.add((Nodes) NewFly.FireFlyt.getNodesAtPosition(i));
+			}
+		}
+		for(int i = Rand1; i < Rand2; i++) {
+			FlipVect.add((Nodes) NewFly.FireFlyt.getNodesAtPosition(i));
+		}
+		if(Rand2 != FireFly.FireflyDimension) {
+			for(int i = Rand2; i < FireFly.FireflyDimension; i++) {
+				RightVect.add((Nodes) NewFly.FireFlyt.getNodesAtPosition(i));
+			}
+		}
+		//System.out.println("left size is " + LeftVect.size() + " flip vect is " + FlipVect.size() + " right vect is " + RightVect.size());
+//--flip/empty			
+		Collections.reverse(FlipVect);
+		NewFly.FireFlyt.emptyList();			
+//---- populate
+		int temp1 = 0;
+		int temp2 = 0;
+		
+		if(Rand1 != 0) {
+			for(int i = 0; i < Rand1; i++) {
+				NewFly.FireFlyt.insertNodeLast(LeftVect.elementAt(i));
+			}
+		}
+		for(int i = Rand1; i < Rand2; i++) {
+			NewFly.FireFlyt.insertNodeLast(FlipVect.elementAt(temp1));
+			temp1++;
+		}
+		if(Rand2 != FireFly.FireflyDimension) {
+			for(int i = Rand2; i < FireFly.FireflyDimension; i++) {
+				NewFly.FireFlyt.insertNodeLast(RightVect.elementAt(temp2));;
+				temp2++;
+			}
+		}
+		ProblemInfo.nodesLLLevelCostF.calculateTotalsStats(NewFly.FireFlyt);
+		
+		return NewFly;
+	}	
+	
+//=====
 	
 	private FireFly XtoY(FindNewEdge edge, FireFly CurrentFly) {
 	
