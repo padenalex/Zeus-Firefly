@@ -308,7 +308,7 @@ public static String WhoAmI() {
 	} //End Times To Run Loop	
 
 	IndexVisited.add(rowcounter);	
-	System.out.println("The vector is: " + IndexVisited);
+	//System.out.println("The vector is: " + IndexVisited);
 	
 	//for(int Counter = 0; Counter < size; Counter++) {
 	//	DistanceArray[rowcounter][Counter] = 0;

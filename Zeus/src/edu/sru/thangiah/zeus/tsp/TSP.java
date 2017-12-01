@@ -158,13 +158,12 @@ public class TSP {
 			//ProblemInfo.insertShipType = new InsertAsGiven();
 			//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
 		    //To Set The original List Passed in Equal To New List Uncomment .setMainNodes()
-			
-			/*Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
+			Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
 			mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(FFOptimization.GetFinalFly());
 			mainDepots.setAttributes(FFOptimization.GetFinalFly().getAttributes());
 			
 			//Create Comparison Sheet In Excel
-			createFinalExcelFile(dataFile, FFOptimization);*/
+			createFinalExcelFile(dataFile, FFOptimization);
 			
 			
 			//Re run FF with the Previous FF route
@@ -176,7 +175,7 @@ public class TSP {
 
 			
 			
-			TSPInteger ga = new TSPInteger(mainDepots);
+			//TSPInteger ga = new TSPInteger(mainDepots);
 
 	//====== END Metaheuristic Call Section ================================================	
 		
@@ -463,7 +462,7 @@ public class TSP {
 				ProblemInfo.distanceMatrix = new int[n][n];
 				ProblemInfo.distanceMatrix = DataArray;
 				
-
+			/*
 				//PRINT OUT 2D ARRAY 
 				for(int s = 0; s<n; s++){
 				    for(int w = 0; w<n; w++)
@@ -476,6 +475,7 @@ public class TSP {
 				    System.out.println();
 				    System.out.println();
 
+			*/	    
 				}	//=============END TRY
 			
 
@@ -770,7 +770,7 @@ public class TSP {
             int isnull = 0;
             double TempCost = 999999999;
             try {
-            TempCost = sheet.getRow(i).getCell(1).getNumericCellValue();
+            TempCost = sheet.getRow(i).getCell(3).getNumericCellValue();
 //Getcell(i) error -- need to check for null and should be looking at getcell(3)
             } catch(Exception e) {isnull = 1;}
             

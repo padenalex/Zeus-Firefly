@@ -57,29 +57,26 @@ public class TSPRoot {
 		curRow = sheet.getRow(rowCounter); // the 2nd row is the problem data
 		//---------------------------------------------
 			//Indented to comment out if you want to run individual files instead of looping master
-			 while ((String)curRow.getCell(0).getStringCellValue() != "EOF") {
+			 //while ((String)curRow.getCell(0).getStringCellValue() != "EOF") {
 		rowCounter++;
 		curRow = sheet.getRow(rowCounter); // the 2nd row is the problem data
 		FileName = (String)curRow.getCell(0).getStringCellValue();
-			 FileType = (int)curRow.getCell(1).getNumericCellValue();
-			 new TSP(FileName+".xlsx", FileType);
-			 }
+			// FileType = (int)curRow.getCell(1).getNumericCellValue();
+			// new TSP(FileName+".xlsx", FileType);
+			// }
 		
 		//uncomment to run individual files with indented while loop commented out
-		//FileType = 0;
-		//FileName = "a280.xlsx";
-		//new TSP(FileName, FileType);
+		for(int i=0; i < 50; i++) {
+		FileType = 0;
+		FileName = "a280.xlsx";
+		new TSP(FileName, FileType);
+		}
 		//---------------------------------------------
 	}
 	catch (Exception e) {
 		System.out.println("Error At TSPRoot Level (Individual File)");
 		e.printStackTrace();
 	}
-    
-	
-	//--------------------------------------------------------------------------
-    //Read In File
-    //new TSP("a280.xlsx");
 
   }
 }
