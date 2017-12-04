@@ -2,6 +2,8 @@ package edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm;
 
 import java.util.LinkedList;
 
+import edu.sru.thangiah.zeus.core.Settings;
+
 public class CXGeneticOperator implements IGeneticOperator
 {
 	private Configuration configuration;
@@ -55,9 +57,15 @@ public class CXGeneticOperator implements IGeneticOperator
 			if(doCrossover < getConfiguration().getCrossoverProbability())
 			{
 				//get first offspring
-				resultChromosome1 = (Chromosome) chr1.newChromosome();
-				int origGeneVal = (int) chr2.getGene(point1).getInternalValue();
-				int currGeneVal = (int) chr1.getGene(point1).getInternalValue();
+				resultChromosome1 = new Chromosome(getConfiguration(), chromosomeSize);
+				resultChromosome1.setGenes(new LinkedList<IGene>());
+				for (int i = 0; i < getConfiguration().getChromosomeSize(); i++)
+				{
+					IGene temp = chr1.getGene(i);
+					resultChromosome1.addGene(temp);
+				}
+				int origGeneVal = (int) chr1.getGene(point1).getInternalValue();
+				int currGeneVal = (int) chr2.getGene(point1).getInternalValue();
 				int currIndex = point1;
 				do
 				{
@@ -65,6 +73,7 @@ public class CXGeneticOperator implements IGeneticOperator
 					currGeneVal = (int) chr1.getGene(currIndex).getInternalValue();
 					//replace result chromosome at current index
 					resultChromosome1.getGene(currIndex).setAllele((int) chr2.getGene(point1).getInternalValue());
+					Settings.printDebug(Settings.COMMENT, Integer.toString(currGeneVal));
 					currIndex = findGeneIndex(chr2, currGeneVal);
 				}
 				while (currGeneVal != origGeneVal);

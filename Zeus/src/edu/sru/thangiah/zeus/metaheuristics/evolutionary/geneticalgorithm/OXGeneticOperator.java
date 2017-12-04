@@ -2,6 +2,8 @@ package edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm;
 
 import java.util.LinkedList;
 
+import edu.sru.thangiah.zeus.core.Settings;
+
 public class OXGeneticOperator implements IGeneticOperator
 {
 	private Configuration configuration;
@@ -57,6 +59,7 @@ public class OXGeneticOperator implements IGeneticOperator
 			if(doCrossover < getConfiguration().getCrossoverProbability())
 			{
 				resultChromosome1 = new Chromosome(configuration, chromosomeSize);
+				
 				if (point1 > point2)//swap so that point one is less than point 2
 				{
 					int i = point2;
@@ -64,14 +67,19 @@ public class OXGeneticOperator implements IGeneticOperator
 					point1 = i;
 				}
 				
+				for (int i = 0; i < getConfiguration().getChromosomeSize(); i++)
+				{
+					resultChromosome1.getGenes().add(new IntegerGene(getConfiguration(), -1, 280));
+				}
+				Settings.printDebug(Settings.COMMENT, Integer.toString(resultChromosome1.getGenes().size()));
 				for (int i = point1; i <= point2; i++)
 				{
 					resultChromosome1.setGene(i, (IntegerGene) chr2.getGene(i));
 				}
 				
+				int count = 0;
 				for (int i = 0; i < point1; i++)
-				{
-					int count = 0;
+				{	
 					while (resultChromosome1.getGenes().contains(chr1.getGene(count)))
 					{
 						count ++;
@@ -81,7 +89,6 @@ public class OXGeneticOperator implements IGeneticOperator
 				
 				for (int i = point2 +1; i < chromosomeSize; i++)
 				{
-					int count = 0;
 					while (resultChromosome1.getGenes().contains(chr1.getGene(count)))
 					{
 						count ++;

@@ -21,11 +21,13 @@ public class TSPInteger {
 	    
 	    try {
 	    		gaConf.setChromosomeSize(chromeSize);
+	    		gaConf.setSampleChromosome(new Chromosome(gaConf));
+	    		gaConf.setSampleGenes(new LinkedList<IGene>());
 	    		gaConf.setFitnessFunction(new TSPCostFunction(mainDepots));
 	    		gaConf.setNumGenerations(numEvolutions);
 	    		gaConf.addGeneticOperator(new PMXGeneticOperator(gaConf));
 	    		gaConf.setGeneticOperators(new LinkedList<IGeneticOperator>());
-	    		gaConf.addGeneticOperator(new PMXGeneticOperator(gaConf));
+	    		gaConf.addGeneticOperator(new OXGeneticOperator(gaConf));
 	    		genotype = new Genotype(gaConf);
 	    		gaConf.getGeneticOperators().getLast().operate(genotype.getPopulation());
 	    		

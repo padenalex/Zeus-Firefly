@@ -5,4 +5,5 @@
 <fullyQualifiedTypeName name="edu.sru.thangiah.zeus.core.DepotLinkedList"/>
 <fullyQualifiedTypeName name="edu.sru.thangiah.zeus.core.Depot"/>
 <fullyQualifiedTypeName name="edu.sru.thangiah.zeus.core.Truck"/>
+<fullyQualifiedTypeName name="edu.sru.thangiah.zeus.core.Settings"/>
 </qualifiedTypeNameHistroy>
