@@ -4,6 +4,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Chromosome;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Configuration;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IChromosome;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IntegerGene;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Population;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.RandomGenerator;
+
 //import com.opensymphony.xwork2.util.ArrayUtils;
 
 /**

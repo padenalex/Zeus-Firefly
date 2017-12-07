@@ -3,6 +3,13 @@ package edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm;
 import java.util.LinkedList;
 
 import edu.sru.thangiah.zeus.core.Settings;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Chromosome;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Configuration;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IChromosome;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IGeneticOperator;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IntegerGene;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Population;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.RandomGenerator;
 
 public class PMXGeneticOperator implements IGeneticOperator
 {
@@ -90,7 +97,7 @@ public class PMXGeneticOperator implements IGeneticOperator
 				resultChromosome2 = new Chromosome(getConfiguration(), chromosomeSize);
 				for (int i = 0; i < chromosomeSize; i++)
 				{
-					resultChromosome2.getGenes().add(new IntegerGene(getConfiguration(), (int) chr2.getGene(i).getInternalValue(), chromosomeSize)); 
+					resultChromosome2.getGenes().add(new IntegerGene(getConfiguration(), (int) chr2.getGene(i).getInternalValue(), chromosomeSize));
 				}
 				for (int i = point1; i <= point2; i++)
 				{

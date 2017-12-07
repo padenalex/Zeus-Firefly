@@ -3,6 +3,13 @@ package edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm;
 import java.util.LinkedList;
 
 import edu.sru.thangiah.zeus.core.Settings;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Chromosome;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Configuration;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IChromosome;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IGene;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IGeneticOperator;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Population;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.RandomGenerator;
 
 public class CXGeneticOperator implements IGeneticOperator
 {

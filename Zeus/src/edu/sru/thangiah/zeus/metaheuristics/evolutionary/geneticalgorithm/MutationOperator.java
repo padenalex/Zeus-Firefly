@@ -2,6 +2,10 @@ package edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm;
 
 import java.util.LinkedList;
 
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.AbstractGeneticOperator;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IChromosome;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Population;
+
 /**
  * This is the most basic form of a Mutation Operator.  See StaticMutationOperator.java for an
  * example of how to implement a MutationOperator.

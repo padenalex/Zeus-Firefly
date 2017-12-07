@@ -20,12 +20,11 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.TSPInteger;
 import edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly.FireFly;
 import edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly.Population;
-import edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm.TSPInteger;
 //For the Simulated Annealing metaheuristic
 //import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
-
 import edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm.*;
 
 //import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
