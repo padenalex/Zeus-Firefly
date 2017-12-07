@@ -22,6 +22,7 @@ public class Population
 		this.configuration = eaConf;
 		this.popLL = new LinkedList<INodeLL>();
 		
+		System.out.println("Test ------ " + ogNodeLL.getNodesAtPosition(0).getIndex());
 		
 		//The initial list populates in the order that it was passed in from Zeus
 		//This is done to preserve a reasonable first list for algorithms like FireFly 
@@ -33,14 +34,11 @@ public class Population
 			popLL.add(temp);
 		}
 		
+	//Set FinalBest
+	//Get FinalBest
 	}
 	
 	//New Population Here Which Is Not Limited By Popsize (Expands and Contracts For Firefly Population)
 	public Population() {this.popLL = new LinkedList<INodeLL>();}
-	
-	public Configuration ReturnConfig() {return this.configuration;}
-	public LinkedList<INodeLL> ReturnPopLL() {return this.popLL;}
+
 }
-
-
-

@@ -1,5 +1,9 @@
 package edu.sru.thangiah.zeus.metaheuristics.evolutionaryalg;
 
+import java.util.LinkedList;
+
+//import antlr.collections.List;
+
 public class Configuration
 {
 
@@ -17,4 +21,4 @@ public class Configuration
 	public int getNumGenerations(){ return numEvolutions; }
 	public int getPopulationSize(){ return popSize; }
 
-} 
+}
