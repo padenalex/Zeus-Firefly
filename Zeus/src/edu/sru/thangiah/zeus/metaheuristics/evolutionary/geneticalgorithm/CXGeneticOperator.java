@@ -76,7 +76,7 @@ public class CXGeneticOperator implements IGeneticOperator
 					Settings.printDebug(Settings.COMMENT, Integer.toString(currGeneVal));
 					currIndex = findGeneIndex(chr2, currGeneVal);
 				}
-				while (currGeneVal != origGeneVal);
+				while (currGeneVal != origGeneVal); //loop until the original gene value is found in second chromosome
 			}
 		}
 	}

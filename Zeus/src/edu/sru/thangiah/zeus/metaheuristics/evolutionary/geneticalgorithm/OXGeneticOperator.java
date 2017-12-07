@@ -73,13 +73,13 @@ public class OXGeneticOperator implements IGeneticOperator
 				}
 				Settings.printDebug(Settings.COMMENT, Integer.toString(resultChromosome1.getGenes().size()));
 				for (int i = point1; i <= point2; i++)
-				{
+				{//move crossover section
 					resultChromosome1.setGene(i, (IntegerGene) chr2.getGene(i));
 				}
 				
 				int count = 0;
 				for (int i = 0; i < point1; i++)
-				{	
+				{	//move points before the crossover that are not in the crossover section
 					while (resultChromosome1.getGenes().contains(chr1.getGene(count)))
 					{
 						count ++;
@@ -88,7 +88,7 @@ public class OXGeneticOperator implements IGeneticOperator
 				}
 				
 				for (int i = point2 +1; i < chromosomeSize; i++)
-				{
+				{//move points after crossover that are not in crossover section
 					while (resultChromosome1.getGenes().contains(chr1.getGene(count)))
 					{
 						count ++;
