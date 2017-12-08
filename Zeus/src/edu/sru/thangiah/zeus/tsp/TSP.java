@@ -21,11 +21,10 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import edu.sru.thangiah.zeus.metaheuristics.evolutionary.TSPInteger;
-import edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly.FireFly;
-import edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly.Population;
+
 //For the Simulated Annealing metaheuristic
 //import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
-import edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm.*;
+
 
 //import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
 //import edu.sru.thangiah.zeus.metaheuristics.tabu.*;
@@ -154,26 +153,7 @@ public class TSP {
 		
 
 	//====== Metaheuristic Call Section ===================================================
-			//ProblemInfo.insertShipType = new InsertAsGiven();
-			//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
-		    //To Set The original List Passed in Equal To New List Uncomment .setMainNodes()
-			/*Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
-			mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(FFOptimization.GetFinalFly());
-			mainDepots.setAttributes(FFOptimization.GetFinalFly().getAttributes());
-			
-			//Create Comparison Sheet In Excel
-			createFinalExcelFile(dataFile, FFOptimization);*/
-			
-			
-			//Re run FF with the Previous FF route
-			//Insert As Given Turns Off The LinearGreedy And Makes Provides The Route In Order Nodes Are Inserted
-			//ProblemInfo.insertShipType = new InsertAsGiven();
-			//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
-			//Population NewOptFF = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
-			//mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().setMainNodes(NewOptFF.GetFinalFly());
 
-			
-			
 			TSPInteger ga = new TSPInteger(mainDepots);
 
 	//====== END Metaheuristic Call Section ================================================	
@@ -740,73 +720,6 @@ public class TSP {
 
 	//---------------------------------------------
 
-
-	
-	 // Create a excel file to put in the final solutions
-	
-	public static void createFinalExcelFile(String FileName, Population FFOpt){
-
-		try {
-            FileInputStream file = new FileInputStream(new File(ProblemInfo.outputPath + "Comparison.xlsx"));
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
-            XSSFSheet sheet = workbook.getSheetAt(0);
-            double ogCost = FFOpt.ogCost;
-            double newCost = FFOpt.newCost;
-            double effPercent = FFOpt.effPercent;
-            double runTime = FFOpt.totalTime;
-            int popSize = FFOpt.popsize;
-            int totalGen = FFOpt.TotalGen;
-            int runTill = 0;
-            int i = 0;
-            
-            while(runTill == 0) {
-            	i++;
-            	XSSFCell TempCell = sheet.getRow(i).getCell(0);
-            	String TempName = TempCell.toString();
-            	if(TempName.equals(FileName)) {runTill = 1; break;}
-            	if(TempName.equals("EOF")) {runTill = 1; break;} //Needs set so creates new file space or doesn't log at all
-            }
-            int isnull = 0;
-            double TempCost = 999999999;
-            try {
-            TempCost = sheet.getRow(i).getCell(3).getNumericCellValue();
-//Getcell(i) error -- need to check for null and should be looking at getcell(3)
-            } catch(Exception e) {isnull = 1;}
-            
-            if(TempCost > newCost || isnull == 1) {
-            	sheet.getRow(i).createCell(2).setCellValue(ogCost);
-            	sheet.getRow(i).createCell(3).setCellValue(newCost);
-            	sheet.getRow(i).createCell(4).setCellValue(effPercent);
-            	sheet.getRow(i).createCell(5).setCellValue(runTime+"s");
-            	sheet.getRow(i).createCell(6).setCellValue(popSize);
-            	sheet.getRow(i).createCell(7).setCellValue(totalGen);
-            }
-            
-  	      //save the file
-  	      try 
-  	      {
-  	    	  FileOutputStream fout = new FileOutputStream(new File(ProblemInfo.outputPath + "Comparison.xlsx"));
-  	    	  workbook.write(fout); 
-  	          fout.close();
-  	      } 
-  	      catch (Exception e) 
-  	      { 
-  	          e.printStackTrace(); 
-  	      } 
-	    } 
-	     
-		catch (Exception e) { System.out.println("Error in createFinalExcel"); e.printStackTrace(); } 
-	  }
-
-
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	 // Runs optmizations inserted into the mainOpts vector
 	public void runOptimizations() {

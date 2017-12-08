@@ -63,6 +63,20 @@ public class Chromosome extends AbstractChromosome
 	    }
 	  }
 	
+	public int findGenePos(int geneValue)
+	{
+		Chromosome chromey = this; 
+		int geneIndex = -1;
+		for (int i = 0; i <= getConfiguration().getChromosomeSize() -1; i++)
+		{
+			if ((int) chromey.getGene(i).getInternalValue() == geneValue)
+			{
+				geneIndex = i;
+			}
+		}
+		return geneIndex;
+	}
+	
 	
 	@Override
 	public int getValue() {
@@ -125,7 +139,15 @@ public class Chromosome extends AbstractChromosome
 				index = i;
 			}
 		}
-		
 		return index;
 	}
+	
+	public double getTspCost() {
+		Configuration config = getConfiguration();
+		IFitnessFunction fitFunc = config.getFitnessFunction();
+		double cost = fitFunc.evaluate(this);
+		return cost;
+	}
+	
+	
 }

@@ -142,4 +142,11 @@ public interface IChromosome
 	
 	public IChromosome newChromosome();
 	
+	
+	//find position by index(genevalue)
+	public int findGenePos(int geneValue);
+	
+	//Get TSP cost of chromosome
+	public double getTspCost();
+	
 }

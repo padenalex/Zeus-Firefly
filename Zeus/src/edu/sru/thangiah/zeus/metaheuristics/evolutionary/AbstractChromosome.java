@@ -103,7 +103,7 @@ public abstract class AbstractChromosome implements IChromosome, Serializable
 	
 	
 	/**
-	 * Get gene at the given index
+	 * Get gene at the given index (position)
 	 * 
 	 * @param index
 	 */

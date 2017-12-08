@@ -1,0 +1,128 @@
+package edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly;
+
+import java.util.LinkedList;
+import java.util.Random;
+import java.util.Vector;
+
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Configuration;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IChromosome;
+
+import java.util.Collections;
+
+
+public class FindNewEdge {
+
+	private int SLindex; 
+	private int SRindex;
+	private Vector<Integer> nsLin = new Vector<Integer>();  // --> <--
+	private Vector<Integer> nsRin = new Vector<Integer>();  // --> <--
+	private Vector<Integer> nsLout = new Vector<Integer>(); // <-- -->
+	private Vector<Integer> nsRout = new Vector<Integer>(); // <-- -->
+	
+	public FindNewEdge(IChromosome brightFly, IChromosome randomFly, Configuration configuration) {
+		Random rand = new Random();
+		int brightPos1 = 999999999;
+		int brightPos2 = 999999999;
+		int a1 = 999999999;
+		int a2 = 999999999;
+		int b1 = 999999999;
+		int b2 = 999999999;
+		int tspMax = configuration.getChromosomeSize()-1;  //Max tsp size in chromosome LL (#node -1 for start at 0) 
+		int keepRunning = 1;
+		
+		//Generates 2 connected random positions that do not exist in both lists
+		while(keepRunning == 1) {
+			brightPos1 = rand.nextInt(tspMax) + 0;
+			int nextOrprev = rand.nextInt(1) + 0;	
+			//1 is next and 0 is prev
+			if(nextOrprev == 0 && brightPos1 !=0) {brightPos2 = brightPos1-1;}
+			else if(nextOrprev == 0 && brightPos1 == 0) {brightPos2 = brightPos1+1;}
+			else if(nextOrprev == 1 && brightPos1 != tspMax) {brightPos2 = brightPos1+1;}
+			else if(nextOrprev == 1 && brightPos1 == tspMax) {brightPos2 = brightPos1-1;}
+			else {System.out.println("Error section #1 occured in findNewEdge of Firefly");}
+		
+			a1 = (int) brightFly.getGenes().get(brightPos1).getInternalValue();
+			a2 = (int) brightFly.getGenes().get(brightPos2).getInternalValue();
+			int tempPos = randomFly.findGenePos(a1);
+			try {
+			b1 = (int) randomFly.getGenes().get(tempPos-1).getInternalValue();
+			b2 = (int) randomFly.getGenes().get(tempPos+1).getInternalValue();
+			} catch(Exception e) {};
+			
+			if(a2 != b1 && a2!= b2) {keepRunning=0;}
+				//System.out.println("still running");
+			//Sets first pos to smaller one
+			if(brightPos1 > brightPos2) {
+				int temp = brightPos1;
+				brightPos1 = brightPos2;
+				brightPos2 = temp;
+			}
+		}
+		b1 = a1;
+		b2 = a2;
+		System.out.println("best " + brightFly.toString());
+		System.out.println("rand " + randomFly.toString());
+		System.out.println("afirst is  " + a1 + " second is  " + a2);
+		System.out.println("bfirst is  " + b1 + " second is  " + b2);
+		int currPos1 = randomFly.findGenePos(b1);
+		int currPos2 = randomFly.findGenePos(b2);
+		//Sets currPos1 to the left position in the randomfly.
+		if(currPos1 > currPos2) {
+			int temp = currPos1;
+			currPos1 = currPos2;
+			currPos2 = temp;
+			int temp1 = b1;
+			b1 = b2;
+			b2 = temp1;
+		}
+		
+		System.out.println("bp1 is " + brightPos1);
+		System.out.println("cp1 is " + currPos1);
+		
+		//Adds the first index
+		this.nsLout.add(b1);
+		this.nsRout.add(b2);
+		
+		//brightFly  -  brightPos1
+		//randomFly  -  currPos1
+		while(currPos1 != 0 && brightPos1 != 0) {
+			brightPos1--;
+			currPos1--;
+			int btemp = (int) brightFly.getGene(brightPos1).getInternalValue();
+			int ctemp = (int) randomFly.getGene(currPos1).getInternalValue();
+			
+			if(btemp == ctemp) {this.nsLout.add(ctemp);}
+			else {break;}
+		}
+		
+		while(currPos2 != tspMax && brightPos1 != tspMax) {
+			brightPos2++;
+			currPos2++;
+			int btemp = (int) brightFly.getGene(brightPos2).getInternalValue();
+			int ctemp = (int) randomFly.getGene(currPos2).getInternalValue();
+			
+			if(btemp == ctemp) {nsRout.add(ctemp);}
+			else {break;}
+		}
+		
+		//NodeSetin is just a reverse order of node set out
+		this.nsLin = this.nsLout;
+		this.nsRin = this.nsRout;
+		Collections.reverse(this.nsLin);
+		Collections.reverse(this.nsRin);
+		
+		System.out.println(this.nsLin);
+		System.out.println(this.nsRin);
+		System.out.println(this.nsLout);
+		System.out.println(this.nsRout);
+
+	}
+}
+
+
+
+
+
+
+
+
