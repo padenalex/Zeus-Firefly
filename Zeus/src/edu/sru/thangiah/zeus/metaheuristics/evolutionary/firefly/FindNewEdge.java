@@ -13,8 +13,6 @@ public class FindNewEdge {
 
 	private Vector<Integer> nsLout = new Vector<Integer>(); // <-- -->
 	private Vector<Integer> nsRout = new Vector<Integer>(); // <-- -->
-	private Vector<Integer> nsLin = new Vector<Integer>(); // <-- -->
-	private Vector<Integer> nsRin = new Vector<Integer>();
 	private int sLeftPos;
 	private int sRightPos;
 	private int sLeftIndex;
@@ -144,13 +142,13 @@ public class FindNewEdge {
 			bRightIndex = brighttemp;
 		}
 		
-		nsLin = flipNS(nsLout);
-		nsRin = flipNS(nsRout);
+		//nsLin = flipNS(nsLout);
+		//nsRin = flipNS(nsRout);
 		
-		System.out.println(nsLin);
-		System.out.println(nsLout);
-		System.out.println(nsRout);
-		System.out.println(nsRin);
+		System.out.println(" left " + nsLout);
+		System.out.println("right " +nsRout);
+		//System.out.println(nsLin);
+		//System.out.println(nsRin);
 
 
 	}
@@ -159,9 +157,6 @@ public class FindNewEdge {
 	
 	public Vector<Integer> getNSRout() {return this.nsRout;}
 	
-	public Vector<Integer> getNSLin() {return this.nsLin;}
-	
-	public Vector<Integer> getNSRin() {return this.nsRin;}
 	
 	public int getSLpos() {return this.sLeftPos;}
 	
@@ -171,15 +166,6 @@ public class FindNewEdge {
 	
 	public int getSRindex() {return this.sRightIndex;}
 	
-	private Vector<Integer> flipNS(Vector<Integer> ogVec) {
-		Vector<Integer> newVec = new Vector<Integer>();
-		for(int i=ogVec.size()-1; i >= 0; i--) {
-			newVec.add(ogVec.get(i));
-		}
-		System.out.println("new vector is " + newVec);
-		
-		return newVec;
-	}
 }
 
 

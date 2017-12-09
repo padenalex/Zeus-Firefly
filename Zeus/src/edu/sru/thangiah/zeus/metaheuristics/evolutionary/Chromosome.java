@@ -67,7 +67,7 @@ public class Chromosome extends AbstractChromosome
 	{
 		Chromosome chromey = this; 
 		int geneIndex = -1;
-		for (int i = 0; i <= getConfiguration().getChromosomeSize() -1; i++)
+		for (int i = 0; i <= this.getGenes().size() -1; i++)
 		{
 			if ((int) chromey.getGene(i).getInternalValue() == geneValue)
 			{

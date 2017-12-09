@@ -57,15 +57,13 @@ public class FireFlyOperator implements IGeneticOperator
 		IChromosome currBright = newPop.getChromosomes().getFirst();
 		FindNewEdge testedge = new FindNewEdge(currBright, ogPopLL.getLast(), configuration);
 
-
-		Chromosome test = new Chromosome(configuration);
-		test.fillRandomGenes(configuration.getRandomGenerator());
-		
 		System.out.println(currBright.getTspCost());
 		
 		//invertMutation(currBright);
 		//xToy(testedge, ogPopLL.getLast());
-		yTox(testedge, ogPopLL.getLast());
+		//yTox(testedge, ogPopLL.getLast());
+		//xFromy(testedge, ogPopLL.getLast());
+		//yFromx(testedge, ogPopLL.getLast());
 		
 		
 
@@ -97,7 +95,7 @@ public class FireFlyOperator implements IGeneticOperator
 	private IChromosome invertMutation(IChromosome ogChromo) {
 		int tspSize = configuration.getChromosomeSize();
 		Chromosome newChromo = new Chromosome(configuration);
-		newChromo.fillRandomGenes(configuration.getRandomGenerator());
+		//newChromo.fillRandomGenes(configuration.getRandomGenerator());
 		newChromo.setGenes(ogChromo.getGenes());
 		Random rand = new Random();
 		Vector<IGene> flipVect = new Vector<IGene>();
@@ -127,7 +125,7 @@ public class FireFlyOperator implements IGeneticOperator
 
 	private IChromosome xToy(FindNewEdge edge, IChromosome ogChromo) {
 		Chromosome newChromo = new Chromosome(configuration);
-		newChromo.fillRandomGenes(configuration.getRandomGenerator());
+		//newChromo.fillRandomGenes(configuration.getRandomGenerator());
 		newChromo.setGenes(ogChromo.getGenes());
 		Vector<Integer> nsLout = new Vector<Integer>();
 		nsLout = edge.getNSLout();
@@ -146,7 +144,7 @@ public class FireFlyOperator implements IGeneticOperator
 	
 	private IChromosome yTox(FindNewEdge edge, IChromosome ogChromo) {
 		Chromosome newChromo = new Chromosome(configuration);
-		newChromo.fillRandomGenes(configuration.getRandomGenerator());
+		//newChromo.fillRandomGenes(configuration.getRandomGenerator());
 		newChromo.setGenes(ogChromo.getGenes());
 		Vector<Integer> nsRout = new Vector<Integer>();
 		nsRout = edge.getNSRout();
@@ -160,14 +158,83 @@ public class FireFlyOperator implements IGeneticOperator
 			newChromo.getGenes().add(tmpLPos, tempGene);
 			sLeftIndex = (int) tempGene.getInternalValue();
 		}
-		
 	return newChromo;
 }
 	
+	private IChromosome xFromy(FindNewEdge edge, IChromosome ogChromo) {
+		Chromosome newChromo = new Chromosome(configuration);
+		newChromo.fillRandomGenes(configuration.getRandomGenerator());
+		newChromo.setGenes(ogChromo.getGenes());
+		Vector<Integer> nsLout = new Vector<Integer>();
+		Vector<Integer> nsRout = new Vector<Integer>();
+		nsLout = edge.getNSLout();
+		nsRout = edge.getNSRout();
+		int sRightIndex = edge.getSRindex();
+		
+		//Puts the Left Set to the Right after Y
+		for(int i=0; i<nsLout.size(); i++) {
+			int tLpos = newChromo.findGenePos(nsLout.get(i));
+			IGene tempGene = newChromo.getGenes().get(tLpos);
+			newChromo.getGenes().remove(tLpos);
+			int sRpos = newChromo.findGenePos(sRightIndex) + 1;
+			newChromo.getGenes().add(sRpos, tempGene);
+			sRightIndex = (int) tempGene.getInternalValue();
+		}
+		
+		sRightIndex = edge.getSRindex(); //reset right index back to the original (y)
 	
+		//Puts the Right set to the left before Y
+		for(int i=1; i<nsRout.size(); i++) {
+			int tRpos = newChromo.findGenePos(nsRout.get(i));
+			IGene tempGene = newChromo.getGenes().get(tRpos);
+			newChromo.getGenes().remove(tRpos);
+			int sRpos = newChromo.findGenePos(sRightIndex);
+			newChromo.getGenes().add(sRpos, tempGene);
+			sRightIndex = (int) tempGene.getInternalValue();
+		}
+		
+		return newChromo;
+	}
 	
-	
-	
+	private IChromosome yFromx(FindNewEdge edge, IChromosome ogChromo) {
+		
+		Chromosome newChromo = new Chromosome(configuration);
+		newChromo.fillRandomGenes(configuration.getRandomGenerator());
+		newChromo.setGenes(ogChromo.getGenes());
+		Vector<Integer> nsLout = new Vector<Integer>();
+		Vector<Integer> nsRout = new Vector<Integer>();
+		nsLout = edge.getNSLout();
+		nsRout = edge.getNSRout();
+		int sLeftIndex = edge.getSLindex();
+		
+		for(int i=0; i<nsRout.size(); i++) {
+			int tRpos = newChromo.findGenePos(nsRout.get(i));
+			IGene tempGene = newChromo.getGenes().get(tRpos);
+			newChromo.getGenes().remove(tRpos);
+			int sRpos = newChromo.findGenePos(sLeftIndex);
+			newChromo.getGenes().add(sRpos, tempGene);
+			sLeftIndex = (int) tempGene.getInternalValue();
+		}
+
+		sLeftIndex = edge.getSLindex(); //reset Left Index to original 
+		
+		for(int i=1; i<nsLout.size(); i++) {
+			int tLpos = newChromo.findGenePos(nsLout.get(i));
+			IGene tempGene = newChromo.getGenes().get(tLpos);
+			newChromo.getGenes().remove(tLpos);
+			int sLpos = newChromo.findGenePos(sLeftIndex)+1;
+			newChromo.getGenes().add(sLpos, tempGene);
+			sLeftIndex = (int) tempGene.getInternalValue();
+		}		
+		
+		return newChromo;
+	}
+
+	private Population trimPopulation(Population ogPop) {
+		ogPop.
+		
+		return ogPop;
+	}
 	
 	
 	public Configuration getConfiguration(){ return configuration; }
