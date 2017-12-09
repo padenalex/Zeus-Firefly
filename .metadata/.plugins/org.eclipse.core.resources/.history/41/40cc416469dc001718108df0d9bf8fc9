@@ -1,0 +1,142 @@
+package edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Random;
+import java.util.Vector;
+
+import edu.sru.thangiah.zeus.core.Settings;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Chromosome;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Configuration;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IChromosome;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IFitnessFunction;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IGene;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IGeneticOperator;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IntegerGene;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Population;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.RandomGenerator;
+
+public class FireFlyOperator implements IGeneticOperator
+{
+	private Configuration configuration;
+	private int crossoverCount;
+	
+	public FireFlyOperator(Configuration currentConfiguration)
+	{
+		configuration = currentConfiguration;
+		crossoverCount = 0;
+	}
+	
+	@Override
+	public void operate(Population pop)
+	{
+		operate(pop, pop.getChromosomes());
+	}
+
+//==============================================================================================
+//==============================================================================================	
+//==============================================================================================
+//==============================================================================================	
+	
+	
+	@Override
+	public void operate(Population ogPop, LinkedList<IChromosome> ogPopLL){
+		Settings.printDebug(Settings.COMMENT, "Into Operator");
+		IFitnessFunction fitFunc = configuration.getFitnessFunction();
+		//double test = fitnessFunction.evaluate(ogPopLL.getLast());
+
+		int totalGen = configuration.getNumGenerations();
+		int totalPop = configuration.getPopulationSize();
+		int tspSize = configuration.getChromosomeSize();
+		Population newPop = new Population(configuration, ogPopLL);
+		
+		//System.out.println(totalGen + " " + totalPop + " " + tspSize);
+		//System.out.println(newPop.calculateFittestChromosome().getTspCost());
+		
+//----Test section
+		IChromosome currBright = newPop.getChromosomes().getFirst();
+		FindNewEdge testedge = new FindNewEdge(currBright, ogPopLL.getLast(), configuration);
+
+		System.out.println(currBright.getTspCost());
+		Chromosome test = new Chromosome(configuration);
+		test.fillRandomGenes(configuration.getRandomGenerator());
+		
+		System.out.println(test.getTspCost());
+		System.out.println(test.getGenes().size());
+		
+		IGene temp = test.getGene(3);
+		test.getGenes().remove(3);
+		
+
+		
+//----Test section
+		
+		
+		for(int g=0; g<totalGen; g++) {
+			//IChromosome currBright = newPop.getChromosome(0);
+			for(int i=0; i<totalPop; i++) {
+				//findNewEdge
+				//xToy
+				//ytoX
+				//xFromy
+				//yFromx
+				
+				
+			}
+		}
+		
+		
+//-----------------------End Calculations---------------------------------
+}
+	
+//==============================================================================================
+//==============================================================================================
+	
+
+	public IChromosome invertMutation(IChromosome ogChromo) {
+
+
+		int totalGen = configuration.getNumGenerations();
+		int totalPop = configuration.getPopulationSize();
+		int tspSize = configuration.getChromosomeSize();
+		
+		Chromosome newChromo = new Chromosome(configuration);
+		newChromo.fillRandomGenes(configuration.getRandomGenerator());
+		Random rand = new Random();
+		//Vector<Integer> LeftVect = new Vector<Integer>();
+		Vector<Integer> FlipVect = new Vector<Integer>();
+		//Vector<Integer> RightVect = new Vector<Integer>();
+		
+		//System.out.println("The original NewFly is " + NewFly.FireFlyt.getRouteString() + " size is " + NewFly.FireFlyt.getSize());
+		int  Rand1 = rand.nextInt(tspSize) + 0;
+		int  Rand2 = rand.nextInt(tspSize) + 0;
+		while(Rand1==Rand2 || Rand1==Rand2-1 || Rand1==Rand2+1) {Rand2 = rand.nextInt(tspSize) + 0;}
+		
+		if(Rand1 > Rand2) { //Set Rand1 to smaller Rand2 larger
+			int temp;
+			temp = Rand1;
+			Rand1 = Rand2;
+			Rand2 = temp;
+		}
+		int loopSize = Rand2-Rand1;
+		
+		return ogChromo;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public Configuration getConfiguration(){ return configuration; }
+}
+
+
+
+
+

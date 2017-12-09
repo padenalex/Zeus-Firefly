@@ -1,0 +1,62 @@
+package edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly;
+
+import java.util.LinkedList;
+import edu.sru.thangiah.zeus.core.Settings;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Chromosome;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Configuration;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IChromosome;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IFitnessFunction;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IGeneticOperator;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IntegerGene;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Population;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.RandomGenerator;
+
+public class FireFlyOperator implements IGeneticOperator
+{
+	private Configuration configuration;
+	private int crossoverCount;
+	
+	public FireFlyOperator(Configuration currentConfiguration)
+	{
+		configuration = currentConfiguration;
+		crossoverCount = 0;
+	}
+	
+	@Override
+	public void operate(Population pop)
+	{
+		operate(pop, pop.getChromosomes());
+	}
+
+	
+	
+	
+	@Override
+	public void operate(Population ogPop, LinkedList<IChromosome> ogPopLL){
+		Settings.printDebug(Settings.COMMENT, "Into Operator");
+		IFitnessFunction fitnessFunction = configuration.getFitnessFunction();
+		double test = fitnessFunction.evaluate(ogPopLL.getLast());
+		System.out.println("temp cost is " + test);
+		
+		//Chromosome temp = (Chromosome) ogPopLL.getLast();
+
+		//test = fitnessFunction.evaluate(temp);
+		System.out.println("temp cost is " + test);
+		
+	}
+	
+	public int findGeneIndex(Chromosome chromey, int geneValue)
+	{
+		int geneIndex = -1;
+		for (int i = 0; i <= getConfiguration().getChromosomeSize() -1; i++)
+		{
+			if ((int) chromey.getGene(i).getInternalValue() == geneValue)
+			{
+				geneIndex = i;
+			}
+		}
+		return geneIndex;
+	}
+	
+	public Configuration getConfiguration(){ return configuration; }
+}

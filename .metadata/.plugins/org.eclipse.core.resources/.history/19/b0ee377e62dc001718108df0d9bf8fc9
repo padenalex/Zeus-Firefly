@@ -1,0 +1,108 @@
+package edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Random;
+import java.util.Vector;
+
+import edu.sru.thangiah.zeus.core.Settings;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Chromosome;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Configuration;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IChromosome;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IFitnessFunction;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IGene;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IGeneticOperator;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IntegerGene;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Population;
+import edu.sru.thangiah.zeus.metaheuristics.evolutionary.RandomGenerator;
+
+public class FireFlyOperator implements IGeneticOperator
+{
+	private Configuration configuration;
+	private int crossoverCount;
+	
+	public FireFlyOperator(Configuration currentConfiguration)
+	{
+		configuration = currentConfiguration;
+		crossoverCount = 0;
+	}
+	
+	@Override
+	public void operate(Population pop)
+	{
+		operate(pop, pop.getChromosomes());
+	}
+
+//==============================================================================================
+//==============================================================================================	
+//==============================================================================================
+//==============================================================================================	
+	
+	
+	@Override
+	public void operate(Population ogPop, LinkedList<IChromosome> ogPopLL){
+		Settings.printDebug(Settings.COMMENT, "Into Operator");
+		IFitnessFunction fitFunc = configuration.getFitnessFunction();
+		//double test = fitnessFunction.evaluate(ogPopLL.getLast());
+
+		int totalGen = configuration.getNumGenerations();
+		int totalPop = configuration.getPopulationSize();
+		int tspSize = configuration.getChromosomeSize();
+		Population newPop = new Population(configuration, ogPopLL);
+		
+		//System.out.println(totalGen + " " + totalPop + " " + tspSize);
+		//System.out.println(newPop.calculateFittestChromosome().getTspCost());
+		
+//----Test section
+		IChromosome currBright = newPop.getChromosomes().getFirst();
+		FindNewEdge testedge = new FindNewEdge(currBright, ogPopLL.getLast(), configuration);
+		
+		System.out.println(currBright.getTspCost());
+		IChromosome test = currBright;
+		test.getGenes().remove(3);
+		System.out.println(currBright.getTspCost());
+		System.out.println(test.getTspCost());
+		
+//----Test section
+		
+		
+		for(int g=0; g<totalGen; g++) {
+			//IChromosome currBright = newPop.getChromosome(0);
+			for(int i=0; i<totalPop; i++) {
+				//findNewEdge
+				//xToy
+				//ytoX
+				//xFromy
+				//yFromx
+				
+				
+			}
+		}
+		
+		
+//-----------------------End Calculations---------------------------------
+}
+	
+//==============================================================================================
+//==============================================================================================
+	
+
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public Configuration getConfiguration(){ return configuration; }
+}
+
+
+
+
+
