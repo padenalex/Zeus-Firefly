@@ -30,6 +30,7 @@ public class TSPInteger {
 	    		gaConf.setFitnessFunction(new TSPCostFunction(mainDepots));
 	    		gaConf.setNumGenerations(numEvolutions);
 	    		gaConf.setPopulationSize(40);
+	    		gaConf.setOGChromosome(mainNodes);
 	    		gaConf.setGeneticOperators(new LinkedList<IGeneticOperator>());
 	    		gaConf.addGeneticOperator(new FireFlyOperator(gaConf));
 	    		genotype = new Genotype(gaConf);

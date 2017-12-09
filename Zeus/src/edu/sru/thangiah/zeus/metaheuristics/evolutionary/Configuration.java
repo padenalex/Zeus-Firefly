@@ -36,12 +36,13 @@ public class Configuration
 		pops = thePopulation;
 	}*/
 	
+	//Zeus & GA should probably have been setup to start at the same index -- if this ever gets fixed remove -1 from .getIndex() below
 	public void setOGChromosome(TSPNodesLinkedList nodesLL)
 	{
 		this.ogChromosome = new Chromosome(this);
 		for (int i = 0; i < chromosomeSize; i++)
 		{
-			this.ogChromosome.getGenes().add(new IntegerGene(this, nodesLL.getNodesAtPosition(i).getIndex(), chromosomeSize));
+			this.ogChromosome.getGenes().add(new IntegerGene(this, nodesLL.getNodesAtPosition(i).getIndex()-1, chromosomeSize));
 		}
 	}
 	
