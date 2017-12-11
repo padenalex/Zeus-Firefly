@@ -19,6 +19,7 @@ public class TSPInteger {
 	    int chromeSize = mainNodes.getSize();
 	    
 	    Configuration gaConf = new DefaultConfiguration();
+	   // gaConf.setOGChromosome(mainNodes);
 	    
 	    Genotype genotype = null;
 	    

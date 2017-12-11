@@ -15,9 +15,11 @@ import edu.sru.thangiah.zeus.metaheuristics.evolutionary.Population;
 public class FireFlyOperator implements IGeneticOperator
 {
 	private Configuration configuration;
+	private int crossoverCount;
 	
 	public FireFlyOperator(Configuration currentConfiguration){
 		configuration = currentConfiguration;
+		crossoverCount = 0;
 	}
 	
 	@Override

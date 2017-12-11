@@ -13,12 +13,13 @@ public class TSPInteger {
 	
 	public TSPInteger(TSPDepotLinkedList mainDepots)
 	{
-		int numEvolutions = 40000;
+		int numEvolutions = 9000;
 	    double maxFitness;
 	    TSPNodesLinkedList mainNodes = (TSPNodesLinkedList) mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes();
 	    int chromeSize = mainNodes.getSize();
 	    
 	    Configuration gaConf = new DefaultConfiguration();
+	   // gaConf.setOGChromosome(mainNodes);
 	    
 	    Genotype genotype = null;
 	    
@@ -28,7 +29,7 @@ public class TSPInteger {
 	    		gaConf.setSampleGenes(new LinkedList<IGene>());
 	    		gaConf.setFitnessFunction(new TSPCostFunction(mainDepots));
 	    		gaConf.setNumGenerations(numEvolutions);
-	    		gaConf.setPopulationSize(8);
+	    		gaConf.setPopulationSize(40);
 	    		gaConf.setOGChromosome(mainNodes);
 	    		gaConf.setGeneticOperators(new LinkedList<IGeneticOperator>());
 	    		gaConf.addGeneticOperator(new FireFlyOperator(gaConf));
