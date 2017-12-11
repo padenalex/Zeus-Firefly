@@ -2,20 +2,20 @@ package edu.sru.thangiah.zeus.metaheuristics.evolutionary;
 
 import java.util.LinkedList;
 
-import edu.sru.thangiah.zeus.core.DepotLinkedList;
 import edu.sru.thangiah.zeus.core.NodesLinkedList;
+import edu.sru.thangiah.zeus.core.Settings;
 import edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly.FireFlyOperator;
 import edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm.OXGeneticOperator;
 import edu.sru.thangiah.zeus.metaheuristics.evolutionary.geneticalgorithm.PMXGeneticOperator;
-
+import edu.sru.thangiah.zeus.tsp.*;
 
 public class TSPInteger {
 	
-	public TSPInteger(DepotLinkedList mainDepots)
+	public TSPInteger(TSPDepotLinkedList mainDepots)
 	{
 		int numEvolutions = 40000;
-	    //double maxFitness;
-	    NodesLinkedList mainNodes = (NodesLinkedList) mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes();
+	    double maxFitness;
+	    TSPNodesLinkedList mainNodes = (TSPNodesLinkedList) mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes();
 	    int chromeSize = mainNodes.getSize();
 	    
 	    Configuration gaConf = new DefaultConfiguration();

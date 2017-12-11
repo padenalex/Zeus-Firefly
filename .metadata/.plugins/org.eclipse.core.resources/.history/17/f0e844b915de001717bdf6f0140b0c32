@@ -2,7 +2,7 @@ package edu.sru.thangiah.zeus.metaheuristics.evolutionary;
 
 import java.util.LinkedList;
 
-import edu.sru.thangiah.zeus.core.NodesLinkedList;
+import edu.sru.thangiah.zeus.tsp.TSPNodesLinkedList;
 
 //import antlr.collections.List;
 
@@ -37,7 +37,7 @@ public class Configuration
 	}*/
 	
 	//Zeus & GA should probably have been setup to start at the same index -- if this ever gets fixed remove -1 from .getIndex() below
-	public void setOGChromosome(NodesLinkedList nodesLL)
+	public void setOGChromosome(TSPNodesLinkedList nodesLL)
 	{
 		this.ogChromosome = new Chromosome(this);
 		for (int i = 0; i < chromosomeSize; i++)
