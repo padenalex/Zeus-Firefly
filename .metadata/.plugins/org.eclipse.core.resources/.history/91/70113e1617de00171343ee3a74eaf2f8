@@ -4,6 +4,7 @@ import edu.sru.thangiah.zeus.core.DepotLinkedList;
 import edu.sru.thangiah.zeus.core.Nodes;
 import edu.sru.thangiah.zeus.core.NodesLinkedList;
 import edu.sru.thangiah.zeus.core.ProblemInfo;
+import edu.sru.thangiah.zeus.tsp.*;
 
 public class TSPCostFunction extends AbstractFitnessFunction
 {
