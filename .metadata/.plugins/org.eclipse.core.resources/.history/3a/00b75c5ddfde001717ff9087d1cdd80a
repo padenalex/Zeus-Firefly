@@ -58,8 +58,6 @@ public class FireFlyOperator implements IGeneticOperator
 
 	//  ---X--------Y---
 	//  ---Y~~~~~~~~X---
-	//Inverts X+Y AND everything inbetween them. Both X and Y positions will be randomly generated/
-	//This is used only on the brightest fly to move it randomly. However, I've added it to trimpopulation and it's used if the new population contains 2 matching chromosomes
 	private IChromosome invertMutation(IChromosome ogChromo) {
 		int tspSize = configuration.getChromosomeSize();
 		Chromosome newChromo = new Chromosome(configuration);
