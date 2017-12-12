@@ -29,10 +29,10 @@ public class FindNewEdge {
 		int tspMax = configuration.getChromosomeSize()-1;  //Max tsp size in chromosome LL (#node -1 for start at 0) 
 		int keepRunning = 1;
 
-		int cIsflip = 0; 
+		int cIsflip = 0;
 		int timesRun =0;
 		
-		//Generates 2 connected random positions which are connected in the brightest fly/chromosome but not in the current/random one
+		//Generates 2 connected random positions that do not exist in both lists
 		while(keepRunning == 1) {
 			brightPos1 = rand.nextInt(tspMax) + 0;
 			int nextOrprev = rand.nextInt(1) + 0;	
@@ -53,7 +53,7 @@ public class FindNewEdge {
 			
 			if(a2 != b1 && a2!= b2) {keepRunning=0;}
 			timesRun++;
-			if(timesRun > 100) {break;} //If runs more than 100 times without non connected edge then break to prevent deadlock on equal fly. yFromx and xFromy will still change this fly.
+			if(timesRun < 100) {break;}
 		}
 		
 		if(brightPos1 > brightPos2) {
@@ -81,13 +81,21 @@ public class FindNewEdge {
 			cIsflip = 1; //Signals current pos is flipped
 		}
 		
+		
+		//System.out.println("best " + brightFly.toString());
+		//System.out.println("rand " + randomFly.toString());
+		
+		//System.out.println("Bright Fly Positions: " + brightPos1 + " and " + brightPos2);
+		//System.out.println("Bright Fly Index Num: " + a1 + " and " + a2);
+		
+		//System.out.println("Bright Fly Positions: " + currPos1 + " and " + currPos2);
+		//System.out.println("Bright Fly Index Num: " + b1 + " and " + b2);
+		
 		//Adds the first index
 		nsLout.add(b1);
 		nsRout.add(b2);
 		
 		
-		//bLeft-RightIndex is the brightest (fly's) left and right index's for a connected edge
-		//cLeft-RightIndex is the current (fly's) left and right index which are equal to the index of bright (Positions are NOT equal)
 		int bLeftIndex = a1;
 		int bRightIndex = a2;
 		int cLeftIndex = b1;
@@ -98,10 +106,9 @@ public class FindNewEdge {
 		sRightPos = randomFly.findGenePos(cRightIndex);
 		sLeftIndex = cLeftIndex;
 		sRightIndex = cRightIndex;
-	
-		//Below will locate the current(random) fly's index for the left side. 
-		//It will then work its way out until it reaches the beginning or the previous node/gene is no longer equal to that of the bright fly's
+//NSLout	
 		while(randomFly.findGenePos(cLeftIndex) != 0 && brightFly.findGenePos(bLeftIndex) != 0) {
+
 			currtemp = (int) randomFly.getGene(randomFly.findGenePos(cLeftIndex)-1).getInternalValue();
 			
 			if(cIsflip == 1) {brighttemp = (int) brightFly.getGene(brightFly.findGenePos(bRightIndex)+1).getInternalValue();}
@@ -114,15 +121,14 @@ public class FindNewEdge {
 			bLeftIndex = brighttemp;
 		}
 
-		//reset variables which have been changed as the edge extends in the above whileloop
+//NSRout
 		bLeftIndex = a1;
 		bRightIndex = a2;
 		cLeftIndex = b1;
 		cRightIndex = b2;
 		
-		//Below will locate the current(random) fly's index for the right side. 
-		//It will then work its way out until it reaches the end or the next node/gene is no longer equal to that of the bright fly's
 		while(randomFly.findGenePos(cRightIndex) != tspMax && brightFly.findGenePos(bRightIndex) != tspMax) {
+
 			currtemp = (int) randomFly.getGene(randomFly.findGenePos(cRightIndex)+1).getInternalValue();
 			
 			if (cIsflip==1 && brightFly.findGenePos(bLeftIndex) == 0) {break;}
@@ -135,6 +141,8 @@ public class FindNewEdge {
 			cRightIndex = currtemp;
 			bRightIndex = brighttemp;
 		}
+		//System.out.println(" left " + nsLout);
+		//System.out.println("right " +nsRout);
 	}
 	
 	public Vector<Integer> getNSLout() {return this.nsLout;}

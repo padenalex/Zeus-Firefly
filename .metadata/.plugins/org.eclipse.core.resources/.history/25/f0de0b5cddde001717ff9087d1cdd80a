@@ -29,8 +29,8 @@ public class FireFlyOperator implements IGeneticOperator
 	@Override
 	public void operate(Population ogPop, LinkedList<IChromosome> ogPopLL){
 		Settings.printDebug(Settings.COMMENT, "Into Operator");
-		//IChromosome ogTSPChromo = configuration.getOGChromosome();  	//Adds original TSP Chromo to population (comment to remove)
-		//ogPop.getChromosomes().addFirst(ogTSPChromo); 				//Adds original TSP Chromo to population (comment to remove)
+		//IChromosome ogTSPChromo = configuration.getOGChromosome();
+		//ogPop.getChromosomes().addFirst(ogTSPChromo); //Adds original TSP Chromo to population (comment to remove)
 		int totalGen = configuration.getNumGenerations();
 		int totalPop = configuration.getPopulationSize();
 		Population newPop = new Population(configuration, ogPopLL);
@@ -40,14 +40,15 @@ public class FireFlyOperator implements IGeneticOperator
 			for(int i=0; i<4; i++) {newPop.addChromosome(invertMutation(currBright));}
 			for(int i=1; i<totalPop; i++) {
 				FindNewEdge testedge = new FindNewEdge(currBright, newPop.getChromosome(i), configuration);
+				//System.out.println("old - " + newPop.getChromosomes().get(i).getTspCost());
 				newPop.addChromosome(xToy(testedge, newPop.getChromosomes().get(i)));
+				//System.out.println("new - " + newPop.getChromosomes().get(i).getTspCost());
 				newPop.addChromosome(yTox(testedge, newPop.getChromosomes().get(i)));
 				newPop.addChromosome(xFromy(testedge, newPop.getChromosomes().get(i)));
 				newPop.addChromosome(yFromx(testedge, newPop.getChromosomes().get(i)));
 			}
 			newPop = trimPopulation(newPop);
 			
-			//Prints Fittest Chromosome Each Generation. Comment to remove
 			System.out.println("current fittest cost: " + newPop.getChromosomes().getFirst().getTspCost() + " Generation # " + g);
 		}
 		
@@ -56,8 +57,6 @@ public class FireFlyOperator implements IGeneticOperator
 //==============================================================================================
 //==============================================================================================
 
-	//  ---X--------Y---
-	//  ---Y~~~~~~~~X---
 	private IChromosome invertMutation(IChromosome ogChromo) {
 		int tspSize = configuration.getChromosomeSize();
 		Chromosome newChromo = new Chromosome(configuration);
@@ -90,8 +89,7 @@ public class FireFlyOperator implements IGeneticOperator
 		return newChromo;
 	}
 
-	//  ---X--------Y---
-	//  -----------XY---
+	
 	private IChromosome xToy(FindNewEdge edge, IChromosome ogChromo) {
 		Chromosome newChromo = new Chromosome(configuration);
 		LinkedList<IGene> tGenes = new LinkedList<>();
@@ -112,8 +110,7 @@ public class FireFlyOperator implements IGeneticOperator
 		return newChromo;
 	}
 	
-	//  ---X--------Y---
-	//  ---XY-----------
+	
 	private IChromosome yTox(FindNewEdge edge, IChromosome ogChromo) {
 		Chromosome newChromo = new Chromosome(configuration);
 		LinkedList<IGene> tGenes = new LinkedList<>();
@@ -134,9 +131,7 @@ public class FireFlyOperator implements IGeneticOperator
 		return newChromo;
 	}
 	
-	//  ---X--------Y---
-	//  -----------YX--
-	//xFromY will also flip the Y/X list so the head of nsLout and nsRout are connected
+	
 	private IChromosome xFromy(FindNewEdge edge, IChromosome ogChromo) {
 		Chromosome newChromo = new Chromosome(configuration);
 		LinkedList<IGene> tGenes = new LinkedList<>();
@@ -172,10 +167,9 @@ public class FireFlyOperator implements IGeneticOperator
 		return newChromo;
 	}
 	
-	//  ---X--------Y---
-	//  ---YX----------
-	//yFromx will also flip the X/Y list so the head of nsLout and nsRout are connected
+	
 	private IChromosome yFromx(FindNewEdge edge, IChromosome ogChromo) {
+		
 		Chromosome newChromo = new Chromosome(configuration);
 		LinkedList<IGene> tGenes = new LinkedList<>();
 		for(int i=0; i<ogChromo.getGenes().size(); i++) {tGenes.add(ogChromo.getGenes().get(i));}
@@ -209,7 +203,6 @@ public class FireFlyOperator implements IGeneticOperator
 	}
 
 	
-	//Trim population brings in the grown population (popSize * 4) and trims it back down to the (popSize) best Flys/Chromosomes
 	private Population trimPopulation(Population ogPop) {
 		LinkedList<IChromosome> tempChromes = new LinkedList<IChromosome>();
 

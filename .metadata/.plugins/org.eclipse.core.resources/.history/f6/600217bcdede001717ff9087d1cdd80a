@@ -134,9 +134,7 @@ public class FireFlyOperator implements IGeneticOperator
 		return newChromo;
 	}
 	
-	//  ---X--------Y---
-	//  -----------YX--
-	//xFromY will also flip the Y/X list so the head of nsLout and nsRout are connected
+	
 	private IChromosome xFromy(FindNewEdge edge, IChromosome ogChromo) {
 		Chromosome newChromo = new Chromosome(configuration);
 		LinkedList<IGene> tGenes = new LinkedList<>();
@@ -172,10 +170,9 @@ public class FireFlyOperator implements IGeneticOperator
 		return newChromo;
 	}
 	
-	//  ---X--------Y---
-	//  ---YX----------
-	//yFromx will also flip the X/Y list so the head of nsLout and nsRout are connected
+	
 	private IChromosome yFromx(FindNewEdge edge, IChromosome ogChromo) {
+		
 		Chromosome newChromo = new Chromosome(configuration);
 		LinkedList<IGene> tGenes = new LinkedList<>();
 		for(int i=0; i<ogChromo.getGenes().size(); i++) {tGenes.add(ogChromo.getGenes().get(i));}
@@ -209,7 +206,6 @@ public class FireFlyOperator implements IGeneticOperator
 	}
 
 	
-	//Trim population brings in the grown population (popSize * 4) and trims it back down to the (popSize) best Flys/Chromosomes
 	private Population trimPopulation(Population ogPop) {
 		LinkedList<IChromosome> tempChromes = new LinkedList<IChromosome>();
 
