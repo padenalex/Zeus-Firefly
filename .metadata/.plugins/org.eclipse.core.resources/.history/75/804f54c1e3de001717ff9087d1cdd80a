@@ -177,8 +177,8 @@ public class FireFlyOperator implements IGeneticOperator
 		LinkedList<IGene> tGenes = new LinkedList<>();
 		for(int i=0; i<ogChromo.getGenes().size(); i++) {tGenes.add(ogChromo.getGenes().get(i));}
 		newChromo.setGenes(tGenes);
-		LinkedList<Integer> nsLout = new LinkedList<Integer>();
-		LinkedList<Integer> nsRout = new LinkedList<Integer>();
+		Vector<Integer> nsLout = new Vector<Integer>();
+		Vector<Integer> nsRout = new Vector<Integer>();
 		nsLout = edge.getNSLout();
 		nsRout = edge.getNSRout();
 		int sLeftIndex = edge.getSLindex();

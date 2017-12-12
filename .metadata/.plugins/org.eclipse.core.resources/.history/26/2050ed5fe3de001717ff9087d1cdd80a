@@ -1,6 +1,5 @@
 package edu.sru.thangiah.zeus.metaheuristics.evolutionary.firefly;
 
-import java.util.LinkedList;
 import java.util.Random;
 import java.util.Vector;
 
@@ -11,8 +10,9 @@ import edu.sru.thangiah.zeus.metaheuristics.evolutionary.IChromosome;
 
 
 public class FindNewEdge {
-	private LinkedList<Integer> nsLout = new LinkedList<Integer>(); // <-- -->
-	private LinkedList<Integer> nsRout = new LinkedList<Integer>(); // <-- -->
+
+	private Vector<Integer> nsLout = new Vector<Integer>(); // <-- -->
+	private Vector<Integer> nsRout = new Vector<Integer>(); // <-- -->
 	private int sLeftIndex;
 	private int sRightIndex;
 	
@@ -133,9 +133,9 @@ public class FindNewEdge {
 		}
 	}
 	
-	public LinkedList<Integer> getNSLout() {return this.nsLout;}
+	public Vector<Integer> getNSLout() {return this.nsLout;}
 	
-	public LinkedList<Integer> getNSRout() {return this.nsRout;}
+	public Vector<Integer> getNSRout() {return this.nsRout;}
 	
 	public int getSLindex() {return this.sLeftIndex;}
 	
