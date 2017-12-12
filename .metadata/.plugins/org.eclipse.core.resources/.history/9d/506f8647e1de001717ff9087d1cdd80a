@@ -20,7 +20,7 @@ public class FireFlyOperator implements IGeneticOperator
 		configuration = currentConfiguration;
 	}
 	
-	
+	@Override
 	public void operate(Population newPop) {
 		Settings.printDebug(Settings.COMMENT, "Into Operator");
 		//IChromosome ogTSPChromo = configuration.getOGChromosome();  	//Adds original TSP Chromo to population (comment to remove)
@@ -234,12 +234,6 @@ public class FireFlyOperator implements IGeneticOperator
 	
 
 	public Configuration getConfiguration(){ return configuration; }
-
-	@Override
-	public void operate(Population pop, LinkedList<IChromosome> chromo) {
-		// TODO Auto-generated method stub
-		
-	}
 }
 
 

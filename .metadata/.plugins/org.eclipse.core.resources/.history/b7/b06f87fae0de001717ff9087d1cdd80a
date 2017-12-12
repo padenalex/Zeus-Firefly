@@ -20,14 +20,20 @@ public class FireFlyOperator implements IGeneticOperator
 		configuration = currentConfiguration;
 	}
 	
+	@Override
+	public void operate(Population pop) {operate(pop, pop.getChromosomes());}
+
+//==============================================================================================
+//==============================================================================================		
 	
-	public void operate(Population newPop) {
+	@Override
+	public void operate(Population newPop, LinkedList<IChromosome> newPopLL){
 		Settings.printDebug(Settings.COMMENT, "Into Operator");
 		//IChromosome ogTSPChromo = configuration.getOGChromosome();  	//Adds original TSP Chromo to population (comment to remove)
 		//ogPop.getChromosomes().addFirst(ogTSPChromo); 				//Adds original TSP Chromo to population (comment to remove)
-		//Population newPop = new Population(configuration, newPop.getChromosomes());  //Uncomment to retain original population and change passed in to ogPop
 		int totalGen = configuration.getNumGenerations();
 		int totalPop = configuration.getPopulationSize();
+		//Population newPop = new Population(configuration, ogPopLL);
 
 		for(int g=0; g<totalGen; g++) {
 			IChromosome currBright = newPop.calculateFittestChromosome();
@@ -44,8 +50,8 @@ public class FireFlyOperator implements IGeneticOperator
 			//Prints Fittest Chromosome Each Generation. Comment to remove
 			System.out.println("current fittest cost: " + newPop.getChromosomes().getFirst().getTspCost() + " Generation # " + g);
 		}
-	}
-
+		
+}
 	
 //==============================================================================================
 //==============================================================================================
@@ -234,12 +240,6 @@ public class FireFlyOperator implements IGeneticOperator
 	
 
 	public Configuration getConfiguration(){ return configuration; }
-
-	@Override
-	public void operate(Population pop, LinkedList<IChromosome> chromo) {
-		// TODO Auto-generated method stub
-		
-	}
 }
 
 
