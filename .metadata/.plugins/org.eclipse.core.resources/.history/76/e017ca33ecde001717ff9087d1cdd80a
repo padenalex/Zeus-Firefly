@@ -26,7 +26,7 @@ public class FireFlyOperator implements IGeneticOperator
 		Settings.printDebug(Settings.COMMENT, "Into Operator");
 		//IChromosome ogTSPChromo = configuration.getOGChromosome();  	//Adds original TSP Chromo to population (comment to remove)
 		//ogPop.getChromosomes().addFirst(ogTSPChromo); 				//Adds original TSP Chromo to population (comment to remove)
-		//Population newPop = new Population(configuration, ogPop.getChromosomes());  //Uncomment to retain original population and change passed in to ogPop
+		//Population newPop = new Population(configuration, newPop.getChromosomes());  //Uncomment to retain original population and change passed in to ogPop
 		int totalGen = configuration.getNumGenerations();
 		int totalPop = configuration.getPopulationSize();
 
@@ -221,7 +221,7 @@ public class FireFlyOperator implements IGeneticOperator
 			}
 			
 			//num loops is how different it will become
-			if(invertAgain==1) { for(int x=0; x<2; x++) {tempFit = invertMutation(tempFit); }}
+			if(invertAgain==1) { for(int x=0; x<1; x++) {tempFit = invertMutation(tempFit); }}
 			
 			tempChromes.add(tempFit);
 		}
