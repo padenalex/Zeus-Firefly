@@ -92,6 +92,7 @@ public class FindNewEdge {
 		int cRightIndex = b2;
 		int currtemp;
 		int brighttemp;
+
 		sLeftIndex = cLeftIndex;
 		sRightIndex = cRightIndex;
 	

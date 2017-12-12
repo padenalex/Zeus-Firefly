@@ -13,6 +13,8 @@ public class FindNewEdge {
 
 	private Vector<Integer> nsLout = new Vector<Integer>(); // <-- -->
 	private Vector<Integer> nsRout = new Vector<Integer>(); // <-- -->
+	private int sLeftPos;
+	private int sRightPos;
 	private int sLeftIndex;
 	private int sRightIndex;
 	
@@ -92,6 +94,8 @@ public class FindNewEdge {
 		int cRightIndex = b2;
 		int currtemp;
 		int brighttemp;
+		sLeftPos = randomFly.findGenePos(cLeftIndex);
+		sRightPos = randomFly.findGenePos(cRightIndex);
 		sLeftIndex = cLeftIndex;
 		sRightIndex = cRightIndex;
 	
@@ -136,6 +140,11 @@ public class FindNewEdge {
 	public Vector<Integer> getNSLout() {return this.nsLout;}
 	
 	public Vector<Integer> getNSRout() {return this.nsRout;}
+	
+	
+	public int getSLpos() {return this.sLeftPos;}
+	
+	public int getSRpos() {return this.sRightPos;}
 	
 	public int getSLindex() {return this.sLeftIndex;}
 	

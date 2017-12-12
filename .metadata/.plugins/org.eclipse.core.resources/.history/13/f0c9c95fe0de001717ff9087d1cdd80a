@@ -92,6 +92,8 @@ public class FindNewEdge {
 		int cRightIndex = b2;
 		int currtemp;
 		int brighttemp;
+		sLeftPos = randomFly.findGenePos(cLeftIndex);
+		sRightPos = randomFly.findGenePos(cRightIndex);
 		sLeftIndex = cLeftIndex;
 		sRightIndex = cRightIndex;
 	

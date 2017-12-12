@@ -137,7 +137,7 @@ public class FireFlyOperator implements IGeneticOperator
 	}
 	
 	//  ---X--------Y---
-	//  ------------YX--
+	//  -----------YX--
 	//xFromY will also flip the Y/X list so the head of nsLout and nsRout are connected
 	private IChromosome xFromy(FindNewEdge edge, IChromosome ogChromo) {
 		Chromosome newChromo = new Chromosome(configuration);
@@ -175,7 +175,7 @@ public class FireFlyOperator implements IGeneticOperator
 	}
 	
 	//  ---X--------Y---
-	//  ---YX-----------
+	//  ---YX----------
 	//yFromx will also flip the X/Y list so the head of nsLout and nsRout are connected
 	private IChromosome yFromx(FindNewEdge edge, IChromosome ogChromo) {
 		Chromosome newChromo = new Chromosome(configuration);
