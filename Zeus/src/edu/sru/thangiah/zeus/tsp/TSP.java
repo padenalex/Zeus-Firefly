@@ -8,7 +8,7 @@ import edu.sru.thangiah.zeus.core.*;
 import edu.sru.thangiah.zeus.localopts.*;
 import edu.sru.thangiah.zeus.localopts.interopts.*;
 import edu.sru.thangiah.zeus.localopts.intraopts.*;
-
+import edu.sru.thangiah.zeus.tsp.sfc.TSPSpaceFillingCurve;
 import edu.sru.thangiah.zeus.tsp.tspqualityassurance.*;
 import edu.sru.thangiah.zeus.gui.*;
 import edu.sru.thangiah.zeus.localopts.OptInfo;
@@ -94,9 +94,27 @@ public class TSP {
 			//ProblemInfo.selectShipType = new SmallestPolarAngleShortestDistToDepot();        
 	        //Settings.printDebug(Settings.COMMENT,SmallestPolarAngleShortestDistToDepot.WhoAmI());
 			
-	
-	        ProblemInfo.selectShipType = new ClosestEuclideanDistToDepot();        
-	        Settings.printDebug(Settings.COMMENT,ClosestEuclideanDistToDepot.WhoAmI());
+			
+			//Temp Location for required variables of spacefilling curve method
+			int method = TSPSpaceFillingCurve.DragonCurve;
+		    int recursionLevel = 3;
+		    double translateX = 0;//.4;
+		    double translateY = 0;//.5;
+		    double rotate = Math.PI/4;
+		    double scaleX = 0;//1.5;
+		    double scaleY = 0;//1.5;
+		    double shearX = 0;//1.1;
+		    double shearY = 0;//1.1;
+
+		    SpaceFillingPathToDepot spaceFillingPath = new SpaceFillingPathToDepot(
+		            method, recursionLevel, translateX, translateY,
+		            rotate, scaleX, scaleY, shearX, shearY);
+		        ProblemInfo.selectShipType = spaceFillingPath; // new SpaceFillingPathToDepot();
+		        Settings.printDebug(Settings.COMMENT, spaceFillingPath.WhoAmI()); //SpaceFillingPathToDepot.WhoAmI());
+		        
+		        
+	        //ProblemInfo.selectShipType = new ClosestEuclideanDistToDepot();        
+	        //Settings.printDebug(Settings.COMMENT,ClosestEuclideanDistToDepot.WhoAmI());
 		}
         
 		if (FileType == 1 || FileType == 2 || FileType == 3 || FileType == 4) {
@@ -107,18 +125,21 @@ public class TSP {
 		//set up the shipment insertion type
 		ProblemInfo.insertShipType = new LinearGreedyInsertShipment();
 		Settings.printDebug(Settings.COMMENT, LinearGreedyInsertShipment.WhoAmI());
+		
+		
+		
 		//InsertAsGiven
 		//ProblemInfo.insertShipType = new InsertAsGiven();
 		//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
-		
-		
+//System.out.println("HERE IS PROBLEMO >>>>>>>>>>>>>>>>>>>>>>>");
 		//Capture the CPU time required for solving the problem
 		startTime = System.currentTimeMillis();
+//System.out.println("HERE IS PROBLEMO >>>>>>>>>>>>>>>>>>>>>>>");-
 		// captures the initial information on solving the problem
 		// returns the total customer and total distance after the initial solution
 		optInformation.add("Inital Solution " + createInitialRoutes());
 		System.out.println("Completed initial routes");
-
+System.out.println("HERE IS PROBLEMO >>>>>>>>>>>>>>>>>>>>>>>");
 		//Get the initial solution
 		//Depending on the Settings status, display information on the routes
 		//Trucks used, total demand, dist, travel time and cost
@@ -149,12 +170,12 @@ public class TSP {
 
 		}
 		//--------------------------------------------------------------(TURN GUI ON/OFF )---------
-		//ZeusGui guiPost = new ZeusGui(mainDepots, mainShipments);
+		ZeusGui guiPost = new ZeusGui(mainDepots, mainShipments);
 		
 
 	//====== Metaheuristic Call Section ===================================================
 
-			TSPInteger ga = new TSPInteger(mainDepots);
+			//TSPInteger ga = new TSPInteger(mainDepots);
 
 	//====== END Metaheuristic Call Section ================================================	
 		
@@ -171,6 +192,7 @@ public class TSP {
 	 * Creates the initial solution for the problem
 	 */
 	public OptInfo createInitialRoutes() {
+//System.out.println("HERE I AM ~~~~~~~~~~~");		
 		//OptInfo has old and new attributes
 		OptInfo info = new OptInfo();
 		TSPDepot currDepot = null; //current depot
@@ -190,17 +212,20 @@ public class TSP {
 
 		//capture the old attributes
 		info.setOldAttributes(mainDepots.getAttributes());
-
+//System.out.println("HERE I AM ~~~~~~~~~~~");
 		while (!mainShipments.isAllShipsAssigned()) {
 
 
 			currDepot = (TSPDepot) mainDepots.getTSPHead();
-
+System.out.println("The Depot is " + currDepot.getDepotNum());
+System.out.println("The shipments are " + mainShipments.getNumShipments());
+//System.out.println("The currship is " + currShip.getIndex());
 			//Send the entire mainDepots and mainShipments to get the next shipment
 			//to be inserted including the current depot
 			TSPShipment theShipment = mainShipments.getNextInsertShipment(mainDepots,
 					currDepot, mainShipments, currShip);
-
+System.out.println("The shipment is " + theShipment.getIndex());			
+System.out.println("HERE I AM ~~~1~~~~~~~~");
 			if (theShipment == null) { //shipment is null, print error message
 				Settings.printDebug(Settings.COMMENT, "No shipment was selected");
 			}
@@ -217,7 +242,7 @@ public class TSP {
 				theShipment.setIsAssigned(true);
 			}
 		}
-
+System.out.println("HERE I AM ~~~1~~~~~~~~");
 		ProblemInfo.depotLLLevelCostF.calculateTotalsStats(mainDepots);
 		info.setNewAtributes(mainDepots.getAttributes());
 		return info;
