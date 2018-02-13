@@ -131,15 +131,12 @@ public class TSP {
 		//InsertAsGiven
 		//ProblemInfo.insertShipType = new InsertAsGiven();
 		//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
-//System.out.println("HERE IS PROBLEMO >>>>>>>>>>>>>>>>>>>>>>>");
 		//Capture the CPU time required for solving the problem
 		startTime = System.currentTimeMillis();
-//System.out.println("HERE IS PROBLEMO >>>>>>>>>>>>>>>>>>>>>>>");-
 		// captures the initial information on solving the problem
 		// returns the total customer and total distance after the initial solution
 		optInformation.add("Inital Solution " + createInitialRoutes());
 		System.out.println("Completed initial routes");
-System.out.println("HERE IS PROBLEMO >>>>>>>>>>>>>>>>>>>>>>>");
 		//Get the initial solution
 		//Depending on the Settings status, display information on the routes
 		//Trucks used, total demand, dist, travel time and cost
@@ -191,8 +188,7 @@ System.out.println("HERE IS PROBLEMO >>>>>>>>>>>>>>>>>>>>>>>");
 	/**
 	 * Creates the initial solution for the problem
 	 */
-	public OptInfo createInitialRoutes() {
-//System.out.println("HERE I AM ~~~~~~~~~~~");		
+	public OptInfo createInitialRoutes() {	
 		//OptInfo has old and new attributes
 		OptInfo info = new OptInfo();
 		TSPDepot currDepot = null; //current depot
@@ -212,20 +208,14 @@ System.out.println("HERE IS PROBLEMO >>>>>>>>>>>>>>>>>>>>>>>");
 
 		//capture the old attributes
 		info.setOldAttributes(mainDepots.getAttributes());
-//System.out.println("HERE I AM ~~~~~~~~~~~");
 		while (!mainShipments.isAllShipsAssigned()) {
 
 
 			currDepot = (TSPDepot) mainDepots.getTSPHead();
-System.out.println("The Depot is " + currDepot.getDepotNum());
-System.out.println("The shipments are " + mainShipments.getNumShipments());
-//System.out.println("The currship is " + currShip.getIndex());
 			//Send the entire mainDepots and mainShipments to get the next shipment
 			//to be inserted including the current depot
 			TSPShipment theShipment = mainShipments.getNextInsertShipment(mainDepots,
 					currDepot, mainShipments, currShip);
-System.out.println("The shipment is " + theShipment.getIndex());			
-System.out.println("HERE I AM ~~~1~~~~~~~~");
 			if (theShipment == null) { //shipment is null, print error message
 				Settings.printDebug(Settings.COMMENT, "No shipment was selected");
 			}
@@ -242,7 +232,6 @@ System.out.println("HERE I AM ~~~1~~~~~~~~");
 				theShipment.setIsAssigned(true);
 			}
 		}
-System.out.println("HERE I AM ~~~1~~~~~~~~");
 		ProblemInfo.depotLLLevelCostF.calculateTotalsStats(mainDepots);
 		info.setNewAtributes(mainDepots.getAttributes());
 		return info;

@@ -119,8 +119,8 @@ public class TSPShipmentLinkedList
 		  TSPShipment currShip) {
 	  TSPShipmentLinkedList selectShip = (TSPShipmentLinkedList) ProblemInfo.
 			  selectShipType;
-//here
-	  return selectShip.getSelectShipment(currDepotLL, currDepot, currShipmentLL,currShip);
+	  
+  return selectShip.getSelectShipment(currDepotLL, currDepot, currShipmentLL,currShip);
   }
 
   /**
@@ -590,7 +590,6 @@ SpaceFillingPathToDepot(int method,
  this.shearX = shearX;
  this.shearY = shearY;
  whoAmI = "level " + recursionLevel + " " + TSPSpaceFillingCurve.curveInfo(method);
- System.out.println("HERE I AM _________________");
 }
 
 /**
@@ -606,7 +605,6 @@ public TSPShipment getSelectShipment(TSPDepotLinkedList currDepotLL,
         TSPDepot currDepot,
         TSPShipmentLinkedList currShipLL,
         TSPShipment currShip) {
-	 System.out.println("HERE IS PROBLEMO >>>>>>>>>>>>>>>>>>>>>>>");
 	  boolean isDiagnostic = false;
 	  //TSPShipment temp = (TSPShipment) getHead(); //point to the first shipment
 	  TSPShipment temp = (TSPShipment) currShipLL.getTSPHead().getNext(); //point to the first shipment
@@ -632,10 +630,6 @@ public TSPShipment getSelectShipment(TSPDepotLinkedList currDepotLL,
  }
  
  
- for(int i=0; i<shipmentCoords.length; i++) {
- System.out.println(shipmentCoords[i]);
- }
- 
 temp = (TSPShipment) currShipLL.getTSPHead().getNext(); //point to the first shipment
  
  try {
@@ -644,7 +638,6 @@ temp = (TSPShipment) currShipLL.getTSPHead().getNext(); //point to the first shi
                               method, recursionLevel, translateX, translateY,
                               rotate, scaleX, scaleY, shearX, shearY);
      firstRun = false;
-//System.out.println("did run");
    }
  }
  catch (SFCInvalidGenerationException ex) {
@@ -652,8 +645,6 @@ temp = (TSPShipment) currShipLL.getTSPHead().getNext(); //point to the first shi
  }
  
  
- 
- System.out.println("HERE I AM _____2____________");
  while (temp != currShipLL.getTSPTail()) {
    if (isDiagnostic) {
      System.out.print("Shipment " + temp.getIndex() + " ");
@@ -687,12 +678,9 @@ temp = (TSPShipment) currShipLL.getTSPHead().getNext(); //point to the first shi
 
  	  continue;
    }
-System.out.println("tempI : " +temp.getIndex());
-System.out.println("tempx : " +temp.getXCoord());
-System.out.println("tempy : " +temp.getYCoord());
+
    // This Replaces the old distance calculation:  distance =  calcDist(x,temp.getXCoord(),y,temp.getYCoord());
    distance = spaceCurve.curvePosition(temp.getXCoord(), temp.getYCoord());
-System.out.println("Dist test: " + distance);
    
    if (isDiagnostic) {
      System.out.println("  " + distance);
@@ -711,8 +699,7 @@ System.out.println("Dist test: " + distance);
    //find the customer with the lowest polar coordinate angle
    temp = (TSPShipment) temp.getNext();
 
- } //end while
- //System.out.println("foundShipment in ShipLL " + foundShipment.getIndex());
+ } 
  return foundShipment; //stub
 }
 
