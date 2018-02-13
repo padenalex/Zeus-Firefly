@@ -25,8 +25,8 @@ public class Zeus {
 	  
 	  
     //Solve the VRP Problem
-    //VRPRoot theRoot = new VRPRoot();
-    TSPRoot theRoot = new TSPRoot();
+    VRPRoot theRoot = new VRPRoot();
+    //TSPRoot theRoot = new TSPRoot();
     //TOPRoot theRoot = new TOPRoot();
     //MDVRPRoot theRoot = new MDVRPRoot();
 	//HDMDVRPRoot theRoot = new HDMDVRPRoot();

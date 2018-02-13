@@ -18,7 +18,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 //For the Simulated Annealing metaheuristic
-import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
+import edu.sru.thangiah.zeus.optimizations.metaheuristics.simulatedannealing.*;
+import edu.sru.thangiah.zeus.optimizations.sfc.MainSFC;
+import edu.sru.thangiah.zeus.vrp.SpaceFillingPathToDepot;
 
 
 //import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
@@ -91,11 +93,31 @@ public class VRP {
 		//Set up the shipment selection type
 		//ProblemInfo.selectShipType = new ClosestEuclideanDistToDepot();
 		//Settings.printDebug(Settings.COMMENT,ClosestEuclideanDistToDepot.WhoAmI());
+		
 		ProblemInfo.selectShipType = new SmallestPolarAngleToDepot();
 		Settings.printDebug(Settings.COMMENT, SmallestPolarAngleToDepot.WhoAmI());
+		
 		//ProblemInfo.selectShipType = new SmallestPolarAngleShortestDistToDepot();
 		//Settings.printDebug(Settings.COMMENT,SmallestPolarAngleShortestDistToDepot.WhoAmI());
+/*
+//Space Filling Setup
+		int method = MainSFC.DragonCurve;
+	    int recursionLevel = 3;
+	    double translateX = 0;//.4;
+	    double translateY = 0;//.5;
+	    double rotate = Math.PI/4;
+	    double scaleX = 0;//1.5;
+	    double scaleY = 0;//1.5;
+	    double shearX = 0;//1.1;
+	    double shearY = 0;//1.1;
 
+	    SpaceFillingPathToDepot spaceFillingPath = new SpaceFillingPathToDepot(
+	            method, recursionLevel, translateX, translateY,
+	            rotate, scaleX, scaleY, shearX, shearY);
+	        ProblemInfo.selectShipType = spaceFillingPath; // new SpaceFillingPathToDepot();
+	        Settings.printDebug(Settings.COMMENT, spaceFillingPath.WhoAmI()); //SpaceFillingPathToDepot.WhoAmI());
+//End Space Filling Setup
+*/
 		//set up the shipment insertion type
 		ProblemInfo.insertShipType = new LinearGreedyInsertShipment();
 		Settings.printDebug(Settings.COMMENT, LinearGreedyInsertShipment.WhoAmI());

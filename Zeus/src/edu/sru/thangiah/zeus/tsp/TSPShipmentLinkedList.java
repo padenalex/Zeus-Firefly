@@ -15,8 +15,8 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Vector;
 import edu.sru.thangiah.zeus.core.ShipmentLinkedList;
-import edu.sru.thangiah.zeus.tsp.sfc.TSPSpaceFillingCurve;
-import edu.sru.thangiah.zeus.tsp.sfc.selectionheuristics.*;
+import edu.sru.thangiah.zeus.optimizations.sfc.MainSFC;
+import edu.sru.thangiah.zeus.optimizations.sfc.selectionheuristics.*;
 import edu.sru.thangiah.zeus.core.Shipment;
 import edu.sru.thangiah.zeus.core.ProblemInfo;
 
@@ -552,9 +552,9 @@ class SmallestPolarAngleShortestDistToDepot
 class SpaceFillingPathToDepot
  extends TSPShipmentLinkedList {
 
-private TSPSpaceFillingCurve spaceCurve = null;
+private MainSFC spaceCurve = null;
 //private int method = TSPSpaceFillingCurve.SquareCurve;
-private int method = TSPSpaceFillingCurve.DragonCurve;
+private int method = MainSFC.DragonCurve;
 private int recursionLevel = 4;
 private double translateX = 0;
 private double translateY = 0;
@@ -568,7 +568,7 @@ private boolean firstRun = true;
 private String whoAmI = "Undetermined Spacefilling Curve";
 
 SpaceFillingPathToDepot() {
-  whoAmI = "level " + recursionLevel + " " + TSPSpaceFillingCurve.curveInfo(method);;
+  whoAmI = "level " + recursionLevel + " " + MainSFC.curveInfo(method);;
 }
 
 SpaceFillingPathToDepot(int method,
@@ -589,7 +589,7 @@ SpaceFillingPathToDepot(int method,
  this.scaleY = scaleY;
  this.shearX = shearX;
  this.shearY = shearY;
- whoAmI = "level " + recursionLevel + " " + TSPSpaceFillingCurve.curveInfo(method);
+ whoAmI = "level " + recursionLevel + " " + MainSFC.curveInfo(method);
 }
 
 /**
@@ -634,7 +634,7 @@ temp = (TSPShipment) currShipLL.getTSPHead().getNext(); //point to the first shi
  
  try {
    if(firstRun){
-     spaceCurve = new TSPSpaceFillingCurve(shipmentCoords,
+     spaceCurve = new MainSFC(shipmentCoords,
                               method, recursionLevel, translateX, translateY,
                               rotate, scaleX, scaleY, shearX, shearY);
      firstRun = false;

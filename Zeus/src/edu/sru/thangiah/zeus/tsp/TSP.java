@@ -8,19 +8,17 @@ import edu.sru.thangiah.zeus.core.*;
 import edu.sru.thangiah.zeus.localopts.*;
 import edu.sru.thangiah.zeus.localopts.interopts.*;
 import edu.sru.thangiah.zeus.localopts.intraopts.*;
-import edu.sru.thangiah.zeus.tsp.sfc.TSPSpaceFillingCurve;
+import edu.sru.thangiah.zeus.optimizations.sfc.MainSFC;
 import edu.sru.thangiah.zeus.tsp.tspqualityassurance.*;
 import edu.sru.thangiah.zeus.gui.*;
 import edu.sru.thangiah.zeus.localopts.OptInfo;
 import edu.sru.thangiah.zeus.localopts.*;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import edu.sru.thangiah.zeus.metaheuristics.evolutionary.TSPInteger;
+import edu.sru.thangiah.zeus.optimizations.metaheuristics.evolutionary.TSPInteger;
 
 //For the Simulated Annealing metaheuristic
 //import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
@@ -96,7 +94,7 @@ public class TSP {
 			
 			
 			//Temp Location for required variables of spacefilling curve method
-			int method = TSPSpaceFillingCurve.DragonCurve;
+			int method = MainSFC.DragonCurve;
 		    int recursionLevel = 3;
 		    double translateX = 0;//.4;
 		    double translateY = 0;//.5;

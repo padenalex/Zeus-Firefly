@@ -15,6 +15,8 @@ import java.io.PrintStream;
 
 //import the parent class
 import edu.sru.thangiah.zeus.core.ShipmentLinkedList;
+import edu.sru.thangiah.zeus.optimizations.sfc.MainSFC;
+import edu.sru.thangiah.zeus.optimizations.sfc.selectionheuristics.SFCInvalidGenerationException;
 import edu.sru.thangiah.zeus.core.Shipment;
 import edu.sru.thangiah.zeus.core.ProblemInfo;
 
@@ -464,4 +466,202 @@ class SmallestPolarAngleShortestDistToDepot
  }
 
 }
+
+
+
+//=========================== SPACEFILLING CURVE =========================
+
+//--------------------------------------------------------------------------------
+
+//Select the shipment with the shortest distance to the current depot
+class SpaceFillingPathToDepot
+extends VRPShipmentLinkedList {
+
+private MainSFC spaceCurve = null;
+//private int method = VRPSpaceFillingCurve.SquareCurve;
+private int method = MainSFC.DragonCurve;
+private int recursionLevel = 4;
+private double translateX = 0;
+private double translateY = 0;
+private double rotate = Math.PI * .22;
+private double scaleX = 1;
+private double scaleY = 1;
+private double shearX = 0;
+private double shearY = 0;
+private boolean firstRun = true;
+
+private String whoAmI = "Undetermined Spacefilling Curve";
+
+SpaceFillingPathToDepot() {
+whoAmI = "level " + recursionLevel + " " + MainSFC.curveInfo(method);;
+}
+
+SpaceFillingPathToDepot(int method,
+                     int recursionLevel,
+                     double translateX,
+                     double translateY,
+                     double rotate,
+                     double scaleX,
+                     double scaleY,
+                     double shearX,
+                     double shearY) {
+this.method = method;
+this.recursionLevel = recursionLevel;
+this.translateX = translateX;
+this.translateY = translateY;
+this.rotate = rotate;
+this.scaleX = scaleX;
+this.scaleY = scaleY;
+this.shearX = shearX;
+this.shearY = shearY;
+whoAmI = "level " + recursionLevel + " " + MainSFC.curveInfo(method);
+}
+
+/**
+* Description:  overridden getSelectShipment() method from the parent class for the
+* Euclidean distance selection algorithm.
+* @ param currDepot VRPDepot
+* @ param currShipLL VRPShipmentLinkedList
+* @ return VRPShipment
+*/
+
+
+public VRPShipment getSelectShipment(VRPDepotLinkedList currDepotLL,
+      VRPDepot currDepot,
+      VRPShipmentLinkedList currShipLL,
+      VRPShipment currShip) {
+	  boolean isDiagnostic = false;
+	  //VRPShipment temp = (VRPShipment) getHead(); //point to the first shipment
+	  VRPShipment temp = (VRPShipment) currShipLL.getVRPHead().getNext(); //point to the first shipment
+	  VRPShipment foundShipment = null; //the shipment found with the criteria
+	  //double angle;
+	  //double foundAngle = 360; //initial value
+	  double distance;
+	  double foundDistance = 200; //initial distance
+	  double depotX, depotY;
+	  depotX = currDepot.getXCoord();
+	  depotY = currDepot.getYCoord();
+
+// Fill an array with the shipment coordinates
+double[] shipmentCoords = new double[currShipLL.getNumShipments() * 2];
+int s = 0;
+int r = 0;
+while (temp != null && s < currShipLL.getNumShipments() * 2) {
+//	 System.out.println(" x is: " + r);
+ shipmentCoords[s] = temp.getXCoord(); 
+ shipmentCoords[s + 1] = temp.getYCoord();
+ s += 2;
+ temp = (VRPShipment) temp.getNext();
+}
+
+
+temp = (VRPShipment) currShipLL.getVRPHead().getNext(); //point to the first shipment
+
+try {
+ if(firstRun){
+   spaceCurve = new MainSFC(shipmentCoords,
+                            method, recursionLevel, translateX, translateY,
+                            rotate, scaleX, scaleY, shearX, shearY);
+   firstRun = false;
+ }
+}
+catch (SFCInvalidGenerationException ex) {
+ ex.printStackTrace();
+}
+
+
+while (temp != currShipLL.getVRPTail()) {
+ if (isDiagnostic) {
+   System.out.print("Shipment " + temp.getIndex() + " ");
+   if ( ( (temp.getXCoord() - depotX) >= 0) && ( (temp.getYCoord() - depotY) >= 0)) {
+     System.out.print("Quadrant I ");
+   }
+   else if ( ( (temp.getXCoord() - depotX) <= 0) &&
+            ( (temp.getYCoord() - depotY) >= 0)) {
+     System.out.print("Quadrant II ");
+   }
+   else if ( ( (temp.getXCoord()) <= 0 - depotX) &&
+            ( (temp.getYCoord() - depotY) <= 0)) {
+     System.out.print("Quadrant III ");
+   }
+   else if ( ( (temp.getXCoord() - depotX) >= 0) &&
+            ( (temp.getYCoord() - depotY) <= 0)) {
+     System.out.print("Quadrant VI ");
+   }
+   else {
+     System.out.print("No Quadrant");
+   }
+ }
+
+ 
+ if (temp.getIsAssigned()) {
+	  if (isDiagnostic) {
+		  System.out.println("has been assigned");
+	  }
+
+	  temp = (VRPShipment) temp.getNext();
+
+	  continue;
+ }
+
+ // This Replaces the old distance calculation:  distance =  calcDist(x,temp.getXCoord(),y,temp.getYCoord());
+ distance = spaceCurve.curvePosition(temp.getXCoord(), temp.getYCoord());
+ 
+ if (isDiagnostic) {
+   System.out.println("  " + distance);
+ }
+ //check if this shipment should be tracked
+ if (foundShipment == null) { //this is the first shipment being checked
+   foundShipment = temp;
+   foundDistance = distance;
+ }
+ else {
+   if (distance < foundDistance) { //found an angle that is less
+     foundShipment = temp;
+     foundDistance = distance;
+   }
+ }
+ //find the customer with the lowest polar coordinate angle
+ temp = (VRPShipment) temp.getNext();
+
+} 
+return foundShipment; //stub
+}
+
+
+
+
+
+
+/**
+* Description:  returns the selection type.
+* @return String
+*/
+public String WhoAmI() {
+return ("Selection Type: " + whoAmI + " to depot");
+}
+
+/**
+* Returns the curve used in this algorithm.
+* @return double[]
+*/
+public double[] getCurveUsed(){
+return spaceCurve.getCurve();
+}
+
+/**
+* Used by the GUI to display info about the SFC used.
+* Returns the name of the curve used and the recursion level.
+* @return String
+*/
+public String buildCurveInformation(){
+String str = "";
+str += "Algorithm Name: " + spaceCurve.AvailableCurveNames[method] + "|";
+str += "Recursion Level: " + recursionLevel;
+
+return str;
+}
+
+}
+//------------------------------------------------------------------------------
 
