@@ -19,6 +19,8 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import edu.sru.thangiah.zeus.optimizations.metaheuristics.evolutionary.TSPInteger;
+import edu.sru.thangiah.zeus.optimizations.oldfirefly.FireFly;
+import edu.sru.thangiah.zeus.optimizations.oldfirefly.Population;
 
 //For the Simulated Annealing metaheuristic
 //import edu.sru.thangiah.zeus.metaheuristics.simulatedannealing.*;
@@ -111,8 +113,8 @@ public class TSP {
 		        Settings.printDebug(Settings.COMMENT, spaceFillingPath.WhoAmI()); //SpaceFillingPathToDepot.WhoAmI());
 		        
 		        
-	        //ProblemInfo.selectShipType = new ClosestEuclideanDistToDepot();        
-	        //Settings.printDebug(Settings.COMMENT,ClosestEuclideanDistToDepot.WhoAmI());
+		       // ProblemInfo.selectShipType = new ClosestEuclideanDistToDepot();        
+		        //Settings.printDebug(Settings.COMMENT,ClosestEuclideanDistToDepot.WhoAmI());
 		}
         
 		if (FileType == 1 || FileType == 2 || FileType == 3 || FileType == 4) {
@@ -124,11 +126,11 @@ public class TSP {
 		ProblemInfo.insertShipType = new LinearGreedyInsertShipment();
 		Settings.printDebug(Settings.COMMENT, LinearGreedyInsertShipment.WhoAmI());
 		
-		
-		
 		//InsertAsGiven
-		//ProblemInfo.insertShipType = new InsertAsGiven();
-		//Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
+		ProblemInfo.insertShipType = new InsertAsGiven();
+		Settings.printDebug(Settings.COMMENT, InsertAsGiven.WhoAmI());
+		
+		
 		//Capture the CPU time required for solving the problem
 		startTime = System.currentTimeMillis();
 		// captures the initial information on solving the problem
@@ -165,12 +167,14 @@ public class TSP {
 
 		}
 		//--------------------------------------------------------------(TURN GUI ON/OFF )---------
-		ZeusGui guiPost = new ZeusGui(mainDepots, mainShipments);
+		//ZeusGui guiPost = new ZeusGui(mainDepots, mainShipments);
 		
 
 	//====== Metaheuristic Call Section ===================================================
-
+		
 			//TSPInteger ga = new TSPInteger(mainDepots);
+		//FireFly oldfly = new FireFly(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
+		Population FFOptimization = new Population(mainDepots.getHead().getNext().getMainTrucks().getHead().getNext().getMainNodes());
 
 	//====== END Metaheuristic Call Section ================================================	
 		

@@ -246,7 +246,6 @@ extends TSPShipmentLinkedList {
 	        }
 	      }
 	      temp = (TSPShipment) temp.getNext(); 
-	      System.out.println("index iss " + foundShipment.getIndex());
 	    }
 
 
